@@ -1,0 +1,88 @@
+@import "./loginPage";
+@import "./header";
+@import "./sales";
+
+.container-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+#root {
+    // background-color: #f8f8ff;
+    font-family: "Montserrat";
+    font-size: 15px;
+    height: 100%;
+}
+
+.img-logo {
+    width: 100px;
+    border-radius: 10px;
+}
+
+.remove-style-link {
+    a:link {
+        text-decoration: none;
+    }
+
+    a:visited {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    a:active {
+        text-decoration: none;
+    }
+}
+
+.title-page {
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid gray;
+}
+
+@media (max-width: 970px) {
+    .container-main {
+        width: 93%;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+}
+
+#select-clients {
+    overflow: auto;
+    max-height: 300px;
+    border-radius: 10px;
+    box-shadow: 5px 10px 7px gray;
+
+    :hover {
+        background-color: white
+    }
+
+    button {
+        color: gray;
+    }
+
+    button:hover {
+        background-color: #f8f8f8
+    }
+}
+
+#select-clients::-webkit-scrollbar {
+    background-color: white;
+    width: 8px;
+}
+
+#select-clients::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: lightgray;
+    border-radius: 20px;
+}
+
+// #table-sales {
+//     max-height: 30px;
+//     background-color: red;
+// }

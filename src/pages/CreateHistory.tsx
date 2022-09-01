@@ -1,0 +1,176 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useGetClientsQuery } from '../api/ApiSlice';
+import { AlertError } from '../components/alerts/AlertError';
+import { AlertSuccess } from '../components/alerts/AlertSuccess';
+import { Breadcumb } from '../components/Breadcumb';
+import { ComboBox } from '../components/ComboBox';
+import { InputText } from '../components/input/InputText';
+import { CircularIndeterminate } from '../components/LoaderCircular';
+import { clientHistoryService } from '../services/clientHistoryService';
+import { HTTP_RESPONSE } from '../utils/constants';
+
+export function CreateHistory() {
+  let navigate = useNavigate();
+  const auth = useSelector((state) => state.authenticated);
+  const { data: clients = [], isLoading: isLoadingGetClients } =
+    useGetClientsQuery();
+
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [client, setClient] = useState('');
+  const [serverError, setServerError] = useState(null);
+  const [invalidParams, setInvalidParams] = useState(null);
+
+  const [history, setHistory] = useState(null);
+
+  useEffect(() => {
+    if (!auth.userId) {
+      navigate(auth.redirectLoginPageUri, { replace: true });
+    }
+  }, [auth, navigate]);
+
+  const saveSale = async (event) => {
+    event.preventDefault();
+    const request = await clientHistoryService.createClientHistory(
+      auth.userId,
+      client.trim(),
+      description,
+      date,
+    );
+
+    if (HTTP_RESPONSE.SUCCESS.includes(request.status)) {
+      setClient('');
+      setDescription('');
+      setDate('');
+      setHistory(true);
+      return;
+    }
+
+    if (request.status === HTTP_RESPONSE.BAD_REQUEST) {
+      setInvalidParams(true);
+      return;
+    }
+
+    if (request.status === HTTP_RESPONSE.ERROR || !request.status) {
+      setServerError(true);
+    }
+  };
+
+  const clearFields = (event) => {
+    event.preventDefault();
+
+    setDescription('');
+    setDate('');
+    const buttonSelector = document.querySelector(
+      '#root > div > div.container-main > form > div > div:nth-child(1) > div > div > div > div > div > button',
+    );
+    if (buttonSelector) buttonSelector.click();
+  };
+
+  if (serverError) {
+    setTimeout(() => setServerError(null), 5000);
+  }
+
+  if (history === true || history === false) {
+    setTimeout(() => setHistory(null), 5000);
+  }
+
+  if (invalidParams === true) {
+    setTimeout(() => setInvalidParams(null), 5000);
+  }
+
+  let content = null;
+  if (isLoadingGetClients) {
+    content = <CircularIndeterminate />;
+  } else {
+    content = null;
+  }
+
+  return (
+    <div className="container-main">
+      {content}
+      <Breadcumb
+        page={[
+          { link: 'history', name: 'Atendimentos' },
+          { link: false, name: 'Criar Novo' },
+        ]}
+      />
+      <h3 className="title-page">Criar Novo</h3>
+
+      <form onSubmit={saveSale} className="form-sale">
+        <div className="card p-3">
+          <div className="form-group">
+            <label htmlFor="name">Cliente</label>
+            <div>
+              {clients ? (
+                <ComboBox
+                  title="Selecionar Cliente"
+                  options={clients.map((item) => item.name)}
+                  selectValue={(e, item) => setClient(item.name)}
+                />
+              ) : (
+                <ComboBox
+                  title="Selecionar Cliente"
+                  options={[]}
+                  selectValue={(e, item) => setClient(item)}
+                />
+              )}
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="name">Descrição</label>
+            <InputText
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              id="name"
+              label="Digite a descrição"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="price">Data</label>
+            <InputText
+              type="date"
+              id="date"
+              label=" "
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="form-row mt-3">
+            <div className="form-group col">
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-entrar p-2"
+                onClick={(e) => clearFields(e)}
+              >
+                Limpar campos
+              </button>
+            </div>
+            <div className="form-group col">
+              <button type="submit" className="btn btn-primary btn-entrar p-2">
+                Registrar
+              </button>
+            </div>
+          </div>
+          <div className="mt-3">
+            {history === true && (
+              <AlertSuccess title="Atendimento registrado com sucesso." />
+            )}
+            {history === false && (
+              <AlertError title="Erro ao registrar o atendimento." />
+            )}
+            {serverError && (
+              <AlertError title="Não foi possível processar a requisição." />
+            )}
+            {invalidParams && (
+              <AlertError title="Preencha os campos corretamente." />
+            )}
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}

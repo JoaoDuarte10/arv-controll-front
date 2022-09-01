@@ -1,0 +1,212 @@
+.form-login {
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  margin-top: 50px;
+}
+
+.btn-entrar {
+  width: 100%;
+}
+
+.credentials {
+  margin-top: 15px;
+}
+
+.login_container {
+  max-width: 35%;
+  margin: 0 auto;
+}
+
+@media (max-width: 970px) {
+  .login_container {
+    max-width: 40%;
+  }
+}
+
+@media (max-width: 800px) {
+  .login_container {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .login_container {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .login_container {
+    max-width: 90%;
+  }
+}
+
+.container-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navbar-light .navbar-toggler {
+  color: white;
+  border-color: white;
+}
+
+#title-navbar {
+  color: white;
+}
+
+.navbar-collapse {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.navbar-expand-lg {
+  background-color: #343a40 !important;
+  width: 100%;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navbar-expand-lg a {
+  text-decoration: none;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-expand-lg a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-expand-lg a:visited {
+  color: white;
+}
+
+.nav-item {
+  margin: 6px 10px;
+  font-size: 18px;
+}
+
+#menu {
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.total-sale {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 15px 0;
+}
+
+.total-sale h4 {
+  padding-right: 5px;
+}
+
+.container-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+#root {
+  font-family: "Montserrat";
+  font-size: 15px;
+  height: 100%;
+}
+
+.img-logo {
+  width: 100px;
+  border-radius: 10px;
+}
+
+.remove-style-link a:link {
+  text-decoration: none;
+}
+
+.remove-style-link a:visited {
+  text-decoration: none;
+}
+
+.remove-style-link a:hover {
+  text-decoration: none;
+}
+
+.remove-style-link a:active {
+  text-decoration: none;
+}
+
+.title-page {
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid gray;
+}
+
+@media (max-width: 970px) {
+  .container-main {
+    width: 93%;
+    margin: 0 auto;
+    padding: 30px 0;
+  }
+}
+
+#select-clients {
+  overflow: auto;
+  max-height: 300px;
+  border-radius: 10px;
+  -webkit-box-shadow: 5px 10px 7px gray;
+          box-shadow: 5px 10px 7px gray;
+}
+
+#select-clients :hover {
+  background-color: white;
+}
+
+#select-clients button {
+  color: gray;
+}
+
+#select-clients button:hover {
+  background-color: #f8f8f8;
+}
+
+#select-clients::-webkit-scrollbar {
+  background-color: white;
+  width: 8px;
+}
+
+#select-clients::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: lightgray;
+  border-radius: 20px;
+}
+/*# sourceMappingURL=main.css.map */
