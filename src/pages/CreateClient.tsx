@@ -11,7 +11,7 @@ import { CircularIndeterminate } from '../components/LoaderCircular';
 import { FormClients } from '../components/FormClients';
 import { TitlePage } from '../components/TitlePage';
 
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { useAddNewClientMutation } from '../api/ApiSlice';
 import { ReducerStore } from '../app/store';
 
@@ -80,7 +80,7 @@ export function CreateClient() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), 5000);
+    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { salesService } from '../services/salesService';
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { useGetClientsQuery } from '../api/ApiSlice';
 import { ReducerStore } from '../app/store';
 import { ISales } from '../api/types/Sales';
@@ -141,23 +141,23 @@ export function Sales() {
   };
 
   if (errorSales === false || errorSales === true) {
-    setTimeout(() => setErrorSales(null), 5000);
+    setTimeout(() => setErrorSales(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError === false || serverError === true) {
-    setTimeout(() => setServerError(null), 5000);
+    setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (salesTodayNotFound) {
-    setTimeout(() => setSalesTodayNotFound(null), 5000);
+    setTimeout(() => setSalesTodayNotFound(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (clearFields) {
-    setTimeout(() => setClearFields(null), 5000);
+    setTimeout(() => setClearFields(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (invalidParams === true) {
-    setTimeout(() => setInvalidParams(null), 5000);
+    setTimeout(() => setInvalidParams(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   let content = null;

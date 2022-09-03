@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGetClientsQuery } from '../api/ApiSlice';
 import { clientHistoryService } from '../services/clientHistoryService';
 import { ReducerStore } from '../app/store';
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 
 import { AlertError } from '../components/alerts/AlertError';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
@@ -76,15 +76,15 @@ export function CreateHistory() {
   };
 
   if (serverError) {
-    setTimeout(() => setServerError(null), 5000);
+    setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (history === true || history === false) {
-    setTimeout(() => setHistory(null), 5000);
+    setTimeout(() => setHistory(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (invalidParams === true) {
-    setTimeout(() => setInvalidParams(null), 5000);
+    setTimeout(() => setInvalidParams(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   let content = null;

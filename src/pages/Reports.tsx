@@ -1,7 +1,7 @@
 import { clientService } from '../services/clientService';
 import { salesService } from '../services/salesService';
 
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { ReducerStore } from '../app/store';
 
 import { AlertError } from '../components/alerts/AlertError';
@@ -187,15 +187,15 @@ export function Reports() {
   };
 
   if (emptySale) {
-    setTimeout(() => setEmptySale(false), 5000);
+    setTimeout(() => setEmptySale(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError) {
-    setTimeout(() => serverError(false), 5000);
+    setTimeout(() => serverError(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (clearTableSalesForClient) {
-    setTimeout(() => setClearTableSalesForClient(null), 5000);
+    setTimeout(() => setClearTableSalesForClient(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

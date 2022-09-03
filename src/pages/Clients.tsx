@@ -10,7 +10,7 @@ import { TitlePage } from '../components/TitlePage';
 import { TopModal } from '../components/TopModal';
 
 import { useDeleteClientMutation, useGetClientsQuery } from '../api/ApiSlice';
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { ReducerStore } from '../app/store';
 
 import React, { useState, useEffect } from 'react';
@@ -66,7 +66,7 @@ export function Clients() {
   }
 
   if (loaderClients) {
-    setTimeout(() => setLoaderClients(null), 5000);
+    setTimeout(() => setLoaderClients(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   let snniperClient = null;

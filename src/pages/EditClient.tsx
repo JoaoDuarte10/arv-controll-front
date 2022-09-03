@@ -8,6 +8,7 @@ import { Client } from '../api/types/Client';
 
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { TIMEOUT } from '../utils/constants';
 
 export function EditClient() {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ export function EditClient() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), 5000);
+    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

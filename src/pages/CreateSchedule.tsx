@@ -6,7 +6,7 @@ import { CircularIndeterminate } from '../components/LoaderCircular';
 import { ScheduleForm } from '../components/ScheduleForm';
 
 import { useAddNewScheduleMutation, useGetClientsQuery } from '../api/ApiSlice';
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { ReducerStore } from '../app/store';
 import { TitlePage } from '../components/TitlePage';
 
@@ -109,7 +109,7 @@ export function CreateSchedule() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), 5000);
+    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

@@ -6,7 +6,7 @@ import { clientHistoryService } from '../services/clientHistoryService';
 import { ReducerStore } from '../app/store';
 import { useGetClientsQuery } from '../api/ApiSlice';
 
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 
 import { AlertError } from '../components/alerts/AlertError';
 import { AlertInfo } from '../components/alerts/AlertInfo';
@@ -122,19 +122,19 @@ export function ClientHistory() {
   }
 
   if (historyNotFound) {
-    setTimeout(() => setHistoryNotFound(false), 5000);
+    setTimeout(() => setHistoryNotFound(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError) {
-    setTimeout(() => setServerError(false), 5000);
+    setTimeout(() => setServerError(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (clearSchedule) {
-    setTimeout(() => setClearSchedule(false), 5000);
+    setTimeout(() => setClearSchedule(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (invalidParams === true) {
-    setTimeout(() => setInvalidParams(false), 5000);
+    setTimeout(() => setInvalidParams(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   let content = null;

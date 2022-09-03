@@ -10,7 +10,7 @@ import { CircularIndeterminate } from '../components/LoaderCircular';
 import { AlertInfo } from '../components/alerts/AlertInfo';
 
 import { clientService } from '../services/clientService';
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -168,7 +168,7 @@ export function Segments() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), 5000);
+    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

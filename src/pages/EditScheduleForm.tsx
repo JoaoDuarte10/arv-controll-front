@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { scheduleService } from '../services/scheduleService';
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { ReducerStore } from '../app/store';
 
 import { AlertError } from '../components/alerts/AlertError';
@@ -85,7 +85,7 @@ export function EditScheduleForm() {
   };
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), 5000);
+    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

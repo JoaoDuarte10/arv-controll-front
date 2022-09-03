@@ -1,7 +1,7 @@
 import '../css/main.css';
 import { authService } from '../services/authService';
 
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 
 import logo from '../img/raise-value.png';
 
@@ -64,11 +64,11 @@ function LoginPage() {
   };
 
   if (credentials === false) {
-    setTimeout(() => setCredentials(null), 5000);
+    setTimeout(() => setCredentials(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError === true) {
-    setTimeout(() => setServerError(null), 5000);
+    setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   const handlePasswordChange = (prop: any) => (event: React.BaseSyntheticEvent) => {

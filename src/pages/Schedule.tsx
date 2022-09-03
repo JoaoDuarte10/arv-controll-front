@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { ReducerStore } from '../app/store';
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { scheduleService } from '../services/scheduleService';
 import { ScheduleCard } from '../components/ScheduleCard';
 import { randomId } from '../utils/random';
@@ -183,27 +183,27 @@ export function Schedule() {
   };
 
   if (errorSchedule === false || errorSchedule) {
-    setTimeout(() => setErrorSchedule(null), 5000);
+    setTimeout(() => setErrorSchedule(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (errorClientSchedule === false || errorClientSchedule) {
-    setTimeout(() => setErrorClientSchedule(null), 5000);
+    setTimeout(() => setErrorClientSchedule(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError) {
-    setTimeout(() => setServerError(null), 5000);
+    setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (deleted === false) {
-    setTimeout(() => setDeleted(null), 5000);
+    setTimeout(() => setDeleted(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (clearSchedule) {
-    setTimeout(() => setClearSchedule(null), 5000);
+    setTimeout(() => setClearSchedule(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (scheduleFinish) {
-    setTimeout(() => setScheduleFinish(null), 5000);
+    setTimeout(() => setScheduleFinish(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (finalitySchedule) {
