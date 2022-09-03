@@ -1,16 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ReducerActionType } from './types/reducerType';
 
-const userLogin = JSON.parse(localStorage.getItem('user-login') as string);
+const loginInLocalStorage = localStorage.getItem('user-login');
 
 type UserLogin = {
-  userName: string;
-  userId: string;
-  redirectLoginPageUri: string;
+  userName: string | null;
+  userId: string | null;
+  redirectLoginPageUri?: string;
 }
 
 const initialState: UserLogin = {
-  userName: userLogin ? userLogin.userName : null,
-  userId: userLogin ? userLogin.userId : null,
+  userName: loginInLocalStorage ? JSON.parse(loginInLocalStorage).userName : null,
+  userId: loginInLocalStorage ? JSON.parse(loginInLocalStorage).userId : null,
   redirectLoginPageUri: '/login',
 };
 
@@ -19,20 +20,20 @@ const authenticatedSlice = createSlice({
   initialState,
   reducers: {
     loginAdded: {
-      reducer(state, action) {
+      reducer(state: UserLogin, action: ReducerActionType<UserLogin>) {
         if (!initialState.userId) {
           localStorage.setItem('user-login', JSON.stringify(action.payload));
           state.userName = action.payload.userName;
-          state.userId = action.payload.id;
+          state.userId = action.payload.userId;
         }
       },
-      prepare(login) {
+      prepare(params: { login: string, id: string }): { payload: UserLogin } {
         return {
           payload: {
-            userName: login.userName,
-            id: login.userId,
+            userName: params.login,
+            userId: params.id,
           },
-        } as any;
+        };
       },
     },
   },
