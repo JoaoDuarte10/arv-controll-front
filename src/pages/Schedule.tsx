@@ -20,11 +20,12 @@ import { useSelector } from 'react-redux';
 import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
 import { AlertInfo } from '../components/alerts/AlertInfo';
+import { ReducerStore } from '../app/store';
 
 export default function Schedule() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
 
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery();
@@ -66,7 +67,7 @@ export default function Schedule() {
     setId('');
   };
 
-  const getScheduleResponse = async (event) => {
+  const getScheduleResponse = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     if (!clientSelected && !date) {
@@ -106,7 +107,7 @@ export default function Schedule() {
     setErrorSchedule(false);
   };
 
-  const finishScheduleResponse = async (event, id) => {
+  const finishScheduleResponse = async (event: React.BaseSyntheticEvent, id) => {
     event.preventDefault();
 
     const scheduleFinish = schedules
@@ -138,11 +139,11 @@ export default function Schedule() {
     });
   };
 
-  const deleteClientScheduleResponse = async (event, id) => {
+  const deleteClientScheduleResponse = async (event: React.BaseSyntheticEvent, id) => {
     event.preventDefault();
     const result = await scheduleService.deleteClientSchedule(auth.userId, id);
 
-    if (result === HTTP_RESPONSE.SUCCESS) {
+    if (HTTP_RESPONSE.SUCCESS.includes(result.status)) {
       setErrorClientSchedule(false);
       clearStates();
     }
@@ -159,20 +160,20 @@ export default function Schedule() {
     });
   };
 
-  const clearFindSchedule = (event) => {
+  const clearFindSchedule = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     setSchedule([]);
     setClearSchedule(true);
   };
 
-  const clearFilters = (event) => {
+  const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     document.getElementById('dateLoadSchedule').value = '';
     const clickButtonSelect = document.querySelector(
       '#root > div > div.container-main > div.card.p-3.mt-4.mb-4.shadow-sm.bg-white > form > div.form-row.mb-3 > div.col-sm-6 > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (clickButtonSelect) clickButtonSelect.click();
 
     setDate('');

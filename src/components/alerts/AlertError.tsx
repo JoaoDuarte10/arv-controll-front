@@ -1,6 +1,6 @@
 import { Alert } from '@mui/material';
 
-export function AlertError(props) {
+export function AlertError(props: { title: string }) {
   const { title } = props;
   return (
     <Alert

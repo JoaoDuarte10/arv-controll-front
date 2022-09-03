@@ -1,14 +1,15 @@
 import axios from 'axios';
+import { Response } from './types/ResponseDTO';
 
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const authService = {
   // saveUserInLocalStorange(user) {
-    //   const userData = JSON.stringify(user);
-    //   localStorage.setItem('user-login', userData);
-    // },
-    
-    async getUserInLocalStorange() {
+  //   const userData = JSON.stringify(user);
+  //   localStorage.setItem('user-login', userData);
+  // },
+
+  async getUserInLocalStorange() {
     const user = localStorage.getItem('user-login');
     if (!user) return null;
     try {
@@ -29,7 +30,7 @@ const authService = {
     localStorage.removeItem('user-login');
   },
 
-  async sendLogin(user: string, password: string) {
+  async sendLogin(user: string, password: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/authenticate`;
 
     const { data, status } = await axios

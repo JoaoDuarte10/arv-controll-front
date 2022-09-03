@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { Response } from './types/ResponseDTO';
 
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const segmentService = {
-  async getSegment(id_user: string) {
+  async getSegment(id_user: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/segments`;
     try {
       const { data, status } = await axios
@@ -19,7 +20,7 @@ const segmentService = {
     }
   },
 
-  async createSegment(id_user: string, segment: string) {
+  async createSegment(id_user: string, segment: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/segment/create`;
     try {
       const { data, status } = await axios
@@ -41,7 +42,11 @@ const segmentService = {
     }
   },
 
-  async updateSegment(id_user: string, id: string, segment: string) {
+  async updateSegment(
+    id_user: string,
+    id: string,
+    segment: string,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/segment/update`;
     try {
       const { data, status } = await axios
@@ -64,7 +69,11 @@ const segmentService = {
     }
   },
 
-  async deleteSegment(id_user: string, id: string, segment: string) {
+  async deleteSegment(
+    id_user: string,
+    id: string,
+    segment: string,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/segment`;
     try {
       const { data, status } = await axios

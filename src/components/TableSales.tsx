@@ -1,6 +1,11 @@
 import { randomId } from '../utils/random';
+import { ISales } from '../api/types/Sales';
 
-export function TableSales(props) {
+type InputProps = {
+  sales: ISales[]
+}
+
+export function TableSales(props: InputProps) {
   const { sales } = props;
 
   return (

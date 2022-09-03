@@ -7,6 +7,7 @@ import { useGetClientsQuery, useUpdateClientMutation } from '../api/ApiSlice';
 
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Client } from '../api/types/Client';
 
 export function EditClient() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export function EditClient() {
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery();
 
-  const editClient = clients.find((client) => client.id === clientId);
+  const editClient = clients.find((client: Client) => client.id === clientId);
 
   const [
     updateClient,
@@ -32,7 +33,7 @@ export function EditClient() {
   const [segmentSelect, setSegmentSelect] = useState(
     editClient ? editClient.segment : null,
   );
-  const [alert, setAlert] = useState(null);
+  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   const clearStates = () => {
     setName('');
@@ -41,7 +42,7 @@ export function EditClient() {
     setSegmentSelect(null);
   };
 
-  const onUpdateClient = async (event) => {
+  const onUpdateClient = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     const emailField = email ? email.trim() : null;
@@ -69,7 +70,7 @@ export function EditClient() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(null), 5000);
+    setTimeout(() => setAlert(<div></div>), 5000);
   }
 
   return (

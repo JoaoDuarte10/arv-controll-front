@@ -14,17 +14,18 @@ import { HTTP_RESPONSE } from '../utils/constants';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ReducerStore } from '../app/store';
 
 export default function Clients() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
 
   const {
     data: clients = [],
     isLoading,
     isSuccess,
-    error = {},
+    error = {} as any,
   } = useGetClientsQuery();
 
   const [
@@ -32,8 +33,8 @@ export default function Clients() {
     { isLoading: isLoadingDelete, isSuccess: isSuccessDeleted },
   ] = useDeleteClientMutation();
 
-  const [id, setId] = useState(null);
-  const [loaderClients, setLoaderClients] = useState('');
+  const [id, setId] = useState<string | null>(null);
+  const [loaderClients, setLoaderClients] = useState<JSX.Element | string | null>('');
 
   useEffect(() => {
     if (!auth.userId) {
@@ -49,7 +50,7 @@ export default function Clients() {
     content = null;
   }
 
-  const onDeleteClient = async (event, id) => {
+  const onDeleteClient = async (event: React.BaseSyntheticEvent, id: string) => {
     event.preventDefault();
 
     try {
@@ -90,7 +91,7 @@ export default function Clients() {
         id="delete-client"
         title="Excluir cliente?"
         body="Tem certeza que deseja excluir esse cliente?"
-        click={(e) => onDeleteClient(e, id)}
+        click={(e: React.BaseSyntheticEvent) => onDeleteClient(e, id ? id : '')}
         button="Excluir"
       />
 

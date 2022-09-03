@@ -1,10 +1,11 @@
 import axios from 'axios';
 import moment from 'moment';
+import { Response } from './types/ResponseDTO';
 
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const salesService = {
-  async getSalesToday(user_id) {
+  async getSalesToday(user_id: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/today`;
     const date = moment(new Date()).format('YYYY-MM-DD');
     try {
@@ -25,7 +26,11 @@ const salesService = {
     }
   },
 
-  async getSalesInPeriod(user_id, date1, date2) {
+  async getSalesInPeriod(
+    user_id: string,
+    date1: string,
+    date2: string,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/period`;
     let date1Valid = date1;
     if (!date1) {
@@ -52,7 +57,11 @@ const salesService = {
     }
   },
 
-  async getSalesInPeriodByClients(user_id, date1, date2) {
+  async getSalesInPeriodByClients(
+    user_id: string,
+    date1: string,
+    date2: string,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/period-clients`;
     try {
       const { data } = await axios.post(URL, {
@@ -66,7 +75,7 @@ const salesService = {
     }
   },
 
-  async getSalesByClients(user_id, client) {
+  async getSalesByClients(user_id: string, client: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/clients`;
     try {
       const { data, status } = await axios
@@ -86,7 +95,13 @@ const salesService = {
     }
   },
 
-  async newSale(user_id, description, client, price, date) {
+  async newSale(
+    user_id: string,
+    description: string,
+    client: string,
+    price: string,
+    date: string,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/new`;
     try {
       const { data, status } = await axios
@@ -112,7 +127,7 @@ const salesService = {
     }
   },
 
-  countTotalValueSales(sales) {
+  countTotalValueSales(sales: { price: string }[]) {
     return sales
       .filter((item) => !!item)
       .map(
@@ -122,7 +137,12 @@ const salesService = {
       .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
   },
 
-  async getSalesByAllFilters(user_id, client, date1, date2) {
+  async getSalesByAllFilters(
+    user_id: string,
+    client: string,
+    date1: string,
+    date2: string | null,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/all-filters`;
     try {
       const { data, status } = await axios

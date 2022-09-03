@@ -1,5 +1,5 @@
 function mask(
-  value,
+  value: number | string,
   precision = 2,
   decimalSeparator = '.',
   thousandSeparator = ',',

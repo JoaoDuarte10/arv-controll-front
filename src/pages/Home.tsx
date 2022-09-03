@@ -6,12 +6,13 @@ import { WhatsAppService } from '../services/whatsapp-service';
 import { Breadcumb } from '../components/Breadcumb';
 import { randomId } from '../utils/random';
 import { useSelector } from 'react-redux';
+import { ReducerStore } from '../app/store';
 
 export function Home() {
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   let navigate = useNavigate();
 
-  const navbar = document.querySelector('.navbar');
+  const navbar = document.querySelector('.navbar') as HTMLElement;
   if (navbar) navbar.style.display = 'flex';
 
   useEffect(() => {

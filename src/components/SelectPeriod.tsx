@@ -1,7 +1,17 @@
+import { Client } from '../api/types/Client';
 import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
 
-export function SelectPeriod(props) {
+type InputProps = {
+  getSalesInPeriodResponse: Function;
+  setDate1: Function;
+  setDate2: Function;
+  filterByClient: Client[];
+  setDataClient: any;
+  clearFields: any;
+}
+
+export function SelectPeriod(props: InputProps) {
   const {
     getSalesInPeriodResponse,
     setDate1,
@@ -22,7 +32,7 @@ export function SelectPeriod(props) {
               type="date"
               label=" "
               id="date1"
-              onChange={(e) => setDate1(e.target.value)}
+              onChange={(e: React.BaseSyntheticEvent) => setDate1(e.target.value)}
             />
           </div>
           <div className="mb-3 col">
@@ -31,7 +41,7 @@ export function SelectPeriod(props) {
               type="date"
               label=" "
               id="date2"
-              onChange={(e) => setDate2(e.target.value)}
+              onChange={(e: React.BaseSyntheticEvent) => setDate2(e.target.value)}
             />
           </div>
         </div>
@@ -41,13 +51,13 @@ export function SelectPeriod(props) {
             <ComboBox
               title="Selecionar Cliente"
               options={filterByClient.map((item) => item.name)}
-              selectValue={(e, item) => setDataClient(e, item)}
+              selectValue={(e: React.BaseSyntheticEvent, item: string) => setDataClient(e, item)}
             />
           ) : (
             <ComboBox
               title="Selecionar Cliente"
               options={[]}
-              selectValue={(e, item) => setDataClient(e, item)}
+              selectValue={(e: React.BaseSyntheticEvent, item: string) => setDataClient(e, item)}
             />
           )}
         </div>

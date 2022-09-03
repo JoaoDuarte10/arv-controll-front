@@ -1,8 +1,14 @@
-import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export function ComboBox(props) {
+type InputProps = {
+  title: string;
+  options: any[];
+  selectValue: any;
+  value?: any;
+}
+
+export function ComboBox(props: InputProps) {
   const { title, options, selectValue, value } = props;
 
   return (

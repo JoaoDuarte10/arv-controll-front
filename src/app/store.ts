@@ -14,3 +14,28 @@ export default configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
 });
+
+export type ReducerStore = {
+  authenticated: {
+    userName: any;
+    userId: any;
+    redirectLoginPageUri: string;
+  };
+  clients: {
+    data: never[];
+    status: string;
+    error: null;
+  };
+  schedule: {
+    id: string;
+    client: string;
+    procedure: string;
+    date: string;
+    time: string;
+    price: string;
+    phone: string;
+    pacote: boolean;
+    qtdTotalAtendimento: number;
+    qtdAtendimento: number;
+  };
+};

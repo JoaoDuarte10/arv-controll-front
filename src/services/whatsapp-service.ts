@@ -1,6 +1,6 @@
 export const WhatsAppService = {
   redirectToWhatsappWithMessage(
-    event: Event,
+    event: React.BaseSyntheticEvent,
     client: string,
     contact: string,
     date: string,
@@ -8,7 +8,7 @@ export const WhatsAppService = {
     qtdTotalAtendimento: number,
     qtdAtendimento: number,
     procedure: string,
-  ) {
+  ): void {
     event.preventDefault();
     const isPacote = qtdTotalAtendimento
       ? `Esse é o ${qtdAtendimento + 1}º dia do pacote. \n`
@@ -22,7 +22,7 @@ export const WhatsAppService = {
     window.open(URL + redirect, '_blank');
   },
 
-  redirectToWhatsapp(event: Event, contact: string) {
+  redirectToWhatsapp(event: React.SyntheticEvent, contact: string): void {
     event.preventDefault();
     const URL = `https://api.whatsapp.com/send?phone=55${contact.replace(
       /[^0-9]+/g,

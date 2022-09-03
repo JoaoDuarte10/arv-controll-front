@@ -2,8 +2,24 @@ import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
 import InputMask from 'react-input-mask';
 import { useGetSegmentsQuery } from '../api/ApiSlice';
+import { ISegment } from '../api/types/Segment';
 
-function FormClients(props) {
+type InputProps = {
+  edit?: boolean;
+  clearStates: any;
+  name: string;
+  setName: any;
+  email: string;
+  setEmail: any;
+  phone: string;
+  setPhone: any;
+  setSegmentSelect: any;
+  segmentSelect: string;
+  onChangeClient: any;
+  alert: JSX.Element;
+}
+
+function FormClients(props: InputProps) {
   const { data: segments = [] } = useGetSegmentsQuery();
 
   const {
@@ -38,7 +54,7 @@ function FormClients(props) {
             className="mb-3"
             id="client"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: React.BaseSyntheticEvent) => setName(e.target.value)}
             label="Digite o nome do cliente"
           />
           <label htmlFor="name">E-mail</label>
@@ -47,7 +63,7 @@ function FormClients(props) {
             className="mb-2"
             id="procedure"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: React.BaseSyntheticEvent) => setEmail(e.target.value)}
             label="Digite o email"
           />
           <label htmlFor="name">Telefone</label>
@@ -69,8 +85,8 @@ function FormClients(props) {
               </label>
               <ComboBox
                 title="Selecionar Segmento"
-                options={segments.map((item) => item.segment)}
-                selectValue={(e, item) => setSegmentSelect(item)}
+                options={segments.map((item: ISegment) => item.segment)}
+                selectValue={(e: React.BaseSyntheticEvent, item: string) => setSegmentSelect(item)}
               />
             </div>
           )}

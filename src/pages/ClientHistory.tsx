@@ -12,24 +12,25 @@ import { AlertInfo } from '../components/alerts/AlertInfo';
 import { useSelector } from 'react-redux';
 import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
+import { ReducerStore } from '../app/store';
 
 export default function ClientHistory() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery();
 
-  const [date1, setDate1] = useState('');
-  const [date2, setDate2] = useState('');
+  const [date1, setDate1] = useState<string | null>('');
+  const [date2, setDate2] = useState<string | null>('');
 
-  const [errorHistory, setErrorHistory] = useState(null);
+  const [errorHistory, setErrorHistory] = useState<boolean | null>(null);
   const [clientHistory, setClientHistory] = useState([]);
 
   const [clientSelected, setClientSelected] = useState(null);
 
-  const [clearSchedule, setClearSchedule] = useState(null);
-  const [invalidParams, setInvalidParams] = useState(null);
+  const [clearSchedule, setClearSchedule] = useState<boolean | null>(null);
+  const [invalidParams, setInvalidParams] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -37,7 +38,7 @@ export default function ClientHistory() {
     }
   }, [auth.userId, auth.redirectLoginPageUri, navigate]);
 
-  const getHistoryInPeriodResponse = async (event) => {
+  const getHistoryInPeriodResponse = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
     if ((!clientSelected && !date1 && !date2) || (!date1 && date2)) {
@@ -53,7 +54,7 @@ export default function ClientHistory() {
         auth.userId,
         clientSelected,
         date1,
-        date2,
+        date2 as string,
       );
     } else if (clientSelected !== null) {
       request = await clientHistoryService.getHistoryByClient(
@@ -70,6 +71,8 @@ export default function ClientHistory() {
       );
     }
 
+    if (!request) return;
+
     if (request.status === HTTP_RESPONSE.NOT_FOUND) {
       setErrorHistory(true);
       setClientHistory([]);
@@ -84,7 +87,7 @@ export default function ClientHistory() {
     setClientHistory(request.data);
   };
 
-  const clearFields = (event) => {
+  const clearFields = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     setClientHistory([]);
     setClientSelected(null);
@@ -93,18 +96,24 @@ export default function ClientHistory() {
     setClearSchedule(true);
   };
 
-  const clearFilters = (event) => {
+  const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     setClientSelected(null);
-    setDate1(null);
-    setDate2(null);
-    document.getElementById('date1').value = '';
-    document.getElementById('date2').value = '';
+    clearDates();
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card.mb-4.p-3.shadow.bg-white.rounded > form > div.mb-4 > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
+
+  const clearDates = () => {
+    const date1Element = document.getElementById('date1') as HTMLInputElement | null;
+    const date2Element = document.getElementById('date2') as HTMLInputElement | null;
+    if (date1Element) date1Element.value = '';
+    if (date2Element) date2Element.value = '';
+    setDate1('');
+    setDate2('');
+  }
 
   if (errorHistory) {
     setTimeout(() => setErrorHistory(null), 5000);
@@ -136,8 +145,8 @@ export default function ClientHistory() {
         setDate1={setDate1}
         setDate2={setDate2}
         filterByClient={clients}
-        setDataClient={(e, item) => setClientSelected(item)}
-        clearFields={(e) => clearFilters(e)}
+        setDataClient={(e: React.BaseSyntheticEvent, item: string) => setClientSelected(item)}
+        clearFields={(e: React.BaseSyntheticEvent) => clearFilters(e)}
       />
 
       {errorHistory === true ? (
@@ -160,9 +169,9 @@ export default function ClientHistory() {
                   })}
                 {date2 &&
                   ' - ' +
-                    new Date(date2).toLocaleDateString('pt-BR', {
-                      timeZone: 'UTC',
-                    })}
+                  new Date(date2).toLocaleDateString('pt-BR', {
+                    timeZone: 'UTC',
+                  })}
               </div>
             )}
           </div>

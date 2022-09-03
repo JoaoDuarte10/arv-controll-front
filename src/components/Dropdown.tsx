@@ -1,6 +1,14 @@
 import { randomId } from '../utils/random';
 
-export function Dropdown(props) {
+type InputProps = {
+  title: string;
+  options: any[];
+  selectValue: any;
+  className?: string;
+  style?: Object
+}
+
+export function Dropdown(props: InputProps) {
   const { title, options, selectValue, className, style } = props;
 
   return (

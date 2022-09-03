@@ -46,45 +46,6 @@ export default function NavBar() {
               <Link to="/home">Home</Link>
             </div>
           </li>
-          {/* <li className="nav-item" data-dismiss="modal" key="1">
-            <div className="input-group">
-              <div className="pr-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="white"
-                  className="bi bi-calendar-check"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
-                </svg>
-              </div>
-              <div className="d-flex">
-                <Link to="/schedule-client">Pedido de horários</Link>
-                {scheduleClients === 0 ? null : (
-                  <div
-                    className="text-white text-center ml-3 pl-1 pr-1 font-weight-bold"
-                    style={{
-                      backgroundColor: 'red',
-                      borderRadius: '50%',
-                      width: '25px',
-                      height: '25px',
-                    }}
-                  >
-                    {scheduleClients === 0 ? null : scheduleClients}
-                  </div>
-                )}
-              </div>
-            </div>
-          </li> */}
-          {/* <li className="nav-item" data-dismiss="modal" key="234">
-            <div>
-              <Link to="/schedule">Agenda</Link>
-            </div>
-          </li> */}
-
           <div className="nav-item dropdown m-0 ml-2" key="25234">
             <div>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

@@ -10,13 +10,11 @@ import Schedule from './pages/Schedule';
 import Client from './pages/Clients';
 import { Reports } from './pages/Reports';
 import { Segments } from './pages/Segments';
-// import { ScheduleClient } from './pages/scheduleClient';
 import ClientHistory from './pages/ClientHistory';
 import { CreateHistory } from './pages/CreateHistory';
 import { randomId } from './utils/random';
 import { CreateSchedule } from './pages/CreateSchedule';
 import { CreateClient } from './pages/CreateClient';
-// import { scheduleClientService } from './services/scheduleClientService';
 import store from './app/store';
 import { Provider } from 'react-redux';
 
@@ -24,35 +22,20 @@ import { EditClient } from './pages/EditClient';
 import { EditScheduleForm } from './pages/EditScheduleForm';
 
 export function App() {
-  // const [scheduleClients, setScheduleClients] = useState([]);
 
   useEffect(() => {
     document.body.style.backgroundColor = '#f8f8ff';
-
-    // getScheduleClient();
   }, []);
-
-  // setTimeout(() => {
-  //     getScheduleClient();
-  // }, (180 * 1000))
-
-  // async function getScheduleClient() {
-  //     const userId = await authService.getUserIdInLocalStorange();
-  //     const findSchedules = await scheduleClientService.getClientsSchedule(userId);
-  //     setScheduleClients(findSchedules);
-  // }
 
   return (
     <div>
       <Provider store={store}>
         <BrowserRouter>
-          {/* <NavBar scheduleClients={scheduleClients.length} /> */}
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/home" element={<Home />} />
-            {/* <Route exact path='/schedule-client' element={<ScheduleClient />} /> */}
             <Route path="/client" element={<Client />} key={randomId()} />
             <Route
               path="/create-client"
@@ -63,7 +46,6 @@ export function App() {
               path="/editClient/:clientId"
               element={<EditClient />}
               key={randomId()}
-              // children={<EditClient />}
             />
             <Route
               path="/new-sale"

@@ -1,7 +1,12 @@
-import React from 'react';
 import { randomId } from '../utils/random';
+import { ISales } from '../api/types/Sales';
 
-function CardSales(props) {
+type InputProps = {
+  sales: ISales[];
+  title: string;
+}
+
+function CardSales(props: InputProps) {
   const { sales, title } = props;
 
   const nameClient = [

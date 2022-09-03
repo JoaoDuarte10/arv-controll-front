@@ -1,10 +1,15 @@
 import { AlertInfo } from './alerts/AlertInfo';
 
-function TableReport(props) {
-  const { clientSales } = props;
+type InputProps = {
+  id: string;
+  clientSales: any[]
+}
+
+function TableReport(props: InputProps) {
+  const { id, clientSales } = props;
 
   return (
-    <div className="collapse table-responsive-sm" id={props.id}>
+    <div className="collapse table-responsive-sm" id={id}>
       {clientSales.length > 0 ? (
         <div>
           <table className="table table-bordered mt-3 mb-0">

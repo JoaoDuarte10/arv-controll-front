@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const fetchPosts = createAsyncThunk('clients/fetchClients', async () => {
-  const { userId } = JSON.parse(localStorage.getItem('user-login'));
+  const { userId } = JSON.parse(localStorage.getItem('user-login') || '');
   const response = await clientService.findAllClient(userId);
   return response;
 });
@@ -22,14 +22,17 @@ const clientSlice = createSlice({
       .addCase(fetchPosts.pending, (state, action) => {
         state.status = 'loading';
       })
-      .addCase(fetchPosts.fulfilled, (state, action) => {
+      .addCase(fetchPosts.fulfilled, (state, action: { payload: any }) => {
         state.status = 'succeeded';
         state.data = state.data.concat(action.payload.data);
       })
-      .addCase(fetchPosts.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      });
+      .addCase(
+        fetchPosts.rejected,
+        (state: { status: string; error: any }, action) => {
+          state.status = 'failed';
+          state.error = action.error.message;
+        },
+      );
   },
 });
 

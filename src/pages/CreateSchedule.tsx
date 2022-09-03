@@ -12,11 +12,12 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ReducerStore } from '../app/store';
 
 export function CreateSchedule() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery();
 
@@ -24,14 +25,14 @@ export function CreateSchedule() {
     useAddNewScheduleMutation();
 
   const [client, setClient] = useState('');
-  const [pacote, setPacote] = useState(null);
-  const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState('');
+  const [pacote, setPacote] = useState<boolean | null>(null);
+  const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState<number | null>(null);
   const [procedure, setProcedure] = useState('');
   const [dateNewSchedule, setDateNewSchedule] = useState('');
   const [time, setTime] = useState('');
   const [price, setPrice] = useState('');
   const [contact, setContact] = useState('');
-  const [alert, setAlert] = useState(null);
+  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -39,7 +40,7 @@ export function CreateSchedule() {
     }
   }, [auth, navigate]);
 
-  const setDataClient = (params) => {
+  const setDataClient = (params: any) => {
     if (!params) {
       setClient('');
       setContact('');
@@ -66,11 +67,11 @@ export function CreateSchedule() {
     setQtdTotalAtendimento(null);
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card > div > div > form > div.mb-3 > div > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
 
-  const addNewClientSchedule = async (event) => {
+  const addNewClientSchedule = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     try {
@@ -107,7 +108,7 @@ export function CreateSchedule() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(null), 5000);
+    setTimeout(() => setAlert(<div></div>), 5000);
   }
 
   return (
@@ -124,7 +125,7 @@ export function CreateSchedule() {
       <div className="card">
         <ScheduleForm
           clientSaves={clients}
-          setDataClient={(e, item) => setDataClient(item)}
+          setDataClient={(e: React.BaseSyntheticEvent, item: any) => setDataClient(item)}
           client={client}
           setClient={setClient}
           procedure={procedure}
@@ -137,12 +138,12 @@ export function CreateSchedule() {
           setPrice={setPrice}
           contact={contact}
           setContact={setContact}
-          clearStates={(e) => clearStates()}
+          clearStates={(e: React.BaseSyntheticEvent) => clearStates()}
           edit={false}
-          addNewClientSchedule={(e) => addNewClientSchedule(e)}
-          setPacoteFunc={(e, pacote) => setPacote(pacote)}
+          addNewClientSchedule={(e: React.BaseSyntheticEvent) => addNewClientSchedule(e)}
+          setPacoteFunc={(e: React.BaseSyntheticEvent, pacote: boolean) => setPacote(pacote)}
           pacote={pacote}
-          setQtdTotalAtendimentoFuncion={(e, qtd) =>
+          setQtdTotalAtendimentoFuncion={(e: React.BaseSyntheticEvent, qtd: number) =>
             setQtdTotalAtendimento(qtd)
           }
           qtdTotalAtendimento={qtdTotalAtendimento}

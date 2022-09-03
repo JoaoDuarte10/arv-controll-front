@@ -1,9 +1,16 @@
 import axios from 'axios';
+import { Response } from './types/ResponseDTO';
 
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const clientService = {
-  async newClient(id_user, name, email, phone, segment) {
+  async newClient(
+    id_user: string,
+    name: string,
+    email: string,
+    phone: string,
+    segment: string,
+  ): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/create`;
     try {
       const { data, status } = await axios
@@ -29,7 +36,14 @@ const clientService = {
     }
   },
 
-  async updateClient(id_user, id, name, email, phone, segment) {
+  async updateClient(
+    id_user: string,
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+    segment: string,
+  ): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/update`;
     try {
       const { data, status } = await axios
@@ -56,7 +70,7 @@ const clientService = {
     }
   },
 
-  async findClient(id_user, id) {
+  async findClient(id_user: string, id: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/load`;
     try {
       const { data, status } = await axios
@@ -76,7 +90,7 @@ const clientService = {
     }
   },
 
-  async findAllClient(id_user) {
+  async findAllClient(id_user: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/all`;
     try {
       const { data, status } = await axios
@@ -95,7 +109,10 @@ const clientService = {
     }
   },
 
-  async findAllClientBySegment(id_user, segment) {
+  async findAllClientBySegment(
+    id_user: string,
+    segment: string,
+  ): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/segment`;
     try {
       const { data, status } = await axios
@@ -115,7 +132,7 @@ const clientService = {
     }
   },
 
-  async deleteClient(id_user, id) {
+  async deleteClient(id_user: string, id: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client`;
     try {
       const { data, status } = await axios

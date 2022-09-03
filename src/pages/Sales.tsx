@@ -17,24 +17,26 @@ import { SelectPeriod } from '../components/SelectPeriod';
 import { useSelector } from 'react-redux';
 import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
+import { ReducerStore } from '../app/store';
+import { ISales } from '../api/types/Sales';
 
 export default function Sales() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery();
 
-  const [date1, setDate1] = useState('');
-  const [date2, setDate2] = useState('');
-  const [sales, setSales] = useState([]);
-  const [errorSales, setErrorSales] = useState(null);
-  const [serverError, setServerError] = useState(null);
-  const [salesTodayNotFound, setSalesTodayNotFound] = useState(null);
-  const [clearFields, setClearFields] = useState(null);
+  const [date1, setDate1] = useState<string | null>('');
+  const [date2, setDate2] = useState<string | null>('');
+  const [sales, setSales] = useState<ISales[]>([]);
+  const [errorSales, setErrorSales] = useState<boolean | null>(null);
+  const [serverError, setServerError] = useState<boolean | null>(null);
+  const [salesTodayNotFound, setSalesTodayNotFound] = useState<boolean | null>(null);
+  const [clearFields, setClearFields] = useState<boolean | null>(null);
 
-  const [clientSelected, setClientSelected] = useState(null);
-  const [invalidParams, setInvalidParams] = useState(null);
+  const [clientSelected, setClientSelected] = useState<string | null>(null);
+  const [invalidParams, setInvalidParams] = useState<boolean | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -63,7 +65,7 @@ export default function Sales() {
     };
   }, [auth, navigate]);
 
-  const getSalesInPeriodResponse = async (event) => {
+  const getSalesInPeriodResponse = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     if ((!clientSelected && !date1 && !date2) || (!date1 && date2)) {
@@ -87,7 +89,7 @@ export default function Sales() {
         clientSelected,
       );
     } else {
-      request = await salesService.getSalesInPeriod(auth.userId, date1, date2);
+      request = await salesService.getSalesInPeriod(auth.userId, date1 as string, date2 as string);
     }
 
     if (date1 === '' || !date1) {
@@ -109,29 +111,33 @@ export default function Sales() {
     setErrorSales(false);
   };
 
-  const clearSales = (event) => {
+  const clearSales = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     setSales([]);
-    document.getElementById('date1').value = '';
-    document.getElementById('date2').value = '';
-    setDate1('');
-    setDate2('');
+    clearDates();
     setClearFields(true);
     setClientSelected(null);
   };
 
-  const clearFilters = (event) => {
+  const clearDates = () => {
+    const date1Element = document.getElementById('date1') as HTMLInputElement | null;
+    const date2Element = document.getElementById('date2') as HTMLInputElement | null;
+    if (date1Element) date1Element.value = '';
+    if (date2Element) date2Element.value = '';
+    setDate1('');
+    setDate2('');
+  }
+
+  const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     setClientSelected(null);
-    setDate1(null);
-    setDate2(null);
-    document.getElementById('date1').value = '';
-    document.getElementById('date2').value = '';
+    clearDates();
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card.mb-4.p-3.shadow.bg-white.rounded > form > div.mb-4 > div > div > div > div > button',
-    );
+    ) as HTMLElement | null;;
     if (buttonSelector) buttonSelector.click();
+
   };
 
   if (errorSales === false || errorSales === true) {
@@ -172,8 +178,8 @@ export default function Sales() {
         setDate1={setDate1}
         setDate2={setDate2}
         filterByClient={clients}
-        setDataClient={(e, item) => setClientSelected(item)}
-        clearFields={(e) => clearFilters(e)}
+        setDataClient={(e: React.BaseSyntheticEvent, item: string) => setClientSelected(item)}
+        clearFields={(e: React.BaseSyntheticEvent) => clearFilters(e)}
       />
 
       {errorSales === true ? (
@@ -195,9 +201,9 @@ export default function Sales() {
 
       {sales.length > 0 ? (
         <div>
-          <div className="d-inline">
-            <strong>Período: </strong>
-            {(date1 || date2) && (
+          {(date1 || date2) && (
+            <div className="d-inline">
+              <strong>Período: </strong>
               <div className="d-inline">
                 {date1 &&
                   new Date(date1).toLocaleDateString('pt-BR', {
@@ -205,12 +211,21 @@ export default function Sales() {
                   })}
                 {date2 &&
                   ' - ' +
-                    new Date(date2).toLocaleDateString('pt-BR', {
-                      timeZone: 'UTC',
-                    })}
+                  new Date(date2).toLocaleDateString('pt-BR', {
+                    timeZone: 'UTC',
+                  })}
               </div>
-            )}
-          </div>
+            </div>
+          )}
+
+          {clientSelected && (
+            <div className="d-inline">
+              <strong>Cliente: </strong>
+              <div className="d-inline">
+                {clientSelected}
+              </div>
+            </div>
+          )}
 
           <ClearFields title="Limpar Pesquisa" callback={clearSales} />
 

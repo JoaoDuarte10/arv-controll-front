@@ -1,6 +1,19 @@
 import { InputText } from './input/InputText';
+import { ISegment } from '../api/types/Segment';
 
-export function CardSegment(props) {
+type InputProps = {
+  editSegment: Function;
+  title: string;
+  actionCreate: Function;
+  actionUpdate: Function;
+  actionName: string;
+  clearStates: any;
+  segment: ISegment;
+  setNewSegment: Function;
+  alert: JSX.Element;
+}
+
+export function CardSegment(props: InputProps) {
   const {
     editSegment,
     title,
@@ -17,7 +30,7 @@ export function CardSegment(props) {
     <div
       className="modal fade"
       id="modalSegment"
-      tabIndex="-1"
+      tabIndex={-1}
       role="dialog"
       aria-hidden="true"
     >
@@ -42,7 +55,7 @@ export function CardSegment(props) {
               type="text"
               id="procedure"
               value={segment ? segment.name : ''}
-              onChange={(e) =>
+              onChange={(e: React.BaseSyntheticEvent) =>
                 setNewSegment({ name: e.target.value, id: segment.id })
               }
               label="Digite o segmento"
@@ -51,7 +64,7 @@ export function CardSegment(props) {
             <div className="modal-footer mt-4">
               <button
                 type="reset"
-                onClick={(e) => {
+                onClick={() => {
                   clearStates();
                   setNewSegment('');
                 }}

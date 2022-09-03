@@ -49,14 +49,14 @@ function ScheduleClient() {
     setScheduleClients(findSchedules);
   }
 
-  const redirectToWhatsapp = (event, contact) => {
+  const redirectToWhatsapp = (event: React.BaseSyntheticEvent, contact: string) => {
     event.preventDefault();
     const URL = `https://api.whatsapp.com/send?phone=55${contact}`;
     const redirect = window.encodeURIComponent();
     window.open(URL + redirect, '_blank');
   };
 
-  const deleteScheduleClient = async (event, id) => {
+  const deleteScheduleClient = async (event: React.BaseSyntheticEvent, id: string) => {
     event.preventDefault();
     const deleteClient = await scheduleClientService.deleteClientSchedule(
       auth.userId,
@@ -69,7 +69,7 @@ function ScheduleClient() {
     }
   };
 
-  const addNewClientSchedule = async (event) => {
+  const addNewClientSchedule = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     const errorTypes = ['inputs_invalids', 'error'];
     const postClientsSchedule = await scheduleService.addClientSchedule(
@@ -94,13 +94,13 @@ function ScheduleClient() {
   };
 
   const addNewSchedule = (
-    event,
-    id,
-    itemClient,
-    itemProcedure,
-    itemDate,
-    itemTime,
-    itemPhone,
+    event: React.BaseSyntheticEvent,
+    id: string,
+    itemClient: string,
+    itemProcedure: string,
+    itemDate: string,
+    itemTime: string,
+    itemPhone: string,
   ) => {
     event.preventDefault();
     setClient(itemClient);

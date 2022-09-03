@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
 import { randomId } from '../utils/random';
 
-export function Breadcumb(props) {
+type InputProps = {
+  page: {
+    link: boolean | string,
+    name: string
+  }[]
+}
+
+export function Breadcumb(props: InputProps) {
   const { page } = props;
 
   return (
@@ -19,7 +26,7 @@ export function Breadcumb(props) {
                   aria-current="page"
                   key={randomId()}
                 >
-                  <Link to={item.link}>{item.name}</Link>
+                  <Link to={item.link as string}>{item.name}</Link>
                 </li>
               );
             }

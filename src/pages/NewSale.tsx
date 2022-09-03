@@ -16,20 +16,23 @@ import { InputText } from '../components/input/InputText';
 import { useSelector } from 'react-redux';
 import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
+import { Client } from '../api/types/Client';
+
+import { ReducerStore } from '../app/store';
 
 export function NewSale() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery();
 
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [sale, setSale] = useState('');
-  const [date, setDate] = useState('');
-  const [client, setClient] = useState('');
-  const [serverError, setServerError] = useState(null);
+  const [description, setDescription] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
+  const [sale, setSale] = useState<boolean | null>(null);
+  const [date, setDate] = useState<string | null>('');
+  const [client, setClient] = useState<string | null>('');
+  const [serverError, setServerError] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -37,14 +40,14 @@ export function NewSale() {
     }
   }, [auth, navigate]);
 
-  const saveSale = async (event) => {
+  const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     const request = await salesService.newSale(
       auth.userId,
       description,
-      client.trim(),
+      client ? client.trim() : '',
       price,
-      date,
+      date as string,
     );
 
     if (HTTP_RESPONSE.SUCCESS.includes(request.status)) {
@@ -61,7 +64,7 @@ export function NewSale() {
     }
   };
 
-  const clearFields = (event) => {
+  const clearFields = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     setDescription('');
@@ -70,7 +73,7 @@ export function NewSale() {
     setClient(null);
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > form > div > div.form-group > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
 
@@ -107,8 +110,8 @@ export function NewSale() {
             {clients ? (
               <ComboBox
                 title="Selecionar Cliente"
-                options={clients.map((item) => item.name)}
-                selectValue={(e, item) => {
+                options={clients.map((item: Client) => item.name)}
+                selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                   if (!item) {
                     setClient(null);
                     return;
@@ -120,7 +123,7 @@ export function NewSale() {
               <ComboBox
                 title="Selecionar Cliente"
                 options={[]}
-                selectValue={(e, item) => {
+                selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                   if (!item) {
                     setClient(null);
                     return;
@@ -137,7 +140,7 @@ export function NewSale() {
             label="Digite a descrição"
             value={description}
             variant="outlined"
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e: React.BaseSyntheticEvent) => setDescription(e.target.value)}
           />
 
           <div className="form-row mt-2">
@@ -150,7 +153,7 @@ export function NewSale() {
                 label="Digite o preço"
                 value={price}
                 variant="outlined"
-                onChange={(ev) => {
+                onChange={(ev: React.BaseSyntheticEvent) => {
                   let val = ev.target.value;
                   const { maskedValue } = mask(val, 2, ',', '.', false, 'R$');
                   setPrice(maskedValue);
@@ -168,7 +171,7 @@ export function NewSale() {
                 value={date}
                 id="date"
                 variant="outlined"
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e: React.BaseSyntheticEvent) => setDate(e.target.value)}
               />
             </div>
           </div>

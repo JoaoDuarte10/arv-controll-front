@@ -7,7 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setEditClient } from '../reducers/scheduleSlice';
 
-export function ScheduleCard(props) {
+type InputProps = {
+  item: any;
+  setId: any;
+  setDeleted: any;
+  expired: boolean; 
+}
+
+export function ScheduleCard(props: InputProps) {
   const { item, setId, setDeleted, expired } = props;
 
   const navigate = useNavigate();
@@ -81,7 +88,7 @@ export function ScheduleCard(props) {
               <button
                 type="submit"
                 className="col btn btn-outline-success mb-1"
-                onClick={(e) =>
+                onClick={(e: React.BaseSyntheticEvent) =>
                   WhatsAppService.redirectToWhatsappWithMessage(
                     e,
                     item.client,

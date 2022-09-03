@@ -1,4 +1,10 @@
-export function ClearFields(props) {
+type InputProps = {
+  callback: Function;
+  title: any;
+  className?: any;
+}
+
+export function ClearFields(props: InputProps) {
   const { callback, title, className } = props;
 
   return (

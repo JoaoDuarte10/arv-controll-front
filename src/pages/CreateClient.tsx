@@ -1,3 +1,8 @@
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import { AlertError } from '../components/alerts/AlertError';
 import { AlertInfo } from '../components/alerts/AlertInfo';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
@@ -7,23 +12,20 @@ import { CircularIndeterminate } from '../components/LoaderCircular';
 
 import { HTTP_RESPONSE } from '../utils/constants';
 import { useAddNewClientMutation } from '../api/ApiSlice';
+import { ReducerStore } from '../app/store';
 
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 export function CreateClient() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   const [addNewClient, { isLoading }] = useAddNewClientMutation();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [segmentSelect, setSegmentSelect] = useState(null);
-  const [alert, setAlert] = useState(null);
+  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -38,11 +40,11 @@ export function CreateClient() {
     setSegmentSelect(null);
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div:nth-child(3) > div > div.modal-body > form > div:nth-child(7) > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
 
-  const onSaveClient = async (event) => {
+  const onSaveClient = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     if (!name || !phone) {
       setAlert(<AlertInfo title="Preencha os campos corretamente." />);
@@ -77,7 +79,7 @@ export function CreateClient() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(null), 5000);
+    setTimeout(() => setAlert(<div></div>), 5000);
   }
 
   return (
@@ -102,9 +104,9 @@ export function CreateClient() {
           phone={phone}
           setPhone={setPhone}
           setSegmentSelect={setSegmentSelect}
-          segmentSelect={segmentSelect}
+          segmentSelect={segmentSelect ?? ''}
           onChangeClient={onSaveClient}
-          alert={alert}
+          alert={alert as JSX.Element}
         />
       </div>
     </div>

@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { Response } from './types/ResponseDTO';
 
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const scheduleService = {
-  async getClientsSchedule(user_id: string, date: string) {
+  async getClientsSchedule(user_id: string, date: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/date`;
     try {
       const { data, status } = await axios
@@ -33,7 +34,7 @@ const scheduleService = {
     contact: string,
     pacote: boolean,
     qtdTotalAtendimento: number,
-  ) {
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/new`;
     try {
       const { data, status } = await axios
@@ -75,7 +76,7 @@ const scheduleService = {
     pacote: boolean,
     qtdTotalAtendimento: number,
     qtdAtendimento: number,
-  ) {
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/update`;
     try {
       const { data, status } = await axios
@@ -107,7 +108,7 @@ const scheduleService = {
     }
   },
 
-  async deleteClientSchedule(user_id: string, id: string) {
+  async deleteClientSchedule(user_id: string, id: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule`;
     try {
       const { data, status } = await axios
@@ -127,7 +128,7 @@ const scheduleService = {
     }
   },
 
-  async finishClientSchedule(user_id: string, id: string) {
+  async finishClientSchedule(user_id: string, id: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/finish`;
     try {
       const { data, status } = await axios
@@ -150,7 +151,7 @@ const scheduleService = {
     }
   },
 
-  async getAllExpiredSchedules(id_user: string) {
+  async getAllExpiredSchedules(id_user: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/expireds`;
 
     try {
@@ -168,7 +169,10 @@ const scheduleService = {
     }
   },
 
-  async getScheduleByClient(user_id: string, client: string) {
+  async getScheduleByClient(
+    user_id: string,
+    client: string,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/client`;
 
     try {

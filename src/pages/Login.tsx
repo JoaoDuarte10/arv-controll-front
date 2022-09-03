@@ -16,28 +16,28 @@ import { useDispatch } from 'react-redux';
 import { loginAdded } from '../reducers/authenticatedSlice';
 
 function LoginPage() {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState<string>('');
   const [password, setPassword] = useState({
     password: '',
     showPassword: false,
   });
-  const [credentials, setCredentials] = useState(null);
-  const [serverError, setServerError] = useState(null);
+  const [credentials, setCredentials] = useState<boolean | null>(null);
+  const [serverError, setServerError] = useState<boolean | null>(null);
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
-    const navbar = document.querySelector('#menu');
+    const navbar = document.querySelector('#menu') as HTMLElement;
     if (navbar) navbar.style.display = 'none';
   }, []);
 
-  const saveLoginUser = (login) => {
-    dispatch(loginAdded(login.user, login.id));
+  const saveLoginUser = (login: { user: string, id: string }) => {
+    dispatch(loginAdded({login: login.user, id: login.id}));
     navigate('/home', { replace: true });
   };
 
-  const login = async (event) => {
+  const login = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     const request = await authService.sendLogin(
       user.trim(),
@@ -68,7 +68,7 @@ function LoginPage() {
     setTimeout(() => setServerError(null), 5000);
   }
 
-  const handlePasswordChange = (prop) => (event) => {
+  const handlePasswordChange = (prop: any) => (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     setPassword({ ...password, [prop]: event.target.value });
   };

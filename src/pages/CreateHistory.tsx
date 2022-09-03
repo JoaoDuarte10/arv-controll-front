@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useGetClientsQuery } from '../api/ApiSlice';
+import { Client } from '../api/types/Client';
 import { AlertError } from '../components/alerts/AlertError';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { Breadcumb } from '../components/Breadcumb';
@@ -10,20 +11,21 @@ import { InputText } from '../components/input/InputText';
 import { CircularIndeterminate } from '../components/LoaderCircular';
 import { clientHistoryService } from '../services/clientHistoryService';
 import { HTTP_RESPONSE } from '../utils/constants';
+import { ReducerStore } from '../app/store';
 
 export function CreateHistory() {
   let navigate = useNavigate();
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery();
 
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [client, setClient] = useState('');
-  const [serverError, setServerError] = useState(null);
-  const [invalidParams, setInvalidParams] = useState(null);
+  const [description, setDescription] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [client, setClient] = useState<string>('');
+  const [serverError, setServerError] = useState<boolean | null>(null);
+  const [invalidParams, setInvalidParams] = useState<boolean | null>(null);
 
-  const [history, setHistory] = useState(null);
+  const [history, setHistory] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -31,7 +33,7 @@ export function CreateHistory() {
     }
   }, [auth, navigate]);
 
-  const saveSale = async (event) => {
+  const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     const request = await clientHistoryService.createClientHistory(
       auth.userId,
@@ -58,14 +60,14 @@ export function CreateHistory() {
     }
   };
 
-  const clearFields = (event) => {
+  const clearFields = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     setDescription('');
     setDate('');
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > form > div > div:nth-child(1) > div > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
 
@@ -93,7 +95,7 @@ export function CreateHistory() {
       {content}
       <Breadcumb
         page={[
-          { link: 'history', name: 'Atendimentos' },
+          { link: '/history', name: 'Atendimentos' },
           { link: false, name: 'Criar Novo' },
         ]}
       />
@@ -107,14 +109,14 @@ export function CreateHistory() {
               {clients ? (
                 <ComboBox
                   title="Selecionar Cliente"
-                  options={clients.map((item) => item.name)}
-                  selectValue={(e, item) => setClient(item.name)}
+                  options={clients.map((item: Client) => item.name)}
+                  selectValue={(e: React.BaseSyntheticEvent, item: Client) => setClient(item.name)}
                 />
               ) : (
                 <ComboBox
                   title="Selecionar Cliente"
                   options={[]}
-                  selectValue={(e, item) => setClient(item)}
+                  selectValue={(e: React.BaseSyntheticEvent, item: string) => setClient(item)}
                 />
               )}
             </div>
@@ -124,7 +126,7 @@ export function CreateHistory() {
             <InputText
               type="text"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e: React.BaseSyntheticEvent) => setDescription(e.target.value)}
               id="name"
               label="Digite a descrição"
             />
@@ -136,7 +138,7 @@ export function CreateHistory() {
               id="date"
               label=" "
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e: React.BaseSyntheticEvent) => setDate(e.target.value)}
             />
           </div>
           <div className="form-row mt-3">
@@ -144,7 +146,7 @@ export function CreateHistory() {
               <button
                 type="button"
                 className="btn btn-outline-secondary btn-entrar p-2"
-                onClick={(e) => clearFields(e)}
+                onClick={(e: React.BaseSyntheticEvent) => clearFields(e)}
               >
                 Limpar campos
               </button>

@@ -146,7 +146,7 @@ function Reports() {
     };
   }, [auth.userId, auth, navigate]);
 
-  const reportClientInfo = async (event, params) => {
+  const reportClientInfo = async (event: React.BaseSyntheticEvent, params) => {
     event.preventDefault();
 
     if (!params) return;
@@ -176,7 +176,7 @@ function Reports() {
     setSalesForClient(request.data);
   };
 
-  const clearSalesForClient = (event) => {
+  const clearSalesForClient = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     setSalesForClient([]);
     setClearTableSalesForClient(true);

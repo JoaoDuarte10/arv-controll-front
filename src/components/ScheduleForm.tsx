@@ -75,7 +75,7 @@ export function ScheduleForm(props) {
                   <ComboBox
                     title="Selecione o cliente"
                     options={[]}
-                    selectValue={(e, item) => {
+                    selectValue={(e: React.BaseSyntheticEvent, item) => {
                       if (!item) {
                         setDataClient(e, item);
                         return;
@@ -93,12 +93,9 @@ export function ScheduleForm(props) {
             type="text"
             id="procedure"
             value={procedure}
-            onChange={(e) => setProcedure(e.target.value)}
+            onChange={(e: React.BaseSyntheticEvent) => setProcedure(e.target.value)}
             label="Digite o procedimento"
           />
-          <small className="form-text text-muted mb-3">
-            Ex.: Corte de cabelo, massagem, sobrancelha, etc.
-          </small>
 
           <div className="form-row">
             <div className="form-group col">

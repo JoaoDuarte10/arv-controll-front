@@ -1,9 +1,15 @@
 import axios from 'axios';
+import { Response } from './types/ResponseDTO';
 
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 export const clientHistoryService = {
-  async createClientHistory(id_user, client, description, date) {
+  async createClientHistory(
+    id_user: string,
+    client: string,
+    description: string,
+    date: string,
+  ): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/history/create`;
     try {
       const { data, status } = await axios
@@ -23,12 +29,12 @@ export const clientHistoryService = {
         }));
 
       return { data, status };
-    } catch (error) {
+    } catch (error: any) {
       return error;
     }
   },
 
-  async getHistoryByClient(id_user, client) {
+  async getHistoryByClient(id_user: string, client: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/history/client`;
     try {
       const { data, status } = await axios
@@ -48,7 +54,7 @@ export const clientHistoryService = {
     }
   },
 
-  async getHistoryByDate(id_user, date) {
+  async getHistoryByDate(id_user: string, date: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/history/date`;
     try {
       const { data, status } = await axios
@@ -68,7 +74,11 @@ export const clientHistoryService = {
     }
   },
 
-  async getHistoryByPeriod(id_user, date1, date2) {
+  async getHistoryByPeriod(
+    id_user: string,
+    date1: string,
+    date2: string,
+  ): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/history/period`;
     try {
       const { data, status } = await axios
@@ -88,7 +98,12 @@ export const clientHistoryService = {
     }
   },
 
-  async getHistoryByAllFilters(id_user, client, date1, date2) {
+  async getHistoryByAllFilters(
+    id_user: string,
+    client: string,
+    date1: string,
+    date2?: string,
+  ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/history/all-filters`;
     try {
       const { data, status } = await axios

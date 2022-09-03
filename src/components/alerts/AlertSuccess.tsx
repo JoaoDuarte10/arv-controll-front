@@ -1,6 +1,6 @@
 import { Alert } from '@mui/material';
 
-export function AlertSuccess(props) {
+export function AlertSuccess(props: { title: string }) {
   const { title } = props;
   return (
     <Alert

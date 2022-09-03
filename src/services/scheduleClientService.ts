@@ -15,7 +15,13 @@ const scheduleClientService = {
     }
   },
 
-  async addClientSchedule(id_user: string, name: string, date: string, service: string, phone: string) {
+  async addClientSchedule(
+    id_user: string,
+    name: string,
+    date: string,
+    service: string,
+    phone: string,
+  ) {
     const URL = `${API_RV_BASE_URI}/api/new-schedule-client`;
     try {
       const { data } = await axios.post(URL, {

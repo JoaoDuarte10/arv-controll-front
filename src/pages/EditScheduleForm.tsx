@@ -7,16 +7,17 @@ import { ComeBack } from '../components/ComeBack';
 import { ScheduleForm } from '../components/ScheduleForm';
 import { scheduleService } from '../services/scheduleService';
 import { HTTP_RESPONSE } from '../utils/constants';
+import { ReducerStore } from '../app/store';
 
 export function EditScheduleForm() {
   let navigate = useNavigate();
   const { scheduleId } = useParams();
-  const auth = useSelector((state) => state.authenticated);
-  const schedule = useSelector((state) => state.schedule);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
+  const schedule = useSelector((state: ReducerStore) => state.schedule);
 
-  const [pacote, setPacote] = useState(schedule.pacote);
+  const [pacote, setPacote] = useState<boolean | null>(schedule.pacote);
   const [client, setClient] = useState(schedule.client);
-  const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState(
+  const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState<number | null>(
     schedule.qtdTotalAtendimento,
   );
   const [procedure, setProcedure] = useState(schedule.procedure);
@@ -24,7 +25,7 @@ export function EditScheduleForm() {
   const [time, setTime] = useState(schedule.time);
   const [price, setPrice] = useState(schedule.price);
   const [contact, setContact] = useState(schedule.phone);
-  const [alert, setAlert] = useState(null);
+  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -46,24 +47,24 @@ export function EditScheduleForm() {
     setQtdTotalAtendimento(null);
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card > div > div > form > div.mb-3 > div > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
 
-  const onChangeSchedule = async (event) => {
+  const onChangeSchedule = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     const request = await scheduleService.updateClientSchedule(
       auth.userId,
-      scheduleId,
+      scheduleId as string,
       client,
       procedure,
       dateNewSchedule,
       time,
       price,
       contact,
-      pacote,
-      qtdTotalAtendimento,
+      pacote as boolean,
+      qtdTotalAtendimento as number,
       schedule.qtdAtendimento,
     );
 
@@ -82,7 +83,7 @@ export function EditScheduleForm() {
   };
 
   if (alert) {
-    setTimeout(() => setAlert(null), 5000);
+    setTimeout(() => setAlert(<div></div>), 5000);
   }
 
   return (
@@ -91,7 +92,7 @@ export function EditScheduleForm() {
 
       <div className="card">
         <ScheduleForm
-          setDataClient={(client) => setClient(client)}
+          setDataClient={(client: string) => setClient(client)}
           client={client}
           setClient={setClient}
           procedure={procedure}
@@ -104,12 +105,12 @@ export function EditScheduleForm() {
           setPrice={setPrice}
           contact={contact}
           setContact={setContact}
-          clearStates={(e) => clearStates()}
+          clearStates={(e: React.BaseSyntheticEvent) => clearStates()}
           edit={true}
-          addNewClientSchedule={(e) => onChangeSchedule(e)}
-          setPacoteFunc={(e, pacote) => setPacote(pacote)}
+          addNewClientSchedule={(e: React.BaseSyntheticEvent) => onChangeSchedule(e)}
+          setPacoteFunc={(e: React.BaseSyntheticEvent, pacote: boolean) => setPacote(pacote)}
           pacote={pacote}
-          setQtdTotalAtendimentoFuncion={(e, qtd) =>
+          setQtdTotalAtendimentoFuncion={(e: React.BaseSyntheticEvent, qtd: number) =>
             setQtdTotalAtendimento(qtd)
           }
           qtdTotalAtendimento={qtdTotalAtendimento}

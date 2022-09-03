@@ -1,6 +1,10 @@
-import React from 'react';
+import { IClientHistory } from '../api/types/ClientHistory';
 
-export function TableHistory(props) {
+type InputProps = {
+  clientHistory: IClientHistory[]
+}
+
+export function TableHistory(props: InputProps) {
   const { clientHistory } = props;
 
   return (

@@ -1,6 +1,11 @@
-import React from 'react';
+type InputProps = {
+  id: string;
+  title: string;
+  body1: any;
+  body2: any;
+}
 
-function Accordion(props) {
+export function Accordion(props: InputProps) {
   const { id, title, body1, body2 } = props;
   return (
     <div className="accordion" id={id}>
@@ -28,5 +33,3 @@ function Accordion(props) {
     </div>
   );
 }
-
-export { Accordion };
