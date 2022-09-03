@@ -17,7 +17,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 import { ISales } from '../api/types/Sales';
 
 export function Reports() {
@@ -218,7 +218,7 @@ export function Reports() {
             {clientSaves !== null && clientSaves.length > 0 ? (
               <ComboBox
                 title="Selecionar Cliente"
-                options={clientSaves.map((item: Client) => ({
+                options={clientSaves.map((item: IClient) => ({
                   label: item.name,
                   segment: item.segment,
                 }))}

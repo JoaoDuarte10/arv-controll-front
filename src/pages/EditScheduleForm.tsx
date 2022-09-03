@@ -17,16 +17,16 @@ export function EditScheduleForm() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const schedule = useSelector((state: ReducerStore) => state.schedule);
 
-  const [pacote, setPacote] = useState<boolean | null>(schedule.pacote);
-  const [client, setClient] = useState(schedule.client);
+  const [pacote, setPacote] = useState<boolean>(schedule.pacote);
+  const [client, setClient] = useState<string>(schedule.client);
   const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState<number | null>(
     schedule.qtdTotalAtendimento,
   );
-  const [procedure, setProcedure] = useState(schedule.procedure);
-  const [dateNewSchedule, setDateNewSchedule] = useState(schedule.date);
-  const [time, setTime] = useState(schedule.time);
-  const [price, setPrice] = useState(schedule.price);
-  const [contact, setContact] = useState(schedule.phone);
+  const [procedure, setProcedure] = useState<string>(schedule.procedure);
+  const [dateNewSchedule, setDateNewSchedule] = useState<string>(schedule.date);
+  const [time, setTime] = useState<string>(schedule.time);
+  const [price, setPrice] = useState<string>(schedule.price);
+  const [contact, setContact] = useState<string>(schedule.phone);
   const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function EditScheduleForm() {
     setTime('');
     setPrice('');
     setContact('');
-    setPacote(null);
+    setPacote(false);
     setQtdTotalAtendimento(null);
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card > div > div > form > div.mb-3 > div > div > div > div > div > button',

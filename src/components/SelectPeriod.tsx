@@ -1,4 +1,4 @@
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
 import { LabelForm } from './labels/LabelForm';
@@ -7,7 +7,7 @@ type InputProps = {
   getSalesInPeriodResponse: Function;
   setDate1: Function;
   setDate2: Function;
-  filterByClient: Client[];
+  filterByClient: IClient[];
   setDataClient: any;
   clearFields: any;
 }

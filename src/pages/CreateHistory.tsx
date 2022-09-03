@@ -11,7 +11,7 @@ import { AlertError } from '../components/alerts/AlertError';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { Breadcumb } from '../components/Breadcumb';
 import { CircularIndeterminate } from '../components/LoaderCircular';
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
@@ -19,17 +19,20 @@ import { LabelForm } from '../components/labels/LabelForm';
 
 export function CreateHistory() {
   let navigate = useNavigate();
+
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery('');
 
+  const [client, setClient] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>('');
-  const [client, setClient] = useState<string>('');
-  const [serverError, setServerError] = useState<boolean | null>(null);
-  const [invalidParams, setInvalidParams] = useState<boolean | null>(null);
 
-  const [history, setHistory] = useState<boolean | null>(null);
+  const [serverError, setServerError] = useState<boolean>(false);
+  const [invalidParams, setInvalidParams] = useState<boolean>(false);
+
+  const [historyResgisterSuccess, setHistoryRegisterSuccess] = useState<boolean>(false);
+  const [historyRegisterFail, setHistoryRegisterFail] = useState<boolean>(false);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -50,7 +53,7 @@ export function CreateHistory() {
       setClient('');
       setDescription('');
       setDate('');
-      setHistory(true);
+      setHistoryRegisterSuccess(true);
       return;
     }
 
@@ -76,15 +79,19 @@ export function CreateHistory() {
   };
 
   if (serverError) {
-    setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setServerError(false), TIMEOUT.FIVE_SECCONDS);
   }
 
-  if (history === true || history === false) {
-    setTimeout(() => setHistory(null), TIMEOUT.FIVE_SECCONDS);
+  if (historyResgisterSuccess === true || historyResgisterSuccess === false) {
+    setTimeout(() => setHistoryRegisterSuccess(false), TIMEOUT.FIVE_SECCONDS);
+  }
+
+  if (historyRegisterFail) {
+    setTimeout(() => setHistoryRegisterFail(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (invalidParams === true) {
-    setTimeout(() => setInvalidParams(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setInvalidParams(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   let content = null;
@@ -113,8 +120,8 @@ export function CreateHistory() {
               {clients ? (
                 <ComboBox
                   title="Selecionar Cliente"
-                  options={clients.map((item: Client) => item.name)}
-                  selectValue={(e: React.BaseSyntheticEvent, item: Client) => setClient(item.name)}
+                  options={clients.map((item: IClient) => item.name)}
+                  selectValue={(e: React.BaseSyntheticEvent, item: IClient) => setClient(item.name)}
                 />
               ) : (
                 <ComboBox
@@ -164,16 +171,16 @@ export function CreateHistory() {
             </div>
           </div>
           <div className="mt-3">
-            {history === true && (
+            {historyResgisterSuccess === true && (
               <AlertSuccess title="Atendimento registrado com sucesso." />
             )}
-            {history === false && (
+            {historyRegisterFail === true && (
               <AlertError title="Erro ao registrar o atendimento." />
             )}
-            {serverError && (
+            {serverError === true && (
               <AlertError title="Não foi possível processar a requisição." />
             )}
-            {invalidParams && (
+            {invalidParams === true && (
               <AlertError title="Preencha os campos corretamente." />
             )}
           </div>

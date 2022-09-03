@@ -5,7 +5,7 @@ import { AlertInfo } from './alerts/AlertInfo';
 import { AlertSuccess } from './alerts/AlertSuccess';
 import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 import { LabelForm } from './labels/LabelForm';
 
 export function ScheduleForm(props: any) {
@@ -62,7 +62,7 @@ export function ScheduleForm(props: any) {
                 {clientSaves && clientSaves.length > 0 ? (
                   <ComboBox
                     title="Selecione o cliente"
-                    options={clientSaves.map((item: Client) => ({
+                    options={clientSaves.map((item: IClient) => ({
                       label: item.name,
                       phone: item.phone,
                     }))}

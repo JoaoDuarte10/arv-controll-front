@@ -137,18 +137,16 @@ export function ClientHistory() {
     setTimeout(() => setInvalidParams(false), TIMEOUT.FIVE_SECCONDS);
   }
 
-  let content = null;
+  let loader = null;
   if (isLoadingGetClients) {
-    content = <CircularIndeterminate />;
+    loader = <CircularIndeterminate />;
   } else {
-    content = null;
+    loader = null;
   }
-
-  console.log(clientHistory);
 
   return (
     <div className="container-main">
-      {content}
+      {loader}
       <Breadcumb page={[{ link: false, name: 'Histórico' }]} />
       <TitlePage title='Histórico'/>
 

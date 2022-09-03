@@ -22,6 +22,8 @@ import { InputText } from '../components/input/InputText';
 import { TopModal } from '../components/TopModal';
 import { TitlePage } from '../components/TitlePage';
 import { LabelForm } from '../components/labels/LabelForm';
+import { ISchedule } from '../reducers/scheduleSlice';
+import { IClient } from '../api/types/Client';
 
 export function Schedule() {
   let navigate = useNavigate();
@@ -31,21 +33,23 @@ export function Schedule() {
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery('');
 
-  const [schedules, setSchedule] = useState<any>([]);
-  const [id, setId] = useState<any>('');
-  const [date, setDate] = useState<any>('');
-  const [errorSchedule, setErrorSchedule] = useState<any>(null);
-  const [errorClientSchedule, setErrorClientSchedule] = useState<any>(null);
-  const [serverError, setServerError] = useState<any>(null);
-  const [finalitySchedule, setFinalitySchedule] = useState<any>(null);
-  const [deleted, setDeleted] = useState<any>(null);
+  const [schedules, setSchedule] = useState<ISchedule[]>([]);
+  const [expiredSchedules, setExpiredSchedules] = useState<ISchedule[]>([]);
 
-  const [expiredSchedules, setExpiredSchedules] = useState<any>([]);
+  const [id, setId] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [clientSelected, setClientSelected] = useState<string>('');
 
-  const [clearSchedule, setClearSchedule] = useState<any>(null);
-  const [scheduleFinish, setScheduleFinish] = useState<any>(null);
+  const [idScheduleDeleted, setIdScheduleDeleted] = useState<string>('');
+  
+  const [scheduleDeletedSuccess, setScheduleDeletedSuccess] = useState<boolean>(false);
+  
+  const [fetchScheduleSuccess, setFetchScheduleSuccess] = useState<boolean>(false);
+  const [scheduleNotFound, setScheduleNotFound] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<boolean>(false);
+  const [clearSchedule, setClearSchedule] = useState<boolean>(false);
+  const [scheduleFinish, setScheduleFinish] = useState<boolean>(false);
 
-  const [clientSelected, setClientSelected] = useState<any>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -72,7 +76,6 @@ export function Schedule() {
     if (event) event.preventDefault();
 
     if (!clientSelected && !date) {
-      setErrorSchedule(true);
       return;
     }
 
@@ -99,13 +102,12 @@ export function Schedule() {
     }
 
     if (request.status === HTTP_RESPONSE.NOT_FOUND) {
-      setErrorSchedule(true);
       setSchedule([]);
       return;
     }
 
     setSchedule(request.data);
-    setErrorSchedule(false);
+    setFetchScheduleSuccess(true);
   };
 
   const finishScheduleResponse = async (event: React.BaseSyntheticEvent, id: any) => {
@@ -145,12 +147,11 @@ export function Schedule() {
     const result = await scheduleService.deleteClientSchedule(auth.userId, id);
 
     if (HTTP_RESPONSE.SUCCESS.includes(result.status)) {
-      setErrorClientSchedule(false);
+      setScheduleDeletedSuccess(true);
       clearStates();
     }
 
     if (!result.status) {
-      setErrorClientSchedule(true);
     }
 
     await getScheduleResponse(event);
@@ -179,37 +180,31 @@ export function Schedule() {
     if (clickButtonSelect) clickButtonSelect.click();
 
     setDate('');
-    setClientSelected(null);
+    setClientSelected('');
   };
 
-  if (errorSchedule === false || errorSchedule) {
-    setTimeout(() => setErrorSchedule(null), TIMEOUT.FIVE_SECCONDS);
-  }
-
-  if (errorClientSchedule === false || errorClientSchedule) {
-    setTimeout(() => setErrorClientSchedule(null), TIMEOUT.FIVE_SECCONDS);
+  if (fetchScheduleSuccess === true) {
+    setTimeout(() => setFetchScheduleSuccess(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError) {
-    setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setServerError(false), TIMEOUT.FIVE_SECCONDS);
   }
 
-  if (deleted === false) {
-    setTimeout(() => setDeleted(null), TIMEOUT.FIVE_SECCONDS);
+  if (scheduleDeletedSuccess === true) {
+    setTimeout(() => setScheduleDeletedSuccess(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (clearSchedule) {
-    setTimeout(() => setClearSchedule(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setClearSchedule(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (scheduleFinish) {
-    setTimeout(() => setScheduleFinish(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setScheduleFinish(false), TIMEOUT.FIVE_SECCONDS);
   }
 
-  if (finalitySchedule) {
-    setSchedule([]);
-    setFinalitySchedule(null);
-    getScheduleResponse();
+  if (scheduleNotFound === true) {
+    setTimeout(() => setScheduleNotFound(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   let content = null;
@@ -235,7 +230,7 @@ export function Schedule() {
         id="delete-client-schedule"
         title="Excluir horário?"
         body="Tem certeza que deseja excluir esse horário?"
-        click={(e: React.BaseSyntheticEvent<object, any, any>) => deleteClientScheduleResponse(e, deleted)}
+        click={(e: React.BaseSyntheticEvent) => deleteClientScheduleResponse(e, idScheduleDeleted)}
         button="Excluir"
       />
 
@@ -245,7 +240,7 @@ export function Schedule() {
         title="Finalizar horário?"
         data_target="#finality-client-schedule"
         body="Tem certeza que deseja finalizar esse horário?"
-        click={(e: React.BaseSyntheticEvent<object, any, any>) => finishScheduleResponse(e, id)}
+        click={(e: React.BaseSyntheticEvent) => finishScheduleResponse(e, id)}
         button="Finalizar"
       />
 
@@ -274,8 +269,8 @@ export function Schedule() {
               {clients !== null ? (
                 <ComboBox
                   title="Clientes..."
-                  options={clients.map((item: { name: any; }) => item.name)}
-                  selectValue={(e: any, item: any) => {
+                  options={clients.map((item: IClient) => item.name)}
+                  selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                     if (!item) {
                       setClientSelected(item);
                       return;
@@ -287,7 +282,7 @@ export function Schedule() {
                 <ComboBox
                   title="Clientes..."
                   options={[]}
-                  selectValue={(e: any, item: any) => {
+                  selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                     if (!item) {
                       setClientSelected(item);
                       return;
@@ -323,16 +318,16 @@ export function Schedule() {
         </form>
       </div>
 
-      {errorSchedule === true ? (
+      {scheduleNotFound === true ? (
         <AlertInfo title="Nenhum horário encontrado." />
       ) : null}
-      {errorSchedule === false ? (
+      {fetchScheduleSuccess === true ? (
         <AlertSuccess title="Pesquisa atualizada." />
       ) : null}
-      {serverError ? (
+      {serverError === true ? (
         <AlertError title="Nenhum horário foi retornado." />
       ) : null}
-      {deleted === false ? (
+      {scheduleDeletedSuccess === true ? (
         <AlertSuccess title="Horário excluído com sucesso." />
       ) : null}
       {clearSchedule === true ? (
@@ -349,13 +344,13 @@ export function Schedule() {
       )}
 
       {expiredSchedules
-        ? expiredSchedules.map((item: any) => {
+        ? expiredSchedules.map((item) => {
           return (
             <div key={randomId()}>
               <ScheduleCard
                 item={item}
                 setId={setId}
-                setDeleted={setDeleted}
+                setDeleted={setScheduleDeletedSuccess}
                 expired={true}
               />
             </div>
@@ -378,7 +373,7 @@ export function Schedule() {
                   <ScheduleCard
                     item={item}
                     setId={setId}
-                    setDeleted={setDeleted}
+                    setDeleted={setIdScheduleDeleted}
                     expired={false}
                   />
                 </div>

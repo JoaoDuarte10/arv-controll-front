@@ -1,6 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ReducerActionType } from './types/reducerType';
 
-const initialState = {
+export type ISchedule = {
+  id: string;
+  client: string;
+  procedure: string;
+  date: string;
+  time: string;
+  price: string;
+  phone: string;
+  pacote: boolean | null;
+  qtdTotalAtendimento: number;
+  qtdAtendimento: string;
+}
+
+const initialState: ISchedule = {
   id: '',
   client: '',
   procedure: '',
@@ -8,8 +22,8 @@ const initialState = {
   time: '',
   price: '',
   phone: '',
-  pacote: '',
-  qtdTotalAtendimento: '',
+  pacote: false,
+  qtdTotalAtendimento: 0,
   qtdAtendimento: '',
 };
 
@@ -18,7 +32,8 @@ const scheduleSlice = createSlice({
   initialState,
   reducers: {
     onEditClient: {
-      reducer(state: any, action: any) {
+      reducer(state: ISchedule, action: ReducerActionType) {
+        console.log(action);
         state.id = action.payload.id;
         state.client = action.payload.client;
         state.procedure = action.payload.procedure;
@@ -31,7 +46,9 @@ const scheduleSlice = createSlice({
         state.qtdAtendimento = action.payload.qtdAtendimento;
       },
       prepare(payload) {
-        return payload
+        return {
+          payload
+        }
       },
     },
   },

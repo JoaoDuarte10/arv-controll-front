@@ -16,7 +16,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TitlePage } from '../components/TitlePage';
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 import { ReducerStore } from '../app/store';
 import {
   useAddNewSegmentMutation,
@@ -46,7 +46,7 @@ export function Segments() {
   const [editSegmentName, setEditSegmentName] = useState<any>({ name: '', id: '' });
   const [editSegment, setEditSegment] = useState<boolean | null>(null);
   const [segmentActual, setSegmentActual] = useState<{ label: string, id: string } | any>(null);
-  const [clientsInSegment, setClientsInSegment] = useState<Client[] | any>([]);
+  const [clientsInSegment, setClientsInSegment] = useState<IClient[] | any>([]);
   const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export function Segments() {
     event.preventDefault();
     setSegmentActual(params);
 
-    const query = [...clients.filter((item: Client) => item.segment === params.label)];
+    const query = [...clients.filter((item: IClient) => item.segment === params.label)];
 
     if (query.length === 0) {
       setAlert(<AlertInfo title="Nenhum cliente nesse segmento." />);

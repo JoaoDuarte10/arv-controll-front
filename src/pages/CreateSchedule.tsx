@@ -25,14 +25,15 @@ export function CreateSchedule() {
   const [addNewSchedule, { isLoading: isLoadingNewSchedule }] =
     useAddNewScheduleMutation();
 
-  const [client, setClient] = useState('');
-  const [pacote, setPacote] = useState<boolean | null>(null);
+  const [client, setClient] = useState<string>('');
+  const [pacote, setPacote] = useState<boolean>(false);
   const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState<number | null>(null);
-  const [procedure, setProcedure] = useState('');
-  const [dateNewSchedule, setDateNewSchedule] = useState('');
-  const [time, setTime] = useState('');
-  const [price, setPrice] = useState('');
-  const [contact, setContact] = useState('');
+  const [procedure, setProcedure] = useState<string>('');
+  const [dateNewSchedule, setDateNewSchedule] = useState<string>('');
+  const [time, setTime] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
+  const [contact, setContact] = useState<string>('');
+
   const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export function CreateSchedule() {
     }
   }, [auth, navigate]);
 
-  const setDataClient = (params: any) => {
+  const setDataClient = (params: { label: string, phone: string}) => {
     if (!params) {
       setClient('');
       setContact('');
@@ -54,8 +55,9 @@ export function CreateSchedule() {
       return;
     }
 
-    setClient(params);
+    setClient(params.label);
   };
+
 
   const clearStates = () => {
     setClient('');
@@ -64,7 +66,7 @@ export function CreateSchedule() {
     setTime('');
     setPrice('');
     setContact('');
-    setPacote(null);
+    setPacote(false);
     setQtdTotalAtendimento(null);
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card > div > div > form > div.mb-3 > div > div > div > div > div > button',
@@ -121,7 +123,7 @@ export function CreateSchedule() {
           { link: false, name: 'Nova Agenda' },
         ]}
       />
-      <TitlePage title='Nova Agenda'/>
+      <TitlePage title='Nova Agenda' />
 
       <div className="card">
         <ScheduleForm

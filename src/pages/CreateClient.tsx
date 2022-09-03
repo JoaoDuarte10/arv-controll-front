@@ -22,10 +22,11 @@ export function CreateClient() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const [addNewClient, { isLoading }] = useAddNewClientMutation();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [segmentSelect, setSegmentSelect] = useState(null);
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [segmentSelect, setSegmentSelect] = useState<string>('');
+
   const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export function CreateClient() {
     setName('');
     setEmail('');
     setPhone('');
-    setSegmentSelect(null);
+    setSegmentSelect('');
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div:nth-child(3) > div > div.modal-body > form > div:nth-child(7) > div > div > div > div > button',
     ) as HTMLElement;

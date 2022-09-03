@@ -14,7 +14,7 @@ import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { AlertError } from '../components/alerts/AlertError';
 import { Breadcumb } from '../components/Breadcumb';
 import { CircularIndeterminate } from '../components/LoaderCircular';
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
@@ -119,7 +119,7 @@ export function NewSale() {
             {clients ? (
               <ComboBox
                 title="Selecionar Cliente"
-                options={clients.map((item: Client) => item.name)}
+                options={clients.map((item: IClient) => item.name)}
                 selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                   if (!item) {
                     setClientName('');

@@ -1,4 +1,4 @@
-export type Client = {
+export type IClient = {
   id: string;
   name: string;
   email: string;

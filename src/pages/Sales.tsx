@@ -27,16 +27,20 @@ export function Sales() {
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery('');
 
-  const [date1, setDate1] = useState<string | null>('');
+  const [date1, setDate1] = useState<string>('');
   const [date2, setDate2] = useState<string | null>('');
   const [sales, setSales] = useState<ISales[]>([]);
-  const [errorSales, setErrorSales] = useState<boolean | null>(null);
-  const [serverError, setServerError] = useState<boolean | null>(null);
-  const [salesTodayNotFound, setSalesTodayNotFound] = useState<boolean | null>(null);
-  const [clearFields, setClearFields] = useState<boolean | null>(null);
+  const [salesTodayNotFound, setSalesTodayNotFound] = useState<boolean>(false);
+  
+  const [fetchSalesSuccess, setFetchSalesSuccess] = useState<boolean>(false);
+
+  const [clearFields, setClearFields] = useState<boolean>(false);
+  
+  const [errorSales, setErrorSales] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<boolean>(false);
 
   const [clientSelected, setClientSelected] = useState<string | null>(null);
-  const [invalidParams, setInvalidParams] = useState<boolean | null>(null);
+  const [invalidParams, setInvalidParams] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -108,7 +112,7 @@ export function Sales() {
     }
 
     setSales(request.data);
-    setErrorSales(false);
+    setFetchSalesSuccess(true)
   };
 
   const clearSales = (event: React.BaseSyntheticEvent) => {
@@ -141,23 +145,27 @@ export function Sales() {
   };
 
   if (errorSales === false || errorSales === true) {
-    setTimeout(() => setErrorSales(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setErrorSales(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError === false || serverError === true) {
-    setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setServerError(false), TIMEOUT.FIVE_SECCONDS);
   }
 
-  if (salesTodayNotFound) {
-    setTimeout(() => setSalesTodayNotFound(null), TIMEOUT.FIVE_SECCONDS);
+  if (salesTodayNotFound === true) {
+    setTimeout(() => setSalesTodayNotFound(false), TIMEOUT.FIVE_SECCONDS);
   }
 
-  if (clearFields) {
-    setTimeout(() => setClearFields(null), TIMEOUT.FIVE_SECCONDS);
+  if (clearFields === true) {
+    setTimeout(() => setClearFields(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (invalidParams === true) {
-    setTimeout(() => setInvalidParams(null), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setInvalidParams(false), TIMEOUT.FIVE_SECCONDS);
+  }
+
+  if (fetchSalesSuccess === true) {
+    setTimeout(() => setFetchSalesSuccess(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   let content = null;
@@ -186,7 +194,7 @@ export function Sales() {
       {errorSales === true ? (
         <AlertInfo title="Nenhuma venda encontrada." />
       ) : null}
-      {errorSales === false ? (
+      {fetchSalesSuccess === true ? (
         <AlertSuccess title="Período atualizado." />
       ) : null}
       {serverError === true ? (
@@ -198,7 +206,9 @@ export function Sales() {
       {clearFields === true ? (
         <AlertSuccess title="A pesquisa foi limpa." />
       ) : null}
-      {invalidParams && <AlertError title="Preencha os campos corretamente." />}
+      {invalidParams === true ? (
+        <AlertError title="Preencha os campos corretamente." />
+      ) : null}
 
       {sales.length > 0 ? (
         <div>

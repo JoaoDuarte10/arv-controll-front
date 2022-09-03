@@ -4,10 +4,10 @@ import { randomId } from '../utils/random';
 
 import { Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 
 type InputProps = {
-  clients: Client[];
+  clients: IClient[];
   setId: any;
 }
 
@@ -18,7 +18,7 @@ export function CardClients(props: InputProps) {
     <div>
       {clients ? clients.map(item => {
         return (
-          <React.Fragment>
+          <React.Fragment key={randomId()}>
             <Paper elevation={3} key={randomId()}>
               <div
                 className="accordion mt-2 mb-3"

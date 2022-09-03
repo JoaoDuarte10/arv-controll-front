@@ -4,7 +4,7 @@ import { AlertError } from '../components/alerts/AlertError';
 import { ComeBack } from '../components/ComeBack';
 
 import { useGetClientsQuery, useUpdateClientMutation } from '../api/ApiSlice';
-import { Client } from '../api/types/Client';
+import { IClient } from '../api/types/Client';
 
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,7 +17,7 @@ export function EditClient() {
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery('');
 
-  const editClient = clients.find((client: Client) => client.id === clientId);
+  const editClient = clients.find((client: IClient) => client.id === clientId);
 
   const [
     updateClient,
@@ -28,10 +28,10 @@ export function EditClient() {
     navigate(-1);
   }
 
-  const [name, setName] = useState(editClient ? editClient.name : '');
-  const [email, setEmail] = useState(editClient ? editClient.email : '');
-  const [phone, setPhone] = useState(editClient ? editClient.phone : '');
-  const [segmentSelect, setSegmentSelect] = useState(
+  const [name, setName] = useState<string>(editClient ? editClient.name : '');
+  const [email, setEmail] = useState<string>(editClient ? editClient.email : '');
+  const [phone, setPhone] = useState<string>(editClient ? editClient.phone : '');
+  const [segmentSelect, setSegmentSelect] = useState<string | null>(
     editClient ? editClient.segment : null,
   );
   const [alert, setAlert] = useState<JSX.Element>(<div></div>);
@@ -90,7 +90,7 @@ export function EditClient() {
         phone={phone}
         setPhone={setPhone}
         setSegmentSelect={setSegmentSelect}
-        segmentSelect={segmentSelect}
+        segmentSelect={segmentSelect as string}
         onChangeClient={onUpdateClient}
         alert={alert}
       />

@@ -1,13 +1,4 @@
 import '../css/main.css';
-import { authService } from '../services/authService';
-
-import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
-
-import logo from '../img/raise-value.png';
-
-import { loginAdded } from '../reducers/authenticatedSlice';
-
-import { AlertError } from '../components/alerts/AlertError';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +6,15 @@ import { useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { LabelForm } from '../components/labels/LabelForm';
 
+import logo from '../img/raise-value.png';
+
+import { authService } from '../services/authService';
+import { loginAdded } from '../reducers/authenticatedSlice';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
+
+import { AlertError } from '../components/alerts/AlertError';
+import { LabelForm } from '../components/labels/LabelForm';
 
 function LoginPage() {
   const [user, setUser] = useState<string>('');

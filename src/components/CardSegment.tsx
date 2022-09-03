@@ -63,30 +63,34 @@ export function CardSegment(props: InputProps) {
               label="Digite o segmento"
               required={true}
             />
-            <div className="modal-footer mt-4">
-              <button
-                type="reset"
-                onClick={() => {
-                  clearStates();
-                  setNewSegment('');
-                }}
-                className="btn btn-outline-secondary col"
-                data-dismiss="modal"
-                key={3}
-              >
-                Fechar
-              </button>
-              <button
-                className="btn btn-primary col"
-                type="button"
-                onClick={(e) => {
-                  editSegment
-                    ? actionUpdate(e, segment.name, segment.id)
-                    : actionCreate(e, segment.name);
-                }}
-              >
-                {actionName}
-              </button>
+            <div className="form-row mt-4">
+              <div className='form-group col'>
+                <button
+                  type="reset"
+                  onClick={() => {
+                    clearStates();
+                    setNewSegment('');
+                  }}
+                  className="btn btn-outline-secondary col p-2"
+                  data-dismiss="modal"
+                  key={3}
+                >
+                  Fechar
+                </button>
+              </div>
+              <div className='form-group col'>
+                <button
+                  className="btn btn-primary col p-2"
+                  type="button"
+                  onClick={(e) => {
+                    editSegment
+                      ? actionUpdate(e, segment.name, segment.id)
+                      : actionCreate(e, segment.name);
+                  }}
+                >
+                  {actionName}
+                </button>
+              </div>
             </div>
             {alert}
           </div>
