@@ -15,6 +15,7 @@ import { HTTP_RESPONSE } from '../utils/constants';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { TitlePage } from '../components/TitlePage';
 import {
   useAddNewSegmentMutation,
   useDeleteSegmentMutation,
@@ -173,7 +174,7 @@ export function Segments() {
       {loader}
       <Breadcumb page={[{ link: false, name: 'Segmentos' }]} />
 
-      <h3 className="title-page">Segmentos</h3>
+      <TitlePage title='Segmentos' />
 
       <TopModal
         className="btn btn-danger"

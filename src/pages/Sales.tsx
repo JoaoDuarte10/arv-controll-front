@@ -19,6 +19,7 @@ import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
 import { ReducerStore } from '../app/store';
 import { ISales } from '../api/types/Sales';
+import { TitlePage } from '../components/TitlePage';
 
 export default function Sales() {
   let navigate = useNavigate();
@@ -171,7 +172,8 @@ export default function Sales() {
     <div className="container-main">
       {content}
       <Breadcumb page={[{ link: false, name: 'Suas Vendas' }]} />
-      <h3 className="title-page">Suas vendas</h3>
+
+      <TitlePage title='Suas Vendas' />
 
       <SelectPeriod
         getSalesInPeriodResponse={getSalesInPeriodResponse}

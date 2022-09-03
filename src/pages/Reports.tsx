@@ -15,6 +15,7 @@ import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { Breadcumb } from '../components/Breadcumb';
 import { ComboBox } from '../components/ComboBox';
 import { useSelector } from 'react-redux';
+import { TitlePage } from '../components/TitlePage';
 
 function Reports() {
   const auth = useSelector((state) => state.authenticated);
@@ -203,7 +204,8 @@ function Reports() {
         ]}
       />
 
-      <h3 className="title-page">Relatórios</h3>
+      <TitlePage title='Relatórios'/>
+
       <div className="mb-3 pb-2">
         <div className="card p-2 shadow-sm bg-white rounded">
           <h6 className=" card-header p-3 text-primary font-weight-bold">

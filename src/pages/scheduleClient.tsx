@@ -8,6 +8,7 @@ import moment from 'moment';
 
 import { NewSchedule } from '../components/newSchedule';
 import { useSelector } from 'react-redux';
+import { TitlePage } from '../components/TitlePage';
 
 function ScheduleClient() {
   const auth = useSelector((state) => state.authenticated);
@@ -113,7 +114,8 @@ function ScheduleClient() {
 
   return (
     <div className="container-main">
-      <h3 className="title-page">Agendar novo horário</h3>
+
+      <TitlePage title='Agendar Novo Horário' />
 
       <TopModal
         className="btn btn-danger"

@@ -12,6 +12,7 @@ import { CircularIndeterminate } from '../components/LoaderCircular';
 import { clientHistoryService } from '../services/clientHistoryService';
 import { HTTP_RESPONSE } from '../utils/constants';
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 export function CreateHistory() {
   let navigate = useNavigate();
@@ -99,7 +100,7 @@ export function CreateHistory() {
           { link: false, name: 'Criar Novo' },
         ]}
       />
-      <h3 className="title-page">Criar Novo</h3>
+      <TitlePage title='Criar Novo'/>
 
       <form onSubmit={saveSale} className="form-sale">
         <div className="card p-3">

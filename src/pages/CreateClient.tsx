@@ -13,6 +13,7 @@ import { CircularIndeterminate } from '../components/LoaderCircular';
 import { HTTP_RESPONSE } from '../utils/constants';
 import { useAddNewClientMutation } from '../api/ApiSlice';
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 
 export function CreateClient() {
@@ -92,7 +93,7 @@ export function CreateClient() {
         ]}
       />
 
-      <h3 className="title-page">Novo Cliente</h3>
+      <TitlePage title='Novo Cliente' />
 
       <div>
         <FormClients

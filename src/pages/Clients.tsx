@@ -15,6 +15,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 export default function Clients() {
   let navigate = useNavigate();
@@ -82,7 +83,7 @@ export default function Clients() {
     <div className="container-main">
       <Breadcumb page={[{ link: false, name: 'Clientes' }]} />
 
-      <h3 className="title-page">Clientes</h3>
+      <TitlePage title='Clientes'/>
 
       {content}
 

@@ -7,6 +7,7 @@ import { Breadcumb } from '../components/Breadcumb';
 import { randomId } from '../utils/random';
 import { useSelector } from 'react-redux';
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 export function Home() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
@@ -24,9 +25,8 @@ export function Home() {
   return (
     <div className="container-main">
       <Breadcumb page={[]} />
-      <h2 className="mb-3 title-page">
-        Olá, {auth ? auth.userName : 'Seja Bem Vindo'}!
-      </h2>
+
+      <TitlePage title={`Olá, ${auth ? auth.userName : 'Seja Bem Vindo'}!`}/>
       <p>
         Este é o <strong>ARV - Controll &copy;</strong>, um Sistema de
         Gerenciamento de Vendas e Agenda.

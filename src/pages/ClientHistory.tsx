@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 export default function ClientHistory() {
   let navigate = useNavigate();
@@ -138,7 +139,7 @@ export default function ClientHistory() {
     <div className="container-main">
       {content}
       <Breadcumb page={[{ link: false, name: 'Histórico' }]} />
-      <h3 className="title-page">Histórico</h3>
+      <TitlePage title='Histórico'/>
 
       <SelectPeriod
         getSalesInPeriodResponse={getHistoryInPeriodResponse}

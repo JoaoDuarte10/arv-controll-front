@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 export function CreateSchedule() {
   let navigate = useNavigate();
@@ -120,7 +121,7 @@ export function CreateSchedule() {
           { link: false, name: 'Nova Agenda' },
         ]}
       />
-      <h3 className="title-page">Nova Agenda</h3>
+      <TitlePage title='Nova Agenda'/>
 
       <div className="card">
         <ScheduleForm

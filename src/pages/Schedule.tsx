@@ -21,6 +21,7 @@ import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
 import { AlertInfo } from '../components/alerts/AlertInfo';
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 export default function Schedule() {
   let navigate = useNavigate();
@@ -247,7 +248,7 @@ export default function Schedule() {
         button="Finalizar"
       />
 
-      <h3 className="mb-3 title-page">Agenda</h3>
+      <TitlePage title='Agenda' />
 
       <div className="card p-3 mt-4 mb-4 shadow-sm bg-white">
         <h4 className="border-bottom pb-2">Busca</h4>
@@ -346,17 +347,17 @@ export default function Schedule() {
 
       {expiredSchedules
         ? expiredSchedules.map((item) => {
-            return (
-              <div key={randomId()}>
-                <ScheduleCard
-                  item={item}
-                  setId={setId}
-                  setDeleted={setDeleted}
-                  expired={true}
-                />
-              </div>
-            );
-          })
+          return (
+            <div key={randomId()}>
+              <ScheduleCard
+                item={item}
+                setId={setId}
+                setDeleted={setDeleted}
+                expired={true}
+              />
+            </div>
+          );
+        })
         : null}
 
       <br />

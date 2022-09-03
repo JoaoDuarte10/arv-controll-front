@@ -19,6 +19,7 @@ import { CircularIndeterminate } from '../components/LoaderCircular';
 import { Client } from '../api/types/Client';
 
 import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 export function NewSale() {
   let navigate = useNavigate();
@@ -101,7 +102,7 @@ export function NewSale() {
           { link: false, name: 'Nova Venda' },
         ]}
       />
-      <h3 className="title-page">Registrar Nova Venda</h3>
+      <TitlePage title='Registrar Nova Venda' />
 
       <form onSubmit={saveSale} className="form-sale">
         <div className="card p-3">
