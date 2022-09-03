@@ -4,12 +4,7 @@ import { Response } from './types/ResponseDTO';
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const authService = {
-  // saveUserInLocalStorange(user) {
-  //   const userData = JSON.stringify(user);
-  //   localStorage.setItem('user-login', userData);
-  // },
-
-  async getUserInLocalStorange() {
+async getUserInLocalStorange() {
     const user = localStorage.getItem('user-login');
     if (!user) return null;
     try {
