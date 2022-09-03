@@ -5,15 +5,17 @@ import { HTTP_RESPONSE } from '../utils/constants';
 
 import logo from '../img/raise-value.png';
 
+import { loginAdded } from '../reducers/authenticatedSlice';
+
+import { AlertError } from '../components/alerts/AlertError';
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { AlertError } from '../components/alerts/AlertError';
 
-import { useDispatch } from 'react-redux';
-import { loginAdded } from '../reducers/authenticatedSlice';
 
 function LoginPage() {
   const [user, setUser] = useState<string>('');

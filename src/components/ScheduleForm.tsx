@@ -5,6 +5,7 @@ import { AlertInfo } from './alerts/AlertInfo';
 import { AlertSuccess } from './alerts/AlertSuccess';
 import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
+import { Client } from '../api/types/Client';
 
 export function ScheduleForm(props) {
   const {
@@ -45,7 +46,7 @@ export function ScheduleForm(props) {
               <ComboBox
                 title="Selecione o cliente"
                 options={[]}
-                selectValue={(e, item) => {
+                selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                   if (!item) {
                     setDataClient(item);
                     return;
@@ -59,11 +60,11 @@ export function ScheduleForm(props) {
                 {clientSaves && clientSaves.length > 0 ? (
                   <ComboBox
                     title="Selecione o cliente"
-                    options={clientSaves.map((item) => ({
+                    options={clientSaves.map((item: Client) => ({
                       label: item.name,
                       phone: item.phone,
                     }))}
-                    selectValue={(e, item) => {
+                    selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                       if (!item) {
                         setDataClient(e, item);
                         return;
@@ -75,7 +76,7 @@ export function ScheduleForm(props) {
                   <ComboBox
                     title="Selecione o cliente"
                     options={[]}
-                    selectValue={(e: React.BaseSyntheticEvent, item) => {
+                    selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                       if (!item) {
                         setDataClient(e, item);
                         return;
@@ -97,7 +98,7 @@ export function ScheduleForm(props) {
             label="Digite o procedimento"
           />
 
-          <div className="form-row">
+          <div className="form-row mt-2 pt-2">
             <div className="form-group col">
               <label htmlFor="name">Pacote</label>
               <div className="card">
@@ -235,7 +236,7 @@ export function ScheduleForm(props) {
                 label=" "
                 id="date"
                 value={dateNewSchedule}
-                onChange={(e) => setDateNewSchedule(e.target.value)}
+                onChange={(e: React.BaseSyntheticEvent) => setDateNewSchedule(e.target.value)}
               />
               <small className="form-text text-muted">Selecione a data.</small>
             </div>
@@ -246,7 +247,7 @@ export function ScheduleForm(props) {
                 label=" "
                 id="time"
                 value={time}
-                onChange={(e) => setTime(e.target.value)}
+                onChange={(e: React.BaseSyntheticEvent) => setTime(e.target.value)}
               />
               <small className="form-text text-muted">Selecione horário.</small>
             </div>
@@ -259,7 +260,7 @@ export function ScheduleForm(props) {
                 format="currency"
                 className="mb-3"
                 value={price}
-                onChange={(ev) => {
+                onChange={(ev: React.BaseSyntheticEvent) => {
                   let val = ev.target.value;
                   const { maskedValue } = mask(val, 2, ',', '.', false, 'R$');
                   setPrice(maskedValue);

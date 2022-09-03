@@ -7,13 +7,13 @@ import { ScheduleForm } from '../components/ScheduleForm';
 
 import { useAddNewScheduleMutation, useGetClientsQuery } from '../api/ApiSlice';
 import { HTTP_RESPONSE } from '../utils/constants';
+import { ReducerStore } from '../app/store';
+import { TitlePage } from '../components/TitlePage';
 
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ReducerStore } from '../app/store';
-import { TitlePage } from '../components/TitlePage';
 
 export function CreateSchedule() {
   let navigate = useNavigate();

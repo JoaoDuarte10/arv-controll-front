@@ -1,23 +1,23 @@
 import '../css/main.css';
 
-import { CardClients } from '../components/CardClient';
-import { TopModal } from '../components/TopModal';
-import { Breadcumb } from '../components/Breadcumb';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { AlertInfo } from '../components/alerts/AlertInfo';
 import { AlertError } from '../components/alerts/AlertError';
+import { Breadcumb } from '../components/Breadcumb';
+import { CardClients } from '../components/CardClient';
 import { CircularIndeterminate } from '../components/LoaderCircular';
+import { TitlePage } from '../components/TitlePage';
+import { TopModal } from '../components/TopModal';
 
 import { useDeleteClientMutation, useGetClientsQuery } from '../api/ApiSlice';
 import { HTTP_RESPONSE } from '../utils/constants';
+import { ReducerStore } from '../app/store';
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ReducerStore } from '../app/store';
-import { TitlePage } from '../components/TitlePage';
 
-export default function Clients() {
+export function Clients() {
   let navigate = useNavigate();
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);

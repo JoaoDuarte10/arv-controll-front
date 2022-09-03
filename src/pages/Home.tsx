@@ -2,11 +2,13 @@ import '../css/main.css';
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { WhatsAppService } from '../services/whatsapp-service';
-import { Breadcumb } from '../components/Breadcumb';
-import { randomId } from '../utils/random';
 import { useSelector } from 'react-redux';
+
+import { WhatsAppService } from '../services/whatsapp-service';
+import { randomId } from '../utils/random';
 import { ReducerStore } from '../app/store';
+
+import { Breadcumb } from '../components/Breadcumb';
 import { TitlePage } from '../components/TitlePage';
 
 export function Home() {

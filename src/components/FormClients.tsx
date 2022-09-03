@@ -19,7 +19,7 @@ type InputProps = {
   alert: JSX.Element;
 }
 
-function FormClients(props: InputProps) {
+export function FormClients(props: InputProps) {
   const { data: segments = [] } = useGetSegmentsQuery();
 
   const {
@@ -128,5 +128,3 @@ function FormClients(props: InputProps) {
     </div>
   );
 }
-
-export { FormClients };

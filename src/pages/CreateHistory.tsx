@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import { useGetClientsQuery } from '../api/ApiSlice';
-import { Client } from '../api/types/Client';
+import { clientHistoryService } from '../services/clientHistoryService';
+import { ReducerStore } from '../app/store';
+import { HTTP_RESPONSE } from '../utils/constants';
+
 import { AlertError } from '../components/alerts/AlertError';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { Breadcumb } from '../components/Breadcumb';
+import { CircularIndeterminate } from '../components/LoaderCircular';
+import { Client } from '../api/types/Client';
 import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
-import { CircularIndeterminate } from '../components/LoaderCircular';
-import { clientHistoryService } from '../services/clientHistoryService';
-import { HTTP_RESPONSE } from '../utils/constants';
-import { ReducerStore } from '../app/store';
 import { TitlePage } from '../components/TitlePage';
 
 export function CreateHistory() {

@@ -1,24 +1,25 @@
 import { clientService } from '../services/clientService';
 import { salesService } from '../services/salesService';
 
-import { CardSales } from '../components/CardSales';
-import { TableSales } from '../components/TableSales';
-import { ClearFields } from '../components/Buttons';
-
 import { HTTP_RESPONSE } from '../utils/constants';
+import { ReducerStore } from '../app/store';
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
 import { AlertError } from '../components/alerts/AlertError';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { Breadcumb } from '../components/Breadcumb';
+import { CardSales } from '../components/CardSales';
+import { ClearFields } from '../components/Buttons';
 import { ComboBox } from '../components/ComboBox';
-import { useSelector } from 'react-redux';
+import { TableSales } from '../components/TableSales';
 import { TitlePage } from '../components/TitlePage';
 
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+
 function Reports() {
-  const auth = useSelector((state) => state.authenticated);
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
   let navigate = useNavigate();
 
   const [clientSaves, setClientSaves] = useState([]);

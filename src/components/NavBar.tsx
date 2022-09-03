@@ -16,7 +16,7 @@ function hidenNavBar() {
   }
 }
 
-export default function NavBar() {
+export function NavBar() {
   useEffect(() => {
     if (document.readyState !== 'loading') {
       hidenNavBar();

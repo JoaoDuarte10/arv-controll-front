@@ -1,27 +1,26 @@
 import '../css/main.css';
 
-import { salesService } from '../services/salesService';
-
-import { TableSales } from '../components/TableSales';
-import { ClearFields } from '../components/Buttons';
-
-import { HTTP_RESPONSE } from '../utils/constants';
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertSuccess } from '../components/alerts/AlertSuccess';
-import { AlertInfo } from '../components/alerts/AlertInfo';
-import { AlertError } from '../components/alerts/AlertError';
-import { Breadcumb } from '../components/Breadcumb';
-import { SelectPeriod } from '../components/SelectPeriod';
 import { useSelector } from 'react-redux';
+
+import { salesService } from '../services/salesService';
+import { HTTP_RESPONSE } from '../utils/constants';
 import { useGetClientsQuery } from '../api/ApiSlice';
-import { CircularIndeterminate } from '../components/LoaderCircular';
 import { ReducerStore } from '../app/store';
 import { ISales } from '../api/types/Sales';
-import { TitlePage } from '../components/TitlePage';
 
-export default function Sales() {
+import { AlertError } from '../components/alerts/AlertError';
+import { AlertInfo } from '../components/alerts/AlertInfo';
+import { AlertSuccess } from '../components/alerts/AlertSuccess';
+import { Breadcumb } from '../components/Breadcumb';
+import { CircularIndeterminate } from '../components/LoaderCircular';
+import { ClearFields } from '../components/Buttons';
+import { TableSales } from '../components/TableSales';
+import { TitlePage } from '../components/TitlePage';
+import { SelectPeriod } from '../components/SelectPeriod';
+
+export function Sales() {
   let navigate = useNavigate();
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);

@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Breadcumb } from '../components/Breadcumb';
-import { SelectPeriod } from '../components/SelectPeriod';
+import { useSelector } from 'react-redux';
+
 import { clientHistoryService } from '../services/clientHistoryService';
+import { ReducerStore } from '../app/store';
+import { useGetClientsQuery } from '../api/ApiSlice';
+
 import { HTTP_RESPONSE } from '../utils/constants';
-import { TableHistory } from '../components/TableHistory';
-import { ClearFields } from '../components/Buttons';
-import { AlertSuccess } from '../components/alerts/AlertSuccess';
+
 import { AlertError } from '../components/alerts/AlertError';
 import { AlertInfo } from '../components/alerts/AlertInfo';
-import { useSelector } from 'react-redux';
-import { useGetClientsQuery } from '../api/ApiSlice';
+import { AlertSuccess } from '../components/alerts/AlertSuccess';
+import { Breadcumb } from '../components/Breadcumb';
 import { CircularIndeterminate } from '../components/LoaderCircular';
-import { ReducerStore } from '../app/store';
+import { ClearFields } from '../components/Buttons';
+import { SelectPeriod } from '../components/SelectPeriod';
+import { TableHistory } from '../components/TableHistory';
 import { TitlePage } from '../components/TitlePage';
 
-export default function ClientHistory() {
+export function ClientHistory() {
   let navigate = useNavigate();
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);

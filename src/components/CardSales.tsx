@@ -6,7 +6,7 @@ type InputProps = {
   title: string;
 }
 
-function CardSales(props: InputProps) {
+export function CardSales(props: InputProps) {
   const { sales, title } = props;
 
   const nameClient = [
@@ -96,5 +96,3 @@ function CardSales(props: InputProps) {
     </div>
   );
 }
-
-export { CardSales };

@@ -1,28 +1,27 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-import NavBar from './components/NavBar';
-import { Home } from './pages/Home';
-import { LoginPage } from './pages/Login';
-import { NewSale } from './pages/NewSale';
-import Sales from './pages/Sales';
-import Schedule from './pages/Schedule';
-import Client from './pages/Clients';
-import { Reports } from './pages/Reports';
-import { Segments } from './pages/Segments';
-import ClientHistory from './pages/ClientHistory';
-import { CreateHistory } from './pages/CreateHistory';
-import { randomId } from './utils/random';
-import { CreateSchedule } from './pages/CreateSchedule';
-import { CreateClient } from './pages/CreateClient';
-import store from './app/store';
 import { Provider } from 'react-redux';
 
+import store from './app/store';
+import { randomId } from './utils/random';
+
+import { Clients } from './pages/Clients';
+import { ClientHistory } from './pages/ClientHistory';
+import { CreateHistory } from './pages/CreateHistory';
+import { CreateSchedule } from './pages/CreateSchedule';
+import { CreateClient } from './pages/CreateClient';
 import { EditClient } from './pages/EditClient';
 import { EditScheduleForm } from './pages/EditScheduleForm';
+import { Home } from './pages/Home';
+import { LoginPage } from './pages/Login';
+import { NavBar } from './components/NavBar';
+import { NewSale } from './pages/NewSale';
+import { Reports } from './pages/Reports';
+import { Sales } from './pages/Sales';
+import { Schedule } from './pages/Schedule';
+import { Segments } from './pages/Segments';
 
 export function App() {
-
   useEffect(() => {
     document.body.style.backgroundColor = '#f8f8ff';
   }, []);
@@ -36,7 +35,7 @@ export function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/client" element={<Client />} key={randomId()} />
+            <Route path="/client" element={<Clients />} key={randomId()} />
             <Route
               path="/create-client"
               element={<CreateClient />}

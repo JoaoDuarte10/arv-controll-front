@@ -1,29 +1,28 @@
 import '../css/main.css';
 
-import { scheduleService } from '../services/scheduleService';
-
-import { TopModal } from '../components/TopModal';
-import { ScheduleCard } from '../components/ScheduleCard';
-import { ClearFields } from '../components/Buttons';
-
-import { HTTP_RESPONSE } from '../utils/constants';
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { ReducerStore } from '../app/store';
+import { HTTP_RESPONSE } from '../utils/constants';
+import { scheduleService } from '../services/scheduleService';
+import { ScheduleCard } from '../components/ScheduleCard';
+import { randomId } from '../utils/random';
+import { useGetClientsQuery } from '../api/ApiSlice';
+
 import { AlertError } from '../components/alerts/AlertError';
+import { AlertInfo } from '../components/alerts/AlertInfo';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { Breadcumb } from '../components/Breadcumb';
-import { randomId } from '../utils/random';
+import { CircularIndeterminate } from '../components/LoaderCircular';
+import { ClearFields } from '../components/Buttons';
 import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
-import { useSelector } from 'react-redux';
-import { useGetClientsQuery } from '../api/ApiSlice';
-import { CircularIndeterminate } from '../components/LoaderCircular';
-import { AlertInfo } from '../components/alerts/AlertInfo';
-import { ReducerStore } from '../app/store';
+import { TopModal } from '../components/TopModal';
 import { TitlePage } from '../components/TitlePage';
 
-export default function Schedule() {
+export function Schedule() {
   let navigate = useNavigate();
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);

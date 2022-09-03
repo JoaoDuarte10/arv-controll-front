@@ -4,10 +4,10 @@ import { AlertError } from '../components/alerts/AlertError';
 import { ComeBack } from '../components/ComeBack';
 
 import { useGetClientsQuery, useUpdateClientMutation } from '../api/ApiSlice';
+import { Client } from '../api/types/Client';
 
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Client } from '../api/types/Client';
 
 export function EditClient() {
   const navigate = useNavigate();

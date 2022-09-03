@@ -15,7 +15,7 @@ const authenticatedSlice = createSlice({
     loginAdded: {
       reducer(state, action) {
         if (!initialState.userId) {
-          localStorage.setItem('user-login', JSON.stringify(action.payload));
+          localStorage.setItem('user-login', JSON.stringify(action.payload.userName));
           state.userName = action.payload.userName.login;
           state.userId = action.payload.userName.id;
         }

@@ -12,7 +12,7 @@ import { AlertInfo } from '../components/alerts/AlertInfo';
 import { clientService } from '../services/clientService';
 import { HTTP_RESPONSE } from '../utils/constants';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TitlePage } from '../components/TitlePage';

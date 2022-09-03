@@ -1,24 +1,22 @@
 import '../css/main.css';
 
-import { salesService } from '../services/salesService';
-
-import { HTTP_RESPONSE } from '../utils/constants';
-
-import { mask } from '../services/maskMoney';
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { HTTP_RESPONSE } from '../utils/constants';
+import { mask } from '../services/maskMoney';
+import { salesService } from '../services/salesService';
+import { useGetClientsQuery } from '../api/ApiSlice';
+import { ReducerStore } from '../app/store';
+
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { AlertError } from '../components/alerts/AlertError';
 import { Breadcumb } from '../components/Breadcumb';
-import { ComboBox } from '../components/ComboBox';
-import { InputText } from '../components/input/InputText';
-import { useSelector } from 'react-redux';
-import { useGetClientsQuery } from '../api/ApiSlice';
 import { CircularIndeterminate } from '../components/LoaderCircular';
 import { Client } from '../api/types/Client';
-
-import { ReducerStore } from '../app/store';
+import { ComboBox } from '../components/ComboBox';
+import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
 
 export function NewSale() {
