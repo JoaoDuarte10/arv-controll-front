@@ -24,7 +24,7 @@ export function Reports() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   let navigate = useNavigate();
 
-  const [clientSaves, setClientSaves] = useState([]);
+  const [clientSaves, setClientSaves] = useState<any>([]);
   const [salesForClient, setSalesForClient] = useState<ISales[]>([]);
   const [segment, setSegment] = useState('');
   const [emptySale, setEmptySale] = useState<boolean | null>(null);

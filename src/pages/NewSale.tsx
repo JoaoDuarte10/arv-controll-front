@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { HTTP_RESPONSE } from '../utils/constants';
+import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { mask } from '../services/maskMoney';
 import { salesService } from '../services/salesService';
 import { useGetClientsQuery } from '../api/ApiSlice';
@@ -26,12 +26,14 @@ export function NewSale() {
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery('');
 
+  const [clientName, setClientName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<string>('');
-  const [sale, setSale] = useState<boolean | null>(null);
-  const [date, setDate] = useState<string | null>('');
-  const [client, setClient] = useState<string | null>('');
-  const [serverError, setServerError] = useState<boolean | null>(null);
+  const [date, setDate] = useState<string>('');
+
+  const [serverError, setServerError] = useState<boolean>(false);
+  const [saleRegisterSuccess, setSaleRegisterSuccess] = useState<boolean>(false);
+  const [saleRegisterFail, setSaleRegisterFail] = useState<boolean>(false);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -41,20 +43,22 @@ export function NewSale() {
 
   const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
+    clearFields(event);
+
     const request = await salesService.newSale(
       auth.userId,
       description,
-      client ? client.trim() : '',
+      clientName ? clientName.trim() : '',
       price,
       date as string,
     );
 
     if (HTTP_RESPONSE.SUCCESS.includes(request.status)) {
-      setClient('');
+      setClientName('');
       setDescription('');
       setPrice('');
       setDate('');
-      setSale(true);
+      setSaleRegisterSuccess(true);
       return;
     }
 
@@ -69,19 +73,23 @@ export function NewSale() {
     setDescription('');
     setPrice('');
     setDate('');
-    setClient(null);
+    setClientName('');
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > form > div > div.form-group > div > div > div > div > button',
     ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
 
-  if (sale) {
-    setTimeout(() => setSale(null), 5000);
+  if (saleRegisterSuccess) {
+    setTimeout(() => setSaleRegisterSuccess(false), TIMEOUT.FIVE_SECCONDS);
+  }
+
+  if (saleRegisterFail) {
+    setTimeout(() => setSaleRegisterFail(false), TIMEOUT.FIVE_SECCONDS)
   }
 
   if (serverError) {
-    setTimeout(() => setServerError(null), 5000);
+    setTimeout(() => setServerError(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   let loader;
@@ -112,10 +120,10 @@ export function NewSale() {
                 options={clients.map((item: Client) => item.name)}
                 selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                   if (!item) {
-                    setClient(null);
+                    setClientName('');
                     return;
                   }
-                  setClient(item);
+                  setClientName(item);
                 }}
               />
             ) : (
@@ -124,10 +132,10 @@ export function NewSale() {
                 options={[]}
                 selectValue={(e: React.BaseSyntheticEvent, item: string) => {
                   if (!item) {
-                    setClient(null);
+                    setClientName('');
                     return;
                   }
-                  setClient(item);
+                  setClientName(item);
                 }}
               />
             )}
@@ -195,13 +203,13 @@ export function NewSale() {
             </div>
           </div>
           <div className="mt-2">
-            {sale === true && (
+            {saleRegisterSuccess === true && (
               <AlertSuccess title="Venda registrada com sucesso." />
             )}
-            {sale === false && (
+            {saleRegisterFail === false && (
               <AlertError title="Erro ao registrar a venda." />
             )}
-            {serverError && (
+            {serverError === true && (
               <AlertError title="Não foi possível processar a requisição." />
             )}
           </div>

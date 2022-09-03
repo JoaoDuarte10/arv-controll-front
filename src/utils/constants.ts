@@ -6,3 +6,7 @@ export const HTTP_RESPONSE = {
   CONFLICT: 409,
   ERROR: 500,
 };
+
+export const TIMEOUT = {
+  FIVE_SECCONDS: 5000,
+}

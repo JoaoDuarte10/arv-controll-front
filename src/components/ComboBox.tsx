@@ -3,7 +3,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 type InputProps = {
   title: string;
-  options: any[];
+  options: string[];
   selectValue: any;
   value?: any;
 }
