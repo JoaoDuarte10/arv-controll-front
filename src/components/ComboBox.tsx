@@ -6,10 +6,11 @@ type InputProps = {
   options: string[];
   selectValue: any;
   value?: any;
+  className?: string;
 }
 
 export function ComboBox(props: InputProps) {
-  const { title, options, selectValue, value } = props;
+  const { title, options, selectValue, value, className } = props;
 
   return (
     <Autocomplete
@@ -21,6 +22,7 @@ export function ComboBox(props: InputProps) {
       value={value}
       onInputChange={selectValue}
       onChange={selectValue}
+      className={className}
     />
   );
 }
