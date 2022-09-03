@@ -3,6 +3,7 @@ import { InputText } from './input/InputText';
 import InputMask from 'react-input-mask';
 import { useGetSegmentsQuery } from '../api/ApiSlice';
 import { ISegment } from '../api/types/Segment';
+import { LabelForm } from './labels/LabelForm';
 
 type InputProps = {
   edit?: boolean;
@@ -48,7 +49,8 @@ export function FormClients(props: InputProps) {
       </div>
       <div className="modal-body">
         <form>
-          <label htmlFor="name">Cliente</label>
+          <LabelForm text='Cliente' />
+
           <InputText
             type="text"
             className="mb-3"
@@ -57,7 +59,8 @@ export function FormClients(props: InputProps) {
             onChange={(e: React.BaseSyntheticEvent) => setName(e.target.value)}
             label="Digite o nome do cliente"
           />
-          <label htmlFor="name">E-mail</label>
+          <LabelForm text='E-mail' />
+
           <InputText
             type="text"
             className="mb-2"
@@ -66,7 +69,8 @@ export function FormClients(props: InputProps) {
             onChange={(e: React.BaseSyntheticEvent) => setEmail(e.target.value)}
             label="Digite o email"
           />
-          <label htmlFor="name">Telefone</label>
+          <LabelForm text='Telefone' />
+
           <InputMask
             type="text"
             form="currency"
@@ -80,9 +84,7 @@ export function FormClients(props: InputProps) {
           />
           {segments && segments.length > 0 && (
             <div>
-              <label htmlFor="name" className="mt-2">
-                Segmento
-              </label>
+              <LabelForm text='Segmento' />
               <ComboBox
                 title="Selecionar Segmento"
                 options={segments.map((item: ISegment) => item.segment)}

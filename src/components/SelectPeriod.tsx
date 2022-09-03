@@ -1,6 +1,7 @@
 import { Client } from '../api/types/Client';
 import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
+import { LabelForm } from './labels/LabelForm';
 
 type InputProps = {
   getSalesInPeriodResponse: Function;
@@ -27,7 +28,8 @@ export function SelectPeriod(props: InputProps) {
       <form onSubmit={(e) => getSalesInPeriodResponse(e)}>
         <div className="form-row d-flex align-items-center">
           <div className="mb-3 col">
-            <label>Primeira data</label>
+            <LabelForm text='Primeira data' />
+
             <InputText
               type="date"
               label=" "
@@ -36,7 +38,8 @@ export function SelectPeriod(props: InputProps) {
             />
           </div>
           <div className="mb-3 col">
-            <label>Segunda data</label>
+            <LabelForm text='Segunda data' />
+
             <InputText
               type="date"
               label=" "

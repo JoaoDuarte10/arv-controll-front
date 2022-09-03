@@ -21,6 +21,7 @@ import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
 import { TopModal } from '../components/TopModal';
 import { TitlePage } from '../components/TitlePage';
+import { LabelForm } from '../components/labels/LabelForm';
 
 export function Schedule() {
   let navigate = useNavigate();
@@ -256,7 +257,8 @@ export function Schedule() {
         <form onSubmit={getScheduleResponse}>
           <div className="form-row mb-3">
             <div className="col mb-2">
-              <label>Selecionar data</label>
+              <LabelForm text='Selecionar data' />
+
               <InputText
                 type="date"
                 label=" "
@@ -267,7 +269,8 @@ export function Schedule() {
             </div>
 
             <div className="col-sm-6">
-              <label>Selecionar cliente</label>
+              <LabelForm text='Selecionar cliente' />
+
               {clients !== null ? (
                 <ComboBox
                   title="Clientes..."

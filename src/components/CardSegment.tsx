@@ -1,5 +1,6 @@
 import { InputText } from './input/InputText';
 import { ISegment } from '../api/types/Segment';
+import { LabelForm } from './labels/LabelForm';
 
 type InputProps = {
   editSegment: Function;
@@ -50,7 +51,8 @@ export function CardSegment(props: InputProps) {
             </button>
           </div>
           <div className="modal-body">
-            <label htmlFor="name">Segmento</label>
+            <LabelForm text='Segmento' />
+
             <InputText
               type="text"
               id="procedure"

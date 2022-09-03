@@ -18,6 +18,7 @@ import { Client } from '../api/types/Client';
 import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
+import { LabelForm } from '../components/labels/LabelForm';
 
 export function NewSale() {
   let navigate = useNavigate();
@@ -112,8 +113,9 @@ export function NewSale() {
 
       <form onSubmit={saveSale} className="form-sale">
         <div className="card p-3">
-          <div className="form-group">
-            <label htmlFor="name">Cliente</label>
+          <div className="form-group mb-2">
+            <LabelForm text='Cliente' />
+
             {clients ? (
               <ComboBox
                 title="Selecionar Cliente"
@@ -141,7 +143,7 @@ export function NewSale() {
             )}
           </div>
 
-          <label htmlFor="name">Descrição</label>
+          <LabelForm text='Descrição' />
           <InputText
             id="name"
             label="Digite a descrição"
@@ -152,9 +154,8 @@ export function NewSale() {
 
           <div className="form-row mt-2">
             <div className="form-group col">
-              <label className="mt-2" htmlFor="price">
-                Preço
-              </label>
+              <LabelForm text='Preço' />
+
               <InputText
                 id="price"
                 label="Digite o preço"
@@ -169,9 +170,8 @@ export function NewSale() {
             </div>
 
             <div className="form-group col">
-              <label className="mt-2" htmlFor="price">
-                Data
-              </label>
+              <LabelForm text='Data' />
+
               <InputText
                 type={'date'}
                 label=" "
@@ -206,7 +206,7 @@ export function NewSale() {
             {saleRegisterSuccess === true && (
               <AlertSuccess title="Venda registrada com sucesso." />
             )}
-            {saleRegisterFail === false && (
+            {saleRegisterFail === true && (
               <AlertError title="Erro ao registrar a venda." />
             )}
             {serverError === true && (

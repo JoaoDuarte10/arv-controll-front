@@ -15,6 +15,7 @@ import { Client } from '../api/types/Client';
 import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
+import { LabelForm } from '../components/labels/LabelForm';
 
 export function CreateHistory() {
   let navigate = useNavigate();
@@ -102,12 +103,12 @@ export function CreateHistory() {
           { link: false, name: 'Criar Novo' },
         ]}
       />
-      <TitlePage title='Criar Novo'/>
+      <TitlePage title='Criar Novo' />
 
       <form onSubmit={saveSale} className="form-sale">
         <div className="card p-3">
           <div className="form-group">
-            <label htmlFor="name">Cliente</label>
+            <LabelForm text='Cliente' />
             <div>
               {clients ? (
                 <ComboBox
@@ -125,7 +126,8 @@ export function CreateHistory() {
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="name">Descrição</label>
+            <LabelForm text='Descrição' />
+
             <InputText
               type="text"
               value={description}
@@ -135,7 +137,8 @@ export function CreateHistory() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="price">Data</label>
+            <LabelForm text='Data' />
+
             <InputText
               type="date"
               id="date"

@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { LabelForm } from '../components/labels/LabelForm';
 
 
 function LoginPage() {
@@ -35,7 +36,7 @@ function LoginPage() {
   }, []);
 
   const saveLoginUser = (login: { user: string, id: string }) => {
-    dispatch(loginAdded({login: login.user, id: login.id}));
+    dispatch(loginAdded({ login: login.user, id: login.id }));
     navigate('/home', { replace: true });
   };
 
@@ -93,7 +94,8 @@ function LoginPage() {
               </p>
             </div>
             <div className="form-group">
-              <label htmlFor="name">Usuário</label>
+              <LabelForm text='Usuário' />
+
               <div className="input-group">
                 <div className="input-group-prepend">
                   <div className="input-group-text">@</div>
@@ -110,7 +112,7 @@ function LoginPage() {
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="password">Senha</label>
+              <LabelForm text='Senha' />
 
               <div className="input-group">
                 <div className="input-group-prepend">

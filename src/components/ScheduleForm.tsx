@@ -6,6 +6,7 @@ import { AlertSuccess } from './alerts/AlertSuccess';
 import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
 import { Client } from '../api/types/Client';
+import { LabelForm } from './labels/LabelForm';
 
 export function ScheduleForm(props: any) {
   const {
@@ -40,7 +41,8 @@ export function ScheduleForm(props: any) {
           {edit && (
             <h5 className="modal-title border-bottom mb-4 pb-2">Editar</h5>
           )}
-          <label htmlFor="name">Cliente</label>
+          <LabelForm text='Cliente' />
+
           <div className="mb-3">
             {edit ? (
               <ComboBox
@@ -89,7 +91,8 @@ export function ScheduleForm(props: any) {
             )}
           </div>
 
-          <label htmlFor="name">Procedimento</label>
+          <LabelForm text='Procedimento' />
+
           <InputText
             type="text"
             id="procedure"
@@ -100,7 +103,8 @@ export function ScheduleForm(props: any) {
 
           <div className="form-row mt-2 pt-2">
             <div className="form-group col">
-              <label htmlFor="name">Pacote</label>
+              <LabelForm text='Pacote' />
+
               <div className="card">
                 <button
                   className="btn bg-white text-left"
@@ -146,7 +150,8 @@ export function ScheduleForm(props: any) {
               </div>
             </div>
             <div className="form-group col">
-              <label htmlFor="name">Nº de Atendimentos</label>
+              <LabelForm text='Nº de Atendimentos' />
+
               <div className="card">
                 <button
                   className="btn bg-white text-left"
@@ -230,7 +235,8 @@ export function ScheduleForm(props: any) {
 
           <div className="form-row">
             <div className="form-group col">
-              <label htmlFor="name">Data</label>
+              <LabelForm text='Data' />
+
               <InputText
                 type="date"
                 label=" "
@@ -241,7 +247,8 @@ export function ScheduleForm(props: any) {
               <small className="form-text text-muted">Selecione a data.</small>
             </div>
             <div className="form-group col">
-              <label htmlFor="name">Horário</label>
+              <LabelForm text='Horário' />
+
               <InputText
                 type="time"
                 label=" "
@@ -254,7 +261,8 @@ export function ScheduleForm(props: any) {
           </div>
           <div className="form-row">
             <div className="form-group col">
-              <label htmlFor="name">Preço</label>
+              <LabelForm text='Preço' />
+
               <InputText
                 type="text"
                 format="currency"
@@ -270,7 +278,8 @@ export function ScheduleForm(props: any) {
               />
             </div>
             <div className="form-group col">
-              <label htmlFor="name">Telefone</label>
+              <LabelForm text='Telefone' />
+
               <InputMask
                 type="text"
                 form="currency"
