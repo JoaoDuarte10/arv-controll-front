@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import store from './app/store';
+import { store } from './app/store';
 import { randomId } from './utils/random';
 
 import { Clients } from './pages/Clients';

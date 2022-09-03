@@ -14,7 +14,7 @@ export function EditClient() {
   const { clientId } = useParams();
 
   const { data: clients = [], isLoading: isLoadingGetClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
   const editClient = clients.find((client: Client) => client.id === clientId);
 

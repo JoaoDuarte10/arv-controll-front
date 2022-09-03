@@ -20,7 +20,7 @@ export function CreateHistory() {
   let navigate = useNavigate();
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>('');

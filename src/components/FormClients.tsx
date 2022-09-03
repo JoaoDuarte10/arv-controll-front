@@ -20,7 +20,7 @@ type InputProps = {
 }
 
 export function FormClients(props: InputProps) {
-  const { data: segments = [] } = useGetSegmentsQuery();
+  const { data: segments = [] } = useGetSegmentsQuery('');
 
   const {
     edit,
@@ -69,7 +69,7 @@ export function FormClients(props: InputProps) {
           <label htmlFor="name">Telefone</label>
           <InputMask
             type="text"
-            format="currency"
+            form="currency"
             className="form-control mb-2 p-3"
             value={phone}
             id="contact"

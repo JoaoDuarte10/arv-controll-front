@@ -28,23 +28,23 @@ export function Schedule() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
 
   const { data: clients = [], isLoading: isLoadingGetClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
-  const [schedules, setSchedule] = useState([]);
-  const [id, setId] = useState('');
-  const [date, setDate] = useState('');
-  const [errorSchedule, setErrorSchedule] = useState(null);
-  const [errorClientSchedule, setErrorClientSchedule] = useState(null);
-  const [serverError, setServerError] = useState(null);
-  const [finalitySchedule, setFinalitySchedule] = useState(null);
-  const [deleted, setDeleted] = useState(null);
+  const [schedules, setSchedule] = useState<any>([]);
+  const [id, setId] = useState<any>('');
+  const [date, setDate] = useState<any>('');
+  const [errorSchedule, setErrorSchedule] = useState<any>(null);
+  const [errorClientSchedule, setErrorClientSchedule] = useState<any>(null);
+  const [serverError, setServerError] = useState<any>(null);
+  const [finalitySchedule, setFinalitySchedule] = useState<any>(null);
+  const [deleted, setDeleted] = useState<any>(null);
 
-  const [expiredSchedules, setExpiredSchedules] = useState([]);
+  const [expiredSchedules, setExpiredSchedules] = useState<any>([]);
 
-  const [clearSchedule, setClearSchedule] = useState(null);
-  const [scheduleFinish, setScheduleFinish] = useState(null);
+  const [clearSchedule, setClearSchedule] = useState<any>(null);
+  const [scheduleFinish, setScheduleFinish] = useState<any>(null);
 
-  const [clientSelected, setClientSelected] = useState(null);
+  const [clientSelected, setClientSelected] = useState<any>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -67,8 +67,8 @@ export function Schedule() {
     setId('');
   };
 
-  const getScheduleResponse = async (event: React.BaseSyntheticEvent) => {
-    event.preventDefault();
+  const getScheduleResponse = async (event?: React.BaseSyntheticEvent) => {
+    if (event) event.preventDefault();
 
     if (!clientSelected && !date) {
       setErrorSchedule(true);
@@ -107,16 +107,16 @@ export function Schedule() {
     setErrorSchedule(false);
   };
 
-  const finishScheduleResponse = async (event: React.BaseSyntheticEvent, id) => {
+  const finishScheduleResponse = async (event: React.BaseSyntheticEvent, id: any) => {
     event.preventDefault();
 
     const scheduleFinish = schedules
-      .map((item) => item)
-      .filter((item) => item.id === id);
+      .map((item: any) => item)
+      .filter((item: { id: any; }) => item.id === id);
 
     const expiredScheduleFinish = expiredSchedules
-      .map((item) => item)
-      .filter((item) => item.id === id);
+      .map((item: any) => item)
+      .filter((item: { id: any; }) => item.id === id);
 
     scheduleFinish.push(...expiredScheduleFinish);
 
@@ -139,7 +139,7 @@ export function Schedule() {
     });
   };
 
-  const deleteClientScheduleResponse = async (event: React.BaseSyntheticEvent, id) => {
+  const deleteClientScheduleResponse = async (event: React.BaseSyntheticEvent, id: string) => {
     event.preventDefault();
     const result = await scheduleService.deleteClientSchedule(auth.userId, id);
 
@@ -170,7 +170,8 @@ export function Schedule() {
   const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
-    document.getElementById('dateLoadSchedule').value = '';
+    const dateLoad = document.getElementById('dateLoadSchedule') as HTMLInputElement;
+    if (dateLoad) dateLoad.value = '';
     const clickButtonSelect = document.querySelector(
       '#root > div > div.container-main > div.card.p-3.mt-4.mb-4.shadow-sm.bg-white > form > div.form-row.mb-3 > div.col-sm-6 > div > div > div > div > button',
     ) as HTMLElement;
@@ -233,7 +234,7 @@ export function Schedule() {
         id="delete-client-schedule"
         title="Excluir horário?"
         body="Tem certeza que deseja excluir esse horário?"
-        click={(e) => deleteClientScheduleResponse(e, deleted)}
+        click={(e: React.BaseSyntheticEvent<object, any, any>) => deleteClientScheduleResponse(e, deleted)}
         button="Excluir"
       />
 
@@ -243,7 +244,7 @@ export function Schedule() {
         title="Finalizar horário?"
         data_target="#finality-client-schedule"
         body="Tem certeza que deseja finalizar esse horário?"
-        click={(e) => finishScheduleResponse(e, id)}
+        click={(e: React.BaseSyntheticEvent<object, any, any>) => finishScheduleResponse(e, id)}
         button="Finalizar"
       />
 
@@ -261,7 +262,7 @@ export function Schedule() {
                 label=" "
                 id="dateLoadSchedule"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e: { target: { value: any; }; }) => setDate(e.target.value)}
               />
             </div>
 
@@ -270,8 +271,8 @@ export function Schedule() {
               {clients !== null ? (
                 <ComboBox
                   title="Clientes..."
-                  options={clients.map((item) => item.name)}
-                  selectValue={(e, item) => {
+                  options={clients.map((item: { name: any; }) => item.name)}
+                  selectValue={(e: any, item: any) => {
                     if (!item) {
                       setClientSelected(item);
                       return;
@@ -283,7 +284,7 @@ export function Schedule() {
                 <ComboBox
                   title="Clientes..."
                   options={[]}
-                  selectValue={(e, item) => {
+                  selectValue={(e: any, item: any) => {
                     if (!item) {
                       setClientSelected(item);
                       return;
@@ -345,7 +346,7 @@ export function Schedule() {
       )}
 
       {expiredSchedules
-        ? expiredSchedules.map((item) => {
+        ? expiredSchedules.map((item: any) => {
           return (
             <div key={randomId()}>
               <ScheduleCard
@@ -365,10 +366,10 @@ export function Schedule() {
         <div>
           {schedules
             .filter(
-              (item) =>
-                !expiredSchedules.map((expire) => expire.id).includes(item.id),
+              (item: { id: any; }) =>
+                !expiredSchedules.map((expire: { id: any; }) => expire.id).includes(item.id),
             )
-            .map((item) => {
+            .map((item: any) => {
               return (
                 <div key={randomId()}>
                   <ScheduleCard

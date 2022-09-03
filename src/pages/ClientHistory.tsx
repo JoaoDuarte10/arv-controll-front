@@ -23,7 +23,7 @@ export function ClientHistory() {
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
   const [date1, setDate1] = useState<string | null>('');
   const [date2, setDate2] = useState<string | null>('');
@@ -31,7 +31,7 @@ export function ClientHistory() {
   const [errorHistory, setErrorHistory] = useState<boolean | null>(null);
   const [clientHistory, setClientHistory] = useState([]);
 
-  const [clientSelected, setClientSelected] = useState(null);
+  const [clientSelected, setClientSelected] = useState<any>(null);
 
   const [clearSchedule, setClearSchedule] = useState<boolean | null>(null);
   const [invalidParams, setInvalidParams] = useState<boolean | null>(null);

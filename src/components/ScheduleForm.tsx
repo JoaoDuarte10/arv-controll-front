@@ -7,7 +7,7 @@ import { ComboBox } from './ComboBox';
 import { InputText } from './input/InputText';
 import { Client } from '../api/types/Client';
 
-export function ScheduleForm(props) {
+export function ScheduleForm(props: any) {
   const {
     clientSaves,
     setDataClient,
@@ -273,7 +273,7 @@ export function ScheduleForm(props) {
               <label htmlFor="name">Telefone</label>
               <InputMask
                 type="text"
-                format="currency"
+                form="currency"
                 className="p-3 form-control"
                 value={contact}
                 id="contact"

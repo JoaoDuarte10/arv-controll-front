@@ -24,7 +24,7 @@ export function NewSale() {
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
   const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<string>('');

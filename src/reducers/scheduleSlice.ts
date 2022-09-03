@@ -17,8 +17,8 @@ const scheduleSlice = createSlice({
   name: 'schedule',
   initialState,
   reducers: {
-    setEditClient: {
-      reducer(state, action) {
+    onEditClient: {
+      reducer(state: any, action: any) {
         state.id = action.payload.id;
         state.client = action.payload.client;
         state.procedure = action.payload.procedure;
@@ -30,9 +30,12 @@ const scheduleSlice = createSlice({
         state.qtdTotalAtendimento = action.payload.qtdTotalAtendimento;
         state.qtdAtendimento = action.payload.qtdAtendimento;
       },
+      prepare(payload) {
+        return payload
+      },
     },
   },
 });
 
 export default scheduleSlice.reducer;
-export const { setEditClient } = scheduleSlice.actions;
+export const { onEditClient } = scheduleSlice.actions;

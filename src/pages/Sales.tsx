@@ -25,7 +25,7 @@ export function Sales() {
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
   const [date1, setDate1] = useState<string | null>('');
   const [date2, setDate2] = useState<string | null>('');

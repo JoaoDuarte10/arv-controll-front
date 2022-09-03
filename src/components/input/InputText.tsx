@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 
-export function InputText(props) {
+export function InputText(props: any) {
   const { type, id, label, onChange, className, value } = props;
 
   return (

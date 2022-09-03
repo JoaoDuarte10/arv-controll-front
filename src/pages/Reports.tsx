@@ -17,22 +17,24 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { Client } from '../api/types/Client';
+import { ISales } from '../api/types/Sales';
 
-function Reports() {
+export function Reports() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   let navigate = useNavigate();
 
   const [clientSaves, setClientSaves] = useState([]);
-  const [salesForClient, setSalesForClient] = useState([]);
+  const [salesForClient, setSalesForClient] = useState<ISales[]>([]);
   const [segment, setSegment] = useState('');
-  const [emptySale, setEmptySale] = useState(null);
-  const [serverError, setServerError] = useState(false);
+  const [emptySale, setEmptySale] = useState<boolean | null>(null);
+  const [serverError, setServerError] = useState<any>(false);
   const [salesLastWeek, setSalesLastWeek] = useState([]);
   const [salesActualtWeek, setSalesActualWeek] = useState([]);
   const [salesLastMonth, setSalesLastMonth] = useState([]);
   const [salesActualMonth, setSalesActualMonth] = useState([]);
   const [clearTableSalesForClient, setClearTableSalesForClient] =
-    useState(null);
+    useState<any>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -80,15 +82,15 @@ function Reports() {
       if (!getSalesLastWeek.status || !getSalesActualWeek.status) return;
 
       if (
-        getSalesLastWeek === HTTP_RESPONSE.NOT_FOUND ||
-        getSalesLastWeek === HTTP_RESPONSE.ERROR
+        getSalesLastWeek.status === HTTP_RESPONSE.NOT_FOUND ||
+        getSalesLastWeek.status === HTTP_RESPONSE.ERROR
       ) {
         if (isMounted) setSalesLastWeek([]);
       }
 
       if (
-        getSalesActualWeek === HTTP_RESPONSE.NOT_FOUND ||
-        getSalesActualWeek === HTTP_RESPONSE.ERROR
+        getSalesActualWeek.status === HTTP_RESPONSE.NOT_FOUND ||
+        getSalesActualWeek.status === HTTP_RESPONSE.ERROR
       ) {
         if (isMounted) setSalesActualWeek([]);
       }
@@ -148,7 +150,7 @@ function Reports() {
     };
   }, [auth.userId, auth, navigate]);
 
-  const reportClientInfo = async (event: React.BaseSyntheticEvent, params) => {
+  const reportClientInfo = async (event: React.BaseSyntheticEvent, params: any) => {
     event.preventDefault();
 
     if (!params) return;
@@ -216,17 +218,17 @@ function Reports() {
             {clientSaves !== null && clientSaves.length > 0 ? (
               <ComboBox
                 title="Selecionar Cliente"
-                options={clientSaves.map((item) => ({
+                options={clientSaves.map((item: Client) => ({
                   label: item.name,
                   segment: item.segment,
                 }))}
-                selectValue={(e, item) => reportClientInfo(e, item)}
+                selectValue={(e: React.BaseSyntheticEvent, item: string) => reportClientInfo(e, item)}
               />
             ) : (
               <ComboBox
                 title="Selecionar Cliente"
                 options={[]}
-                selectValue={(e, item) => reportClientInfo(e, item)}
+                selectValue={(e: React.BaseSyntheticEvent, item: string) => reportClientInfo(e, item)}
               />
             )}
             <small className="text-muted">
@@ -254,7 +256,7 @@ function Reports() {
                   <small className="text-muted h6 mb-3">
                     {new Date(
                       salesForClient
-                        .map((item) => item.date)
+                        .map((item: ISales) => item.date)
                         .sort((a, b) => parseInt(b) - parseInt(a))[0],
                     ).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                   </small>
@@ -264,7 +266,7 @@ function Reports() {
                   <small className="text-muted h6 mb-3">
                     {new Date(
                       salesForClient
-                        .map((item) => item.date)
+                        .map((item: ISales) => item.date)
                         .sort((a, b) => parseInt(a[1]) - parseInt(b))[0],
                     ).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                   </small>
@@ -275,7 +277,7 @@ function Reports() {
                     {salesForClient
                       .filter((item) => !!item)
                       .map(
-                        (item) =>
+                        (item: ISales) =>
                           parseInt(
                             item.price.substring(2).replace(/\.|,/g, ''),
                           ) / 100,
@@ -434,7 +436,7 @@ function Reports() {
   );
 }
 
-function HeaderModal(props) {
+function HeaderModal(props: { title: any; idCollapse: any; }) {
   const { title, idCollapse } = props;
   return (
     <div className="card-header">
@@ -464,5 +466,3 @@ function HeaderModal(props) {
     </div>
   );
 }
-
-export { Reports };

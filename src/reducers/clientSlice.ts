@@ -36,6 +36,4 @@ const clientSlice = createSlice({
   },
 });
 
-export const { getAllClients } = clientSlice.actions;
-
 export default clientSlice.reducer;

@@ -16,6 +16,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TitlePage } from '../components/TitlePage';
+import { Client } from '../api/types/Client';
+import { ReducerStore } from '../app/store';
 import {
   useAddNewSegmentMutation,
   useDeleteSegmentMutation,
@@ -27,10 +29,10 @@ import {
 export function Segments() {
   let navigate = useNavigate();
 
-  const auth = useSelector((state) => state.authenticated);
-  const { data: segments = [] } = useGetSegmentsQuery();
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
+  const { data: segments = [] } = useGetSegmentsQuery('');
   const { data: clients = [], isLoading: isLoadingClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
   const [addSegment, { isLoading: isLoadingAdd }] = useAddNewSegmentMutation();
   const [updateSegment, { isLoading: isLoadingUpdate }] =
@@ -38,14 +40,14 @@ export function Segments() {
   const [deleteSegment, { isLoading: isLoadingDelete }] =
     useDeleteSegmentMutation();
 
-  const [id, setId] = useState(null);
-  const [titleCardSegment, setTitleCardSegment] = useState('');
-  const [actionName, setActionName] = useState('');
-  const [editSegmentName, setEditSegmentName] = useState({ name: '', id: '' });
-  const [editSegment, setEditSegment] = useState(null);
-  const [segmentActual, setSegmentActual] = useState(null);
-  const [clientsInSegment, setClientsInSegment] = useState([]);
-  const [alert, setAlert] = useState(null);
+  const [id, setId] = useState<string | null>(null);
+  const [titleCardSegment, setTitleCardSegment] = useState<string>('');
+  const [actionName, setActionName] = useState<string>('');
+  const [editSegmentName, setEditSegmentName] = useState<any>({ name: '', id: '' });
+  const [editSegment, setEditSegment] = useState<boolean | null>(null);
+  const [segmentActual, setSegmentActual] = useState<{ label: string, id: string } | any>(null);
+  const [clientsInSegment, setClientsInSegment] = useState<Client[] | any>([]);
+  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -53,11 +55,11 @@ export function Segments() {
     }
   }, [auth, navigate]);
 
-  const getClientBySegment = async (event, params) => {
+  const getClientBySegment = async (event: React.BaseSyntheticEvent, params: { label: string, id: string }) => {
     event.preventDefault();
     setSegmentActual(params);
 
-    const query = [...clients.filter((item) => item.segment === params.label)];
+    const query = [...clients.filter((item: Client) => item.segment === params.label)];
 
     if (query.length === 0) {
       setAlert(<AlertInfo title="Nenhum cliente nesse segmento." />);
@@ -70,7 +72,7 @@ export function Segments() {
     setEditSegment(null);
   };
 
-  const deleteClient = async (event, id) => {
+  const deleteClient = async (event: React.BaseSyntheticEvent, id: string) => {
     event.preventDefault();
     const request = await clientService.deleteClient(auth.userId, id);
 
@@ -81,11 +83,11 @@ export function Segments() {
 
     clearStates();
     setAlert(<AlertSuccess title="Segmento Deletado" />);
-    await getClientBySegment(event, segmentActual);
+    await getClientBySegment(event, segmentActual as any);
     return;
   };
 
-  const clearFindClients = (event) => {
+  const clearFindClients = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
     setClientsInSegment([]);
@@ -93,11 +95,11 @@ export function Segments() {
     setSegmentActual(null);
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card.shadow-sm.bg-white.pt-3.pl-3.pb-3 > div > div > div > div > div > button',
-    );
+    ) as HTMLElement;
     if (buttonSelector) buttonSelector.click();
   };
 
-  const onAddNewSegment = async (event, segment) => {
+  const onAddNewSegment = async (event: React.BaseSyntheticEvent, segment: any) => {
     event.preventDefault();
 
     if (!segment || !segment.trim()) {
@@ -119,7 +121,7 @@ export function Segments() {
     }
   };
 
-  const updateSegmentRequest = async (event, segment, id) => {
+  const updateSegmentRequest = async (event: React.BaseSyntheticEvent, segment: any, id: string) => {
     event.preventDefault();
 
     try {
@@ -134,7 +136,7 @@ export function Segments() {
     }
   };
 
-  const onDeleteSegment = async (event, id, segment) => {
+  const onDeleteSegment = async (event: React.BaseSyntheticEvent, id: string, segment: string) => {
     event.preventDefault();
 
     try {
@@ -166,7 +168,7 @@ export function Segments() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(null), 5000);
+    setTimeout(() => setAlert(<div></div>), 5000);
   }
 
   return (
@@ -181,7 +183,7 @@ export function Segments() {
         id="delete-client"
         title="Excluir cliente?"
         body="Tem certeza que deseja excluir esse cliente?"
-        click={(e) => deleteClient(e, id)}
+        click={(e: React.BaseSyntheticEvent) => deleteClient(e, id as string)}
         button="Excluir"
       />
 
@@ -190,17 +192,21 @@ export function Segments() {
         id="delete-segment"
         title="Excluir segmento?"
         body="Tem certeza que deseja excluir esse segmento?"
-        click={(e) => onDeleteSegment(e, segmentActual.id, segmentActual.label)}
+        click={(e: React.BaseSyntheticEvent) => {
+          if (segmentActual) {
+            onDeleteSegment(e, segmentActual.id, segmentActual.label)
+          }
+        }}
         button="Excluir"
       />
 
       <CardSegment
-        editSegment={editSegment}
+        editSegment={editSegment as any}
         title={titleCardSegment}
         actionName={actionName}
         segment={editSegmentName}
-        clearStates={(e) => setEditSegmentName({ name: '', id: '' })}
-        actionCreate={(e, segment) => onAddNewSegment(e, segment)}
+        clearStates={(e: React.BaseSyntheticEvent) => setEditSegmentName({ name: '', id: '' })}
+        actionCreate={(e: React.BaseSyntheticEvent, segment: any) => onAddNewSegment(e, segment)}
         actionUpdate={updateSegmentRequest}
         setNewSegment={setEditSegmentName}
         alert={alert}
@@ -228,11 +234,11 @@ export function Segments() {
           {segments.length > 0 ? (
             <ComboBox
               title="Selecionar segmento"
-              options={segments.map((item) => ({
+              options={segments.map((item: any) => ({
                 label: item.segment,
                 id: item.id,
               }))}
-              selectValue={(e, item) => {
+              selectValue={(e: React.BaseSyntheticEvent, item: any) => {
                 getClientBySegment(e, item);
               }}
             />
@@ -240,7 +246,7 @@ export function Segments() {
             <ComboBox
               title="Selecionar segmento"
               options={[]}
-              selectValue={(e, item) => {
+              selectValue={(e: React.BaseSyntheticEvent, item: any) => {
                 getClientBySegment(e, item);
               }}
             />
@@ -269,7 +275,7 @@ export function Segments() {
               className="col btn btn-outline-primary font-weight-bold"
               data-toggle="modal"
               data-target="#modalSegment"
-              onClick={(e) => {
+              onClick={(e: React.BaseSyntheticEvent) => {
                 setTitleCardSegment('Editar');
                 setActionName('Salvar');
                 setEditSegmentName({
@@ -287,7 +293,7 @@ export function Segments() {
               className="col btn btn-outline-danger font-weight-bold"
               data-toggle="modal"
               data-target="#delete-segment"
-              onClick={(e) => e}
+              onClick={(e: React.BaseSyntheticEvent) => e}
             >
               Deletar Segmento
             </button>

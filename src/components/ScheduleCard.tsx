@@ -5,7 +5,7 @@ import { Paper } from '@material-ui/core';
 import { randomId } from '../utils/random';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setEditClient } from '../reducers/scheduleSlice';
+import { onEditClient } from '../reducers/scheduleSlice';
 
 type InputProps = {
   item: any;
@@ -119,7 +119,7 @@ export function ScheduleCard(props: InputProps) {
                 className="col m-1 btn btn-outline-primary"
                 onClick={(e) => {
                   dispatch(
-                    setEditClient({
+                    onEditClient({
                       id: item.id,
                       client: item.client,
                       procedure: item.procedure,

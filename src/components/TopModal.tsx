@@ -3,11 +3,11 @@ import '../css/main.css';
 type InputProps = {
   id: string;
   title: string;
-  button: string;
-  click: any;
+  button?: string;
+  click?: any;
   data_target?: string;
   body: any;
-  className: string;
+  className?: string;
 }
 
 export function TopModal(props: InputProps) {

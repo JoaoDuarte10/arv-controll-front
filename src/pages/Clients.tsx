@@ -27,7 +27,7 @@ export function Clients() {
     isLoading,
     isSuccess,
     error = {} as any,
-  } = useGetClientsQuery();
+  } = useGetClientsQuery('');
 
   const [
     deleteClient,

@@ -4,7 +4,7 @@ import clientReducer from '../reducers/clientSlice';
 import { apiSlice } from '../api/ApiSlice';
 import scheduleReducer from '../reducers/scheduleSlice';
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
     authenticated: authenticatedReducer,
     clients: clientReducer,
@@ -39,3 +39,6 @@ export type ReducerStore = {
     qtdAtendimento: number;
   };
 };
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

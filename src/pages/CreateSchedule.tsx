@@ -20,7 +20,7 @@ export function CreateSchedule() {
 
   const auth = useSelector((state: ReducerStore) => state.authenticated);
   const { data: clients = [], isLoading: isLoadingGetClients } =
-    useGetClientsQuery();
+    useGetClientsQuery('');
 
   const [addNewSchedule, { isLoading: isLoadingNewSchedule }] =
     useAddNewScheduleMutation();
