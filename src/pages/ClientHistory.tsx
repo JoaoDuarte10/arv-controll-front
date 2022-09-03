@@ -17,6 +17,7 @@ import { ClearFields } from '../components/Buttons';
 import { SelectPeriod } from '../components/SelectPeriod';
 import { TableHistory } from '../components/TableHistory';
 import { TitlePage } from '../components/TitlePage';
+import { IClientHistory } from '../api/types/ClientHistory';
 
 export function ClientHistory() {
   let navigate = useNavigate();
@@ -25,16 +26,17 @@ export function ClientHistory() {
   const { data: clients = [], isLoading: isLoadingGetClients } =
     useGetClientsQuery('');
 
-  const [date1, setDate1] = useState<string | null>('');
-  const [date2, setDate2] = useState<string | null>('');
+  const [date1, setDate1] = useState<string>('');
+  const [date2, setDate2] = useState<string>('');
 
-  const [errorHistory, setErrorHistory] = useState<boolean | null>(null);
-  const [clientHistory, setClientHistory] = useState([]);
+  const [serverError, setServerError] = useState<boolean>(false);
+  const [historyNotFound, setHistoryNotFound] = useState<boolean>(false);
 
-  const [clientSelected, setClientSelected] = useState<any>(null);
+  const [clientHistory, setClientHistory] = useState<IClientHistory[]>([]);
+  const [clientSelected, setClientSelected] = useState<string>('');
 
-  const [clearSchedule, setClearSchedule] = useState<boolean | null>(null);
-  const [invalidParams, setInvalidParams] = useState<boolean | null>(null);
+  const [clearSchedule, setClearSchedule] = useState<boolean>(false);
+  const [invalidParams, setInvalidParams] = useState<boolean>(false);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -78,13 +80,13 @@ export function ClientHistory() {
     if (!request) return;
 
     if (request.status === HTTP_RESPONSE.NOT_FOUND) {
-      setErrorHistory(true);
+      setHistoryNotFound(true);
       setClientHistory([]);
       return;
     }
 
     if (request.status === HTTP_RESPONSE.ERROR || !request.status) {
-      setErrorHistory(true);
+      setServerError(true);
       return;
     }
 
@@ -94,15 +96,15 @@ export function ClientHistory() {
   const clearFields = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     setClientHistory([]);
-    setClientSelected(null);
-    setDate1(null);
-    setDate2(null);
+    setClientSelected('');
+    setDate1('');
+    setDate2('');
     setClearSchedule(true);
   };
 
   const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
-    setClientSelected(null);
+    setClientSelected('');
     clearDates();
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card.mb-4.p-3.shadow.bg-white.rounded > form > div.mb-4 > div > div > div > div > button',
@@ -119,16 +121,20 @@ export function ClientHistory() {
     setDate2('');
   }
 
-  if (errorHistory) {
-    setTimeout(() => setErrorHistory(null), 5000);
+  if (historyNotFound) {
+    setTimeout(() => setHistoryNotFound(false), 5000);
+  }
+
+  if (serverError) {
+    setTimeout(() => setServerError(false), 5000);
   }
 
   if (clearSchedule) {
-    setTimeout(() => setClearSchedule(null), 5000);
+    setTimeout(() => setClearSchedule(false), 5000);
   }
 
   if (invalidParams === true) {
-    setTimeout(() => setInvalidParams(null), 5000);
+    setTimeout(() => setInvalidParams(false), 5000);
   }
 
   let content = null;
@@ -137,6 +143,8 @@ export function ClientHistory() {
   } else {
     content = null;
   }
+
+  console.log(clientHistory);
 
   return (
     <div className="container-main">
@@ -153,13 +161,16 @@ export function ClientHistory() {
         clearFields={(e: React.BaseSyntheticEvent) => clearFilters(e)}
       />
 
-      {errorHistory === true ? (
+      {historyNotFound === true ? (
         <AlertInfo title="Nenhum histórico encontrado." />
+      ) : null}
+      {serverError === true ? (
+        <AlertError title="Não foi possível processar a requisição." />
       ) : null}
       {clearSchedule === true ? (
         <AlertSuccess title="A pesquisa foi limpa." />
       ) : null}
-      {invalidParams && <AlertError title="Preencha os campos corretamente." />}
+      {invalidParams === true && <AlertError title="Preencha os campos corretamente." />}
 
       {clientHistory.length > 0 ? (
         <div>
