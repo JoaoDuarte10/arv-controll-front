@@ -47,7 +47,7 @@ export function Segments() {
   const [editSegment, setEditSegment] = useState<boolean | null>(null);
   const [segmentActual, setSegmentActual] = useState<{ label: string, id: string } | any>(null);
   const [clientsInSegment, setClientsInSegment] = useState<IClient[] | any>([]);
-  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
+  const [alert, setAlert] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -168,7 +168,7 @@ export function Segments() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setAlert(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

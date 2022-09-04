@@ -17,7 +17,7 @@ type InputProps = {
   setSegmentSelect: any;
   segmentSelect: string;
   onChangeClient: any;
-  alert: JSX.Element;
+  alert: JSX.Element | null;
 }
 
 export function FormClients(props: InputProps) {

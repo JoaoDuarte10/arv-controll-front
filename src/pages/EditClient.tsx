@@ -34,7 +34,7 @@ export function EditClient() {
   const [segmentSelect, setSegmentSelect] = useState<string | null>(
     editClient ? editClient.segment : null,
   );
-  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
+  const [alert, setAlert] = useState<JSX.Element | null>(null);
 
   const clearStates = () => {
     setName('');
@@ -71,7 +71,7 @@ export function EditClient() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setAlert(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

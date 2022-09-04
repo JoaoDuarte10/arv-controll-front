@@ -11,7 +11,7 @@ type InputProps = {
   clearStates: any;
   segment: ISegment;
   setNewSegment: Function;
-  alert: JSX.Element;
+  alert: JSX.Element | null;
 }
 
 export function CardSegment(props: InputProps) {

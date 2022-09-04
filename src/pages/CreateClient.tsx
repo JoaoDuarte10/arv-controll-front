@@ -27,7 +27,7 @@ export function CreateClient() {
   const [phone, setPhone] = useState<string>('');
   const [segmentSelect, setSegmentSelect] = useState<string>('');
 
-  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
+  const [alert, setAlert] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -81,7 +81,7 @@ export function CreateClient() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setAlert(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

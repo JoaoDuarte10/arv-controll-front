@@ -34,7 +34,7 @@ export function CreateSchedule() {
   const [price, setPrice] = useState<string>('');
   const [contact, setContact] = useState<string>('');
 
-  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
+  const [alert, setAlert] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -111,7 +111,7 @@ export function CreateSchedule() {
   }
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setAlert(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (

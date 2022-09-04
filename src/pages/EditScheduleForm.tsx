@@ -27,7 +27,7 @@ export function EditScheduleForm() {
   const [time, setTime] = useState<string>(schedule.time);
   const [price, setPrice] = useState<string>(schedule.price);
   const [contact, setContact] = useState<string>(schedule.phone);
-  const [alert, setAlert] = useState<JSX.Element>(<div></div>);
+  const [alert, setAlert] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -85,7 +85,7 @@ export function EditScheduleForm() {
   };
 
   if (alert) {
-    setTimeout(() => setAlert(<div></div>), TIMEOUT.FIVE_SECCONDS);
+    setTimeout(() => setAlert(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   return (
