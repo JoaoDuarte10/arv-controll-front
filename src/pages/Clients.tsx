@@ -6,19 +6,22 @@ import { AlertError } from '../components/alerts/AlertError';
 import { Breadcumb } from '../components/Breadcumb';
 import { CardClients } from '../components/CardClient';
 import { CircularIndeterminate } from '../components/LoaderCircular';
+import { ComboBox } from '../components/ComboBox';
 import { TitlePage } from '../components/TitlePage';
 import { TopModal } from '../components/TopModal';
 
 import { useDeleteClientMutation, useGetClientsQuery, useGetSegmentsQuery } from '../api/ApiSlice';
 import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { ReducerStore } from '../app/store';
+import { ISegment } from '../api/types/Segment';
+import { IClient } from '../api/types/Client';
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ComboBox } from '../components/ComboBox';
-import { IClient } from '../api/types/Client';
-import { ISegment } from '../api/types/Segment';
+import { SearchFilterButton } from '../components/buttons/SearchFilter';
+import { ClearSearchFilterButton } from '../components/buttons/ClearSearchFilter';
+import { SearchButton } from '../components/buttons/SearchButton';
 
 export function Clients() {
   let navigate = useNavigate();
@@ -97,13 +100,13 @@ export function Clients() {
     event.preventDefault();
 
     const inputFilterName = document.querySelector(`
-      #root > div > div.container-main > div.form-row.mb-4 > div:nth-child(1) > div > div > div > div > div > button
+      #searchByName > div > div > div > div > button
     `) as HTMLElement;
 
     if (inputFilterName) inputFilterName.click();
 
     const inputFilterSegment = document.querySelector(`
-    #root > div > div.container-main > div.form-row.mb-4 > div:nth-child(2) > div > div > div > div > div > button
+      #searchBySegmento > div > div > div > div > button
     `) as HTMLElement;
 
     if (inputFilterSegment) inputFilterSegment.click();
@@ -135,6 +138,97 @@ export function Clients() {
 
       <TitlePage title='Clientes' />
 
+      <div className='pb-2 mb-2'>
+        <strong>Quantidade de clientes: </strong>
+        {clientView.length}
+      </div>
+
+
+      <div className="pb-2"
+        style={{
+          overflow: 'auto',
+          whiteSpace: 'nowrap',
+          display: 'block',
+          alignItems: 'center'
+        }}
+      >
+        <SearchFilterButton
+          onClick={(e: React.BaseSyntheticEvent) => {
+            const filerBSegmentElement = document.getElementById('searchBySegmento');
+            const filterByNameElement = document.getElementById('searchByName');
+
+            if (filerBSegmentElement) filerBSegmentElement.style.display = 'flex';
+            if (filterByNameElement) filterByNameElement.style.display = 'none';
+          }}
+          text='Segmento'
+        />
+
+        <SearchFilterButton
+          onClick={(e: React.BaseSyntheticEvent) => {
+            const filterByNameElement = document.getElementById('searchByName');
+            const filerBSegmentElement = document.getElementById('searchBySegmento');
+
+            if (filterByNameElement) filterByNameElement.style.display = 'flex';
+            if (filerBSegmentElement) filerBSegmentElement.style.display = 'none';
+          }}
+          text='Nome'
+        />
+
+        <ClearSearchFilterButton
+          onClick={(e: React.BaseSyntheticEvent) => {
+            clearFilters(e)
+
+            const filterClientsElement = document.getElementById('searchByName');
+            if (filterClientsElement) filterClientsElement.style.display = 'none';
+            const filerClientElement = document.getElementById('searchBySegmento');
+
+            if (filerClientElement) filerClientElement.style.display = 'none';
+          }}
+        />
+      </div>
+
+      <div
+        className='mb-4'
+        style={{
+          display: 'none',
+        }}
+        id='searchByName'
+      >
+        <ComboBox
+          title="Digite o nome..."
+          options={clients.map((item: IClient) => ({ label: item.name, id: item.id }))}
+          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientById(item.id)}
+          style={{
+            width: '300px'
+          }}
+        />
+        <SearchButton
+          onClick={(e: React.BaseSyntheticEvent) => filterClientSelectedById(e, filterClientById)}
+        />
+      </div>
+      <div
+        className='mb-4'
+        style={{
+          display: 'none'
+        }}
+        id='searchBySegmento'
+      >
+        <ComboBox
+          title="Digite o segmento..."
+          options={segments.map((item: ISegment) => ({ label: item.segment, id: item.id }))}
+          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientBySegment(item.label)}
+          style={{
+            width: '300px'
+          }}
+        />
+
+        <SearchButton
+          onClick={(e: React.BaseSyntheticEvent) => filterClientSelectedBySegment(e, filterClientBySegment)}
+        />
+      </div>
+
+
+
       {loader}
 
       <TopModal
@@ -145,74 +239,6 @@ export function Clients() {
         click={(e: React.BaseSyntheticEvent) => onDeleteClient(e, id ? id : '')}
         button="Excluir"
       />
-
-      <div className='form-row mb-4'
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <div className='form-group'
-          style={{
-            minWidth: '200px',
-            maxWidth: '400px'
-          }}
-        >
-          <div className='form-row'>
-            <ComboBox
-              title="Filtrar por nome"
-              options={clients.map((item: IClient) => ({ label: item.name, id: item.id }))}
-              selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientById(item.id)}
-              className='col'
-            />
-            <button
-              className='btn btn-primary'
-              onClick={e => filterClientSelectedById(e, filterClientById)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div className='form-group'
-          style={{
-            minWidth: '200px',
-            maxWidth: '400px'
-          }}
-        >
-          <div className='form-row'>
-            <ComboBox
-              title="Filtrar por segmento"
-              options={segments.map((item: ISegment) => ({ label: item.segment, id: item.id }))}
-              selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientBySegment(item.label)}
-              className='col'
-            />
-            <button
-              className='btn btn-primary'
-              onClick={e => filterClientSelectedBySegment(e, filterClientBySegment)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" className="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <button
-          className='btn btn-outline-primary'
-          style={{
-            maxWidth: '150px'
-          }}
-          onClick={(e: React.BaseSyntheticEvent) => clearFilters(e)}
-        >
-          Limpar Filtros
-        </button>
-      </div>
-
-      <strong>Quantidade de clientes: </strong>
-      {clientView.length}
 
       <div className="mt-2">{snniperClient}</div>
 

@@ -7,10 +7,11 @@ type InputProps = {
   selectValue: any;
   value?: any;
   className?: string;
+  style?: React.CSSProperties
 }
 
 export function ComboBox(props: InputProps) {
-  const { title, options, selectValue, value, className } = props;
+  const { title, options, selectValue, value, className, style } = props;
 
   return (
     <Autocomplete
@@ -23,6 +24,7 @@ export function ComboBox(props: InputProps) {
       onInputChange={selectValue}
       onChange={selectValue}
       className={className}
+      style={style}
     />
   );
 }
