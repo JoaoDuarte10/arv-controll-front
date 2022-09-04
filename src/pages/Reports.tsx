@@ -202,7 +202,7 @@ export function Reports() {
     <div className="container-main">
       <Breadcumb
         page={[
-          { link: false, name: 'Vendas' },
+          { link: '/sales', name: 'Vendas' },
           { link: false, name: 'Relatórios' },
         ]}
       />

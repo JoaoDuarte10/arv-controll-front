@@ -33,7 +33,7 @@ export function ClientHistory() {
   const [historyNotFound, setHistoryNotFound] = useState<boolean>(false);
 
   const [clientHistory, setClientHistory] = useState<IClientHistory[]>([]);
-  const [clientSelected, setClientSelected] = useState<string>('');
+  const [clientSelected, setClientSelected] = useState<string | null>('');
 
   const [clearSchedule, setClearSchedule] = useState<boolean>(false);
   const [invalidParams, setInvalidParams] = useState<boolean>(false);
@@ -144,11 +144,13 @@ export function ClientHistory() {
     loader = null;
   }
 
+  console.log(clientSelected)
+
   return (
     <div className="container-main">
       {loader}
       <Breadcumb page={[{ link: false, name: 'Histórico' }]} />
-      <TitlePage title='Histórico'/>
+      <TitlePage title='Histórico' />
 
       <SelectPeriod
         getSalesInPeriodResponse={getHistoryInPeriodResponse}
@@ -173,9 +175,9 @@ export function ClientHistory() {
       {clientHistory.length > 0 ? (
         <div>
           <div className="d-inline">
-            <strong>Período: </strong>
             {(date1 || date2) && (
               <div className="d-inline">
+                <strong>Período: </strong>
                 {date1 &&
                   new Date(date1).toLocaleDateString('pt-BR', {
                     timeZone: 'UTC',
@@ -185,6 +187,15 @@ export function ClientHistory() {
                   new Date(date2).toLocaleDateString('pt-BR', {
                     timeZone: 'UTC',
                   })}
+              </div>
+            )}
+
+            {clientSelected && (
+              <div className="d-inline">
+                <strong>Cliente: </strong>
+                <div className="d-inline">
+                  {clientSelected}
+                </div>
               </div>
             )}
           </div>
