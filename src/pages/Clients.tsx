@@ -141,7 +141,7 @@ export function Clients() {
           }}
         >
           <ComboBox
-            title="Buscar cliente por nome"
+            title="Filtrar por nome"
             options={clients.map((item: IClient) => ({ label: item.name, id: item.id }))}
             selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => filterClientSelectedById(e, item)}
           />
@@ -153,7 +153,7 @@ export function Clients() {
           }}
         >
           <ComboBox
-            title="Buscar cliente por segmento"
+            title="Filtrar por segmento"
             options={segments.map((item: ISegment) => ({ label: item.segment, id: item.id }))}
             selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => filterClientSelectedBySegment(e, item)}
           />

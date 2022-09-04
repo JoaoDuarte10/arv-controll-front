@@ -49,7 +49,7 @@ export function FormClients(props: InputProps) {
       </div>
       <div className="modal-body">
         <form>
-          <LabelForm text='Cliente' />
+          <LabelForm text='Nome' />
 
           <InputText
             type="text"
