@@ -44,6 +44,9 @@ export function Clients() {
   const [clientView, setClientView] = useState<IClient[]>([]);
   const [deletedClientSuccess, setDeletedClientSuccess] = useState<boolean>(false);
 
+  const [filterClientById, setFilterClientById] = useState<string>('');
+  const [filterClientBySegment, setFilterClientBySegment] = useState<string>('');
+
   useEffect(() => {
     if (!auth.userId) {
       navigate(auth.redirectLoginPageUri, { replace: true });
@@ -70,26 +73,40 @@ export function Clients() {
     }
   };
 
-  const filterClientSelectedById = (event: React.BaseSyntheticEvent, item: { label: string, id: string }) => {
+  const filterClientSelectedById = (event: React.BaseSyntheticEvent, id: string) => {
     event.preventDefault();
 
-    if (item) {
-      const clientsById = clients.filter((client: IClient) => client.id === item.id);
+    if (id) {
+      const clientsById = clients.filter((client: IClient) => client.id === id);
       setClientView(clientsById);
       return;
     }
-
-    setClientView(clients);
   }
 
-  const filterClientSelectedBySegment = (event: React.BaseSyntheticEvent, item: { label: string, id: string }) => {
+  const filterClientSelectedBySegment = (event: React.BaseSyntheticEvent, segment: string) => {
     event.preventDefault();
 
-    if (item) {
-      const clientsBySegment = clients.filter((client: IClient) => client.segment === item.label);
+    if (segment) {
+      const clientsBySegment = clients.filter((client: IClient) => client.segment === segment);
       setClientView(clientsBySegment);
       return;
     }
+  }
+
+  const clearFilters = (event: React.BaseSyntheticEvent) => {
+    event.preventDefault();
+
+    const inputFilterName = document.querySelector(`
+      #root > div > div.container-main > div.form-row.mb-4 > div:nth-child(1) > div > div > div > div > div > button
+    `) as HTMLElement;
+
+    if (inputFilterName) inputFilterName.click();
+
+    const inputFilterSegment = document.querySelector(`
+    #root > div > div.container-main > div.form-row.mb-4 > div:nth-child(2) > div > div > div > div > div > button
+    `) as HTMLElement;
+
+    if (inputFilterSegment) inputFilterSegment.click();
 
     setClientView(clients);
   }
@@ -129,35 +146,69 @@ export function Clients() {
         button="Excluir"
       />
 
-      <div className='form-row mb-2'
+      <div className='form-row mb-4'
         style={{
           display: 'flex',
-          flexWrap: 'wrap'
+          flexDirection: 'column',
         }}
       >
-        <div className='form-group col'
+        <div className='form-group'
           style={{
-            minWidth: '200px'
+            minWidth: '200px',
+            maxWidth: '400px'
           }}
         >
-          <ComboBox
-            title="Filtrar por nome"
-            options={clients.map((item: IClient) => ({ label: item.name, id: item.id }))}
-            selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => filterClientSelectedById(e, item)}
-          />
+          <div className='form-row'>
+            <ComboBox
+              title="Filtrar por nome"
+              options={clients.map((item: IClient) => ({ label: item.name, id: item.id }))}
+              selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientById(item.id)}
+              className='col'
+            />
+            <button
+              className='btn btn-primary'
+              onClick={e => filterClientSelectedById(e, filterClientById)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <div className='form-group col'
+        <div className='form-group'
           style={{
-            minWidth: '200px'
+            minWidth: '200px',
+            maxWidth: '400px'
           }}
         >
-          <ComboBox
-            title="Filtrar por segmento"
-            options={segments.map((item: ISegment) => ({ label: item.segment, id: item.id }))}
-            selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => filterClientSelectedBySegment(e, item)}
-          />
+          <div className='form-row'>
+            <ComboBox
+              title="Filtrar por segmento"
+              options={segments.map((item: ISegment) => ({ label: item.segment, id: item.id }))}
+              selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientBySegment(item.label)}
+              className='col'
+            />
+            <button
+              className='btn btn-primary'
+              onClick={e => filterClientSelectedBySegment(e, filterClientBySegment)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" className="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+              </svg>
+            </button>
+          </div>
         </div>
+
+        <button
+          className='btn btn-outline-primary'
+          style={{
+            maxWidth: '150px'
+          }}
+          onClick={(e: React.BaseSyntheticEvent) => clearFilters(e)}
+        >
+          Limpar Filtros
+        </button>
       </div>
 
       <strong>Quantidade de clientes: </strong>
