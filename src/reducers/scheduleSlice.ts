@@ -33,7 +33,6 @@ const scheduleSlice = createSlice({
   reducers: {
     onEditClient: {
       reducer(state: ISchedule, action: ReducerActionType) {
-        console.log(action);
         state.id = action.payload.id;
         state.client = action.payload.client;
         state.procedure = action.payload.procedure;

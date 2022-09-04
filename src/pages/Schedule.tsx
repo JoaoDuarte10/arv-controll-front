@@ -102,6 +102,7 @@ export function Schedule() {
     }
 
     if (request.status === HTTP_RESPONSE.NOT_FOUND) {
+      setScheduleNotFound(true)
       setSchedule([]);
       return;
     }
