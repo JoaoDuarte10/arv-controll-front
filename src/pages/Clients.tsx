@@ -29,19 +29,20 @@ export function Clients() {
     data: clients = [],
     isLoading,
     isSuccess,
-    error = {} as any,
+    error: errorFetchClients = {} as any,
   } = useGetClientsQuery('');
 
   const { data: segments = [] } = useGetSegmentsQuery('');
 
   const [
     deleteClient,
-    { isLoading: isLoadingDelete, isSuccess: isSuccessDeleted },
+    { isLoading: isLoadingDelete },
   ] = useDeleteClientMutation();
 
   const [id, setId] = useState<string | null>(null);
-  const [loaderClients, setLoaderClients] = useState<JSX.Element | string | null>('');
+  const [loaderClients, setLoaderClients] = useState<JSX.Element | null>();
   const [clientView, setClientView] = useState<IClient[]>([]);
+  const [deletedClientSuccess, setDeletedClientSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -50,12 +51,12 @@ export function Clients() {
     if (clients.length > 0) setClientView(clients);
   }, [auth, navigate, clients]);
 
-  let content;
+  let loader;
 
   if (isLoading || isLoadingDelete) {
-    content = <CircularIndeterminate />;
+    loader = <CircularIndeterminate />;
   } else if (isSuccess) {
-    content = null;
+    loader = null;
   }
 
   const onDeleteClient = async (event: React.BaseSyntheticEvent, id: string) => {
@@ -63,6 +64,7 @@ export function Clients() {
 
     try {
       await deleteClient(id).unwrap();
+      setDeletedClientSuccess(true);
     } catch (error) {
       console.log(error);
     }
@@ -92,8 +94,8 @@ export function Clients() {
     setClientView(clients);
   }
 
-  if (isSuccessDeleted) {
-    setLoaderClients(<AlertSuccess title="Cliente excluído com sucesso." />);
+  if (deletedClientSuccess) {
+    setDeletedClientSuccess(true);
   }
 
   if (loaderClients) {
@@ -102,9 +104,9 @@ export function Clients() {
 
   let snniperClient = null;
 
-  if (error.status === HTTP_RESPONSE.NOT_FOUND) {
+  if (errorFetchClients.status === HTTP_RESPONSE.NOT_FOUND) {
     snniperClient = <AlertInfo title="Nenhum cliente foi retornado." />;
-  } else if (error.status === HTTP_RESPONSE.ERROR) {
+  } else if (errorFetchClients.status === HTTP_RESPONSE.ERROR) {
     snniperClient = (
       <AlertError title="Não foi possível processar a requisição." />
     );
@@ -116,7 +118,7 @@ export function Clients() {
 
       <TitlePage title='Clientes' />
 
-      {content}
+      {loader}
 
       <TopModal
         className="btn btn-danger"
@@ -162,6 +164,10 @@ export function Clients() {
       {clientView.length}
 
       <div className="mt-2">{snniperClient}</div>
+
+      {deletedClientSuccess === true ? (
+        <AlertSuccess title="Cliente excluído com sucesso." />
+      ) : null}
 
       <CardClients clients={clientView} setId={setId} />
     </div>
