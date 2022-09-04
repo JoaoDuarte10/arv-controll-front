@@ -153,6 +153,7 @@ export function Schedule() {
     }
 
     if (!result.status) {
+      setServerError(true);
     }
 
     await getScheduleResponse(event);
@@ -326,7 +327,7 @@ export function Schedule() {
         <AlertSuccess title="Pesquisa atualizada." />
       ) : null}
       {serverError === true ? (
-        <AlertError title="Nenhum horário foi retornado." />
+        <AlertError title="Erro ao processar sua requisição." />
       ) : null}
       {scheduleDeletedSuccess === true ? (
         <AlertSuccess title="Horário excluído com sucesso." />
@@ -351,7 +352,7 @@ export function Schedule() {
               <ScheduleCard
                 item={item}
                 setId={setId}
-                setDeleted={setScheduleDeletedSuccess}
+                setIdScheduleDeleted={setIdScheduleDeleted}
                 expired={true}
               />
             </div>
@@ -374,7 +375,7 @@ export function Schedule() {
                   <ScheduleCard
                     item={item}
                     setId={setId}
-                    setDeleted={setIdScheduleDeleted}
+                    setIdScheduleDeleted={setIdScheduleDeleted}
                     expired={false}
                   />
                 </div>

@@ -10,12 +10,12 @@ import { onEditClient } from '../reducers/scheduleSlice';
 type InputProps = {
   item: any;
   setId: any;
-  setDeleted: any;
-  expired: boolean; 
+  setIdScheduleDeleted: any;
+  expired: boolean;
 }
 
 export function ScheduleCard(props: InputProps) {
-  const { item, setId, setDeleted, expired } = props;
+  const { item, setId, setIdScheduleDeleted, expired } = props;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -142,7 +142,10 @@ export function ScheduleCard(props: InputProps) {
                 className="col m-1 btn btn-outline-danger"
                 data-toggle="modal"
                 data-target="#delete-client-schedule"
-                onClick={(e) => setDeleted(item.id)}
+                onClick={(e) => {
+                  console.log(item.id)
+                  setIdScheduleDeleted(item.id)
+                }}
               >
                 Excluir
               </button>
