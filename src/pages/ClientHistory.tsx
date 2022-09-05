@@ -144,8 +144,6 @@ export function ClientHistory() {
     loader = null;
   }
 
-  console.log(clientSelected)
-
   return (
     <div className="container-main">
       {loader}

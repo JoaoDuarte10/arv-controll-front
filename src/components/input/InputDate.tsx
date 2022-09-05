@@ -6,21 +6,20 @@ type InputProps = {
     idInput: string;
     text: string;
     onChange: Function;
-    style?: React.CSSProperties
+    style?: React.CSSProperties;
+    className?: string
 }
 
 export function InputDate(props: InputProps) {
     return (
         <div
-            className="mb-3"
+            className={`${props.className}`}
             style={{
                 width: '145px',
                 ...props.style
             }}
             id={props.idComponent}
         >
-            <LabelForm text={props.text} />
-
             <InputText
                 type="date"
                 label=" "

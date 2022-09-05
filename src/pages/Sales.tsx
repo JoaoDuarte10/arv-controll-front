@@ -36,7 +36,7 @@ export function Sales() {
 
   const [clearFields, setClearFields] = useState<boolean>(false);
   
-  const [errorSales, setErrorSales] = useState<boolean>(false);
+  const [salesNotFound, setSalesNotFound] = useState<boolean>(false);
   const [serverError, setServerError] = useState<boolean>(false);
 
   const [clientSelected, setClientSelected] = useState<string | null>(null);
@@ -96,12 +96,8 @@ export function Sales() {
       request = await salesService.getSalesInPeriod(auth.userId, date1 as string, date2 as string);
     }
 
-    if (date1 === '' || !date1) {
-      setErrorSales(true);
-    }
-
     if (request.status === HTTP_RESPONSE.NOT_FOUND) {
-      setErrorSales(true);
+      setSalesNotFound(true);
       setSales([]);
       return;
     }
@@ -144,8 +140,8 @@ export function Sales() {
 
   };
 
-  if (errorSales === false || errorSales === true) {
-    setTimeout(() => setErrorSales(false), TIMEOUT.FIVE_SECCONDS);
+  if (salesNotFound === true) {
+    setTimeout(() => setSalesNotFound(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError === false || serverError === true) {
@@ -191,7 +187,7 @@ export function Sales() {
         clearFields={(e: React.BaseSyntheticEvent) => clearFilters(e)}
       />
 
-      {errorSales === true ? (
+      {salesNotFound === true ? (
         <AlertInfo title="Nenhuma venda encontrada." />
       ) : null}
       {fetchSalesSuccess === true ? (

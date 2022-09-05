@@ -143,7 +143,6 @@ export function ScheduleCard(props: InputProps) {
                 data-toggle="modal"
                 data-target="#delete-client-schedule"
                 onClick={(e) => {
-                  console.log(item.id)
                   setIdScheduleDeleted(item.id)
                 }}
               >

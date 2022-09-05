@@ -3,6 +3,8 @@ import { ComboBox } from './ComboBox';
 import { SearchFilterButton } from './buttons/SearchFilter';
 import { ClearSearchFilterButton } from './buttons/ClearSearchFilter';
 import { InputDate } from './input/InputDate';
+import { SearchButton } from './buttons/SearchButton';
+import { LabelForm } from './labels/LabelForm';
 
 type InputProps = {
   getSalesInPeriodResponse: Function;
@@ -20,24 +22,15 @@ function clearAllFilters() {
   const filterByDateInPeriod2 = document.getElementById('filterByDateInPeriod2');
   const filterByClient = document.getElementById('filterByClient');
   const date1Element = document.getElementById('date1Period') as HTMLInputElement | null;
+  const inputClientElement = document.querySelector('#filterByClient > div > div > div > div > div > button') as HTMLElement;
 
+  if (inputClientElement) inputClientElement.click();
   if (filterByClient) filterByClient.style.display = 'none';
   if (filterByPeriod) filterByPeriod.style.display = 'none';
   if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'none';
   if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'none';
   if (filterByDateElement) filterByDateElement.style.display = 'none';
   if (date1Element) date1Element.value = '';
-}
-
-function FetchSalesButton(props: { onClick: any }) {
-  return (
-    <button
-      className="btn btn-primary mb-1"
-      onClick={props.onClick}
-    >
-      Buscar
-    </button>
-  )
 }
 
 export function SelectPeriod(props: InputProps) {
@@ -68,7 +61,12 @@ export function SelectPeriod(props: InputProps) {
             const filterByDateInPeriod2 = document.getElementById('filterByDateInPeriod2');
             const filterByClient = document.getElementById('filterByClient');
 
-            if (filterByDateElement) filterByDateElement.style.display = 'block';
+            if (filterByDateElement?.style.display === 'block') {
+              filterByDateElement.style.display = 'none';
+            } else {
+              if (filterByDateElement) filterByDateElement.style.display = 'block';
+            }
+
             if (filterByPeriod) filterByPeriod.style.display = 'none';
             if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'none';
             if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'none';
@@ -86,9 +84,15 @@ export function SelectPeriod(props: InputProps) {
             const filterByClient = document.getElementById('filterByClient');
 
             if (filterByDateElement) filterByDateElement.style.display = 'none';
-            if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'block';
-            if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'block';
-            if (filterByPeriod) filterByPeriod.style.display = 'flex';
+
+            if (filterByPeriod?.style.display === 'flex') {
+              filterByPeriod.style.display = 'none';
+            } else {
+              if (filterByPeriod) filterByPeriod.style.display = 'flex';
+              if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'block';
+              if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'block';
+            }
+
             if (filterByClient) filterByClient.style.display = 'none';
           }}
           text='Período'
@@ -106,7 +110,12 @@ export function SelectPeriod(props: InputProps) {
             if (filterByPeriod) filterByPeriod.style.display = 'none';
             if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'none';
             if (filterByDateElement) filterByDateElement.style.display = 'none';
-            if (filterByClient) filterByClient.style.display = 'block';
+
+            if (filterByClient?.style.display === 'block') {
+              filterByClient.style.display = 'none';
+            } else {
+              if (filterByClient) filterByClient.style.display = 'block';
+            }
           }}
           text='Cliente'
         />
@@ -120,93 +129,137 @@ export function SelectPeriod(props: InputProps) {
       </div>
 
       <div
-        // className="form-row d-flex align-items-center"
         style={{
           display: 'none',
-          flexDirection: 'column'
-          // maxWidth: '360px',
+        }}
+        id='filterByDate'
+        className='shadow-sm p-3'
+      >
+        <LabelForm text='Data' />
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
+          <InputDate
+            idComponent='date1InputDate'
+            idInput='date1'
+            text='Data'
+            onChange={(e: React.BaseSyntheticEvent) => setDate1(e.target.value)}
+            className=''
+          />
+          <SearchButton
+            onClick={(e: React.BaseSyntheticEvent) => {
+              getSalesInPeriodResponse(e)
+              clearAllFilters()
+            }}
+          />
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: 'none',
+          flexDirection: 'column',
         }}
         id='filterByPeriod'
+        className='shadow-sm p-3'
       >
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            width: '300px',
+            width: '360px',
+            alignItems: 'flex-end'
           }}
         >
-          <InputDate
-            idComponent='filterByDateInPeriod'
-            idInput='date1Period'
-            text='Início'
-            onChange={(e: React.BaseSyntheticEvent) => setDate1(e.target.value)}
-          // style={{ display: 'none' }}
-          />
+          <div
+            style={{
+              display: 'block'
+            }}
+          >
+            <LabelForm text='Inicial' />
+            <InputDate
+              idComponent='filterByDateInPeriod'
+              idInput='date1Period'
+              text='Início'
+              onChange={(e: React.BaseSyntheticEvent) => setDate1(e.target.value)}
+            />
+          </div>
 
-          <InputDate
-            idComponent='filterByDateInPeriod2'
-            idInput='date2'
-            text='Término'
-            onChange={(e: React.BaseSyntheticEvent) => setDate2(e.target.value)}
-          // style={{ display: 'none' }}
+          <div
+            style={{
+              display: 'block'
+            }}
+          >
+            <LabelForm text='Final' />
+            <InputDate
+              idComponent='filterByDateInPeriod2'
+              idInput='date2'
+              text='Término'
+              onChange={(e: React.BaseSyntheticEvent) => setDate2(e.target.value)}
+            />
+          </div>
+          <SearchButton
+            onClick={(e: React.BaseSyntheticEvent) => {
+              getSalesInPeriodResponse(e)
+              clearAllFilters()
+            }}
+            style={{
+              height: '55px',
+            }}
           />
-        </div>
-        <div style={{
-          display: 'flex'
-        }}>
-          <FetchSalesButton onClick={(e: React.BaseSyntheticEvent) => {
-            getSalesInPeriodResponse(e)
-            clearAllFilters()
-          }} />
         </div>
       </div>
 
-
       <div
+        className="mt-4 mb-4 shadow p-3"
         style={{
-          display: 'none',
-        }}
-        id='filterByDate'
-      >
-        <InputDate
-          idComponent='date1InputDate'
-          idInput='date1'
-          text='Data'
-          onChange={(e: React.BaseSyntheticEvent) => setDate1(e.target.value)}
-        />
-        <FetchSalesButton onClick={(e: React.BaseSyntheticEvent) => {
-          getSalesInPeriodResponse(e)
-          clearAllFilters()
-        }} />
-      </div>
-
-      <div
-        style={{
-          maxWidth: '330px',
           display: 'none'
         }}
-        className="mt-4 mb-4"
         id='filterByClient'
       >
         {filterByClient !== null ? (
-          <div>
+          <div
+            style={{
+              display: 'flex'
+            }}>
             <ComboBox
               title="Digite o nome do cliente..."
               options={filterByClient.map((item) => item.name)}
               selectValue={(e: React.BaseSyntheticEvent, item: string) => setDataClient(e, item)}
-              className='mb-3'
+              style={{
+                width: '300px'
+              }}
             />
-            <FetchSalesButton onClick={(e: React.BaseSyntheticEvent) => {
-              getSalesInPeriodResponse(e)
-              clearAllFilters()
-            }} />
+            <SearchButton
+              onClick={(e: React.BaseSyntheticEvent) => {
+                getSalesInPeriodResponse(e)
+                clearAllFilters()
+              }}
+            />
           </div>
         ) : (
-          <ComboBox
-            title="Digite o nome do cliente..."
-            options={[]}
-            selectValue={(e: React.BaseSyntheticEvent, item: string) => setDataClient(e, item)}
-          />
+          <div
+            style={{
+              display: 'flex'
+            }}
+          >
+            <ComboBox
+              title="Digite o nome do cliente..."
+              options={[]}
+              selectValue={(e: React.BaseSyntheticEvent, item: string) => setDataClient(e, item)}
+              style={{
+                width: '300px'
+              }}
+            />
+            <SearchButton
+              onClick={(e: React.BaseSyntheticEvent) => {
+                getSalesInPeriodResponse(e)
+                clearAllFilters()
+              }}
+            />
+          </div>
         )}
       </div>
     </div>

@@ -144,7 +144,7 @@ export function Clients() {
       </div>
 
 
-      <div className="pb-2"
+      <div className="pb-2 mb-3"
         style={{
           overflow: 'auto',
           whiteSpace: 'nowrap',
@@ -154,10 +154,15 @@ export function Clients() {
       >
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            const filerBSegmentElement = document.getElementById('searchBySegmento');
+            const filterBySegmentElement = document.getElementById('searchBySegmento');
             const filterByNameElement = document.getElementById('searchByName');
 
-            if (filerBSegmentElement) filerBSegmentElement.style.display = 'flex';
+            if (filterBySegmentElement?.style.display === 'flex') {
+              filterBySegmentElement.style.display = 'none';
+            } else {
+              if (filterBySegmentElement) filterBySegmentElement.style.display = 'flex';
+            }
+
             if (filterByNameElement) filterByNameElement.style.display = 'none';
           }}
           text='Segmento'
@@ -165,11 +170,16 @@ export function Clients() {
 
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
+            const filterBySegmentElement = document.getElementById('searchBySegmento');
             const filterByNameElement = document.getElementById('searchByName');
-            const filerBSegmentElement = document.getElementById('searchBySegmento');
 
-            if (filterByNameElement) filterByNameElement.style.display = 'flex';
-            if (filerBSegmentElement) filerBSegmentElement.style.display = 'none';
+            if (filterByNameElement?.style.display === 'flex') {
+              filterByNameElement.style.display = 'none';
+            } else {
+              if (filterByNameElement) filterByNameElement.style.display = 'flex';
+            }
+
+            if (filterBySegmentElement) filterBySegmentElement.style.display = 'none';
           }}
           text='Nome'
         />
@@ -188,7 +198,7 @@ export function Clients() {
       </div>
 
       <div
-        className='mb-4'
+        className='mb-4 shadow p-3'
         style={{
           display: 'none',
         }}
@@ -197,7 +207,7 @@ export function Clients() {
         <ComboBox
           title="Digite o nome..."
           options={clients.map((item: IClient) => ({ label: item.name, id: item.id }))}
-          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientById(item.id)}
+          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientById(item ? item.id : '')}
           style={{
             width: '300px'
           }}
@@ -207,7 +217,7 @@ export function Clients() {
         />
       </div>
       <div
-        className='mb-4'
+        className='mb-4 shadow p-3'
         style={{
           display: 'none'
         }}
