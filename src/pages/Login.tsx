@@ -33,7 +33,7 @@ function LoginPage() {
     if (navbar) navbar.style.display = 'none';
   }, []);
 
-  const saveLoginUser = (login: { user: string, id: string }) => {
+  const saveLoginUser = (login: { user: string; id: string }) => {
     dispatch(loginAdded({ login: login.user, id: login.id }));
     navigate('/home', { replace: true });
   };
@@ -69,10 +69,11 @@ function LoginPage() {
     setTimeout(() => setServerError(null), TIMEOUT.FIVE_SECCONDS);
   }
 
-  const handlePasswordChange = (prop: any) => (event: React.BaseSyntheticEvent) => {
-    event.preventDefault();
-    setPassword({ ...password, [prop]: event.target.value });
-  };
+  const handlePasswordChange =
+    (prop: any) => (event: React.BaseSyntheticEvent) => {
+      event.preventDefault();
+      setPassword({ ...password, [prop]: event.target.value });
+    };
 
   return (
     <div className="login_container">
@@ -92,7 +93,7 @@ function LoginPage() {
               </p>
             </div>
             <div className="form-group">
-              <LabelForm text='Usuário' />
+              <LabelForm text="Usuário" />
 
               <div className="input-group">
                 <div className="input-group-prepend">
@@ -110,7 +111,7 @@ function LoginPage() {
               </div>
             </div>
             <div className="form-group">
-              <LabelForm text='Senha' />
+              <LabelForm text="Senha" />
 
               <div className="input-group">
                 <div className="input-group-prepend">

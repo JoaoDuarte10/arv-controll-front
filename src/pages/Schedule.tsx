@@ -46,14 +46,15 @@ export function Schedule() {
 
   const [idScheduleDeleted, setIdScheduleDeleted] = useState<string>('');
 
-  const [scheduleDeletedSuccess, setScheduleDeletedSuccess] = useState<boolean>(false);
+  const [scheduleDeletedSuccess, setScheduleDeletedSuccess] =
+    useState<boolean>(false);
 
-  const [fetchScheduleSuccess, setFetchScheduleSuccess] = useState<boolean>(false);
+  const [fetchScheduleSuccess, setFetchScheduleSuccess] =
+    useState<boolean>(false);
   const [scheduleNotFound, setScheduleNotFound] = useState<boolean>(false);
   const [serverError, setServerError] = useState<boolean>(false);
   const [clearSchedule, setClearSchedule] = useState<boolean>(false);
   const [scheduleFinish, setScheduleFinish] = useState<boolean>(false);
-
 
   useEffect(() => {
     let isMounted = true;
@@ -106,7 +107,7 @@ export function Schedule() {
     }
 
     if (request.status === HTTP_RESPONSE.NOT_FOUND) {
-      setScheduleNotFound(true)
+      setScheduleNotFound(true);
       setSchedule([]);
       return;
     }
@@ -115,16 +116,19 @@ export function Schedule() {
     setFetchScheduleSuccess(true);
   };
 
-  const finishScheduleResponse = async (event: React.BaseSyntheticEvent, id: any) => {
+  const finishScheduleResponse = async (
+    event: React.BaseSyntheticEvent,
+    id: any,
+  ) => {
     event.preventDefault();
 
     const scheduleFinish = schedules
       .map((item: any) => item)
-      .filter((item: { id: any; }) => item.id === id);
+      .filter((item: { id: any }) => item.id === id);
 
     const expiredScheduleFinish = expiredSchedules
       .map((item: any) => item)
-      .filter((item: { id: any; }) => item.id === id);
+      .filter((item: { id: any }) => item.id === id);
 
     scheduleFinish.push(...expiredScheduleFinish);
 
@@ -147,7 +151,10 @@ export function Schedule() {
     });
   };
 
-  const deleteClientScheduleResponse = async (event: React.BaseSyntheticEvent, id: string) => {
+  const deleteClientScheduleResponse = async (
+    event: React.BaseSyntheticEvent,
+    id: string,
+  ) => {
     event.preventDefault();
     const result = await scheduleService.deleteClientSchedule(auth.userId, id);
 
@@ -178,14 +185,18 @@ export function Schedule() {
   const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
 
-    const dateLoad = document.getElementById('dateLoadSchedule') as HTMLInputElement;
+    const dateLoad = document.getElementById(
+      'dateLoadSchedule',
+    ) as HTMLInputElement;
     if (dateLoad) dateLoad.value = '';
     const clickButtonSelect = document.querySelector(
       '#filterByClient > div > div > div > div > div > button',
     ) as HTMLElement;
     if (clickButtonSelect) clickButtonSelect.click();
 
-    const date1Element = document.getElementById('date1') as HTMLInputElement | null;
+    const date1Element = document.getElementById(
+      'date1',
+    ) as HTMLInputElement | null;
     if (date1Element) date1Element.value = '';
 
     setDate('');
@@ -239,7 +250,9 @@ export function Schedule() {
         id="delete-client-schedule"
         title="Excluir horário?"
         body="Tem certeza que deseja excluir esse horário?"
-        click={(e: React.BaseSyntheticEvent) => deleteClientScheduleResponse(e, idScheduleDeleted)}
+        click={(e: React.BaseSyntheticEvent) =>
+          deleteClientScheduleResponse(e, idScheduleDeleted)
+        }
         button="Excluir"
       />
 
@@ -253,57 +266,63 @@ export function Schedule() {
         button="Finalizar"
       />
 
-      <TitlePage title='Agenda' />
-
+      <TitlePage title="Agenda" />
 
       <div
-        className='mb-4 pb-2'
+        className="mb-4 pb-2"
         style={{
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFilters(e)
+            clearFilters(e);
             const filterByDateElement = document.getElementById('filterByDate');
-            const filterByClientElement = document.getElementById('filterByClient');
+            const filterByClientElement =
+              document.getElementById('filterByClient');
 
             if (filterByDateElement?.style.display === 'block') {
               filterByDateElement.style.display = 'none';
             } else {
-              if (filterByDateElement) filterByDateElement.style.display = 'block';
+              if (filterByDateElement)
+                filterByDateElement.style.display = 'block';
             }
 
-            if (filterByClientElement) filterByClientElement.style.display = 'none';
+            if (filterByClientElement)
+              filterByClientElement.style.display = 'none';
           }}
-          text='Data'
+          text="Data"
         />
 
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFilters(e)
+            clearFilters(e);
             const filterByDateElement = document.getElementById('filterByDate');
-            const filterByClientElement = document.getElementById('filterByClient');
+            const filterByClientElement =
+              document.getElementById('filterByClient');
 
             if (filterByClientElement?.style.display === 'block') {
               filterByClientElement.style.display = 'none';
             } else {
-              if (filterByClientElement) filterByClientElement.style.display = 'block';
+              if (filterByClientElement)
+                filterByClientElement.style.display = 'block';
             }
 
             if (filterByDateElement) filterByDateElement.style.display = 'none';
           }}
-          text='Cliente'
+          text="Cliente"
         />
 
         <ClearSearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
             clearFilters(e);
             const filterByDateElement = document.getElementById('filterByDate');
-            const filterByClientElement = document.getElementById('filterByClient');
+            const filterByClientElement =
+              document.getElementById('filterByClient');
 
-            if (filterByClientElement) filterByClientElement.style.display = 'none';
+            if (filterByClientElement)
+              filterByClientElement.style.display = 'none';
             if (filterByDateElement) filterByDateElement.style.display = 'none';
           }}
         />
@@ -312,40 +331,43 @@ export function Schedule() {
       <div
         className="col mb-4 shadow p-3"
         style={{
-          display: 'none'
+          display: 'none',
         }}
-        id='filterByDate'
+        id="filterByDate"
       >
-        <LabelForm text='Data' />
-        <div style={{
-          display: 'flex'
-        }}>
+        <LabelForm text="Data" />
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
           <InputDate
-            idComponent='date1InputDate'
-            idInput='date1'
-            onChange={(e: { target: { value: any; }; }) => setDate(e.target.value)}
-            className=''
+            idComponent="date1InputDate"
+            idInput="date1"
+            onChange={(e: { target: { value: any } }) =>
+              setDate(e.target.value)
+            }
+            className=""
           />
           <SearchButton
             onClick={(e: React.BaseSyntheticEvent) => {
-              getScheduleResponse(e)
+              getScheduleResponse(e);
             }}
           />
         </div>
       </div>
 
-
       <div
         className="mt-2 mb-4 shadow p-3"
         style={{
-          display: 'none'
+          display: 'none',
         }}
-        id='filterByClient'
+        id="filterByClient"
       >
         {clients !== null ? (
           <div
             style={{
-              display: 'flex'
+              display: 'flex',
             }}
           >
             <ComboBox
@@ -359,19 +381,19 @@ export function Schedule() {
                 setClientSelected(item);
               }}
               style={{
-                width: '300px'
+                width: '300px',
               }}
             />
             <SearchButton
               onClick={(e: React.BaseSyntheticEvent) => {
-                getScheduleResponse(e)
+                getScheduleResponse(e);
               }}
             />
           </div>
         ) : (
           <div
             style={{
-              display: 'flex'
+              display: 'flex',
             }}
           >
             <ComboBox
@@ -385,12 +407,12 @@ export function Schedule() {
                 setClientSelected(item);
               }}
               style={{
-                width: '300px'
+                width: '300px',
               }}
             />
             <SearchButton
               onClick={(e: React.BaseSyntheticEvent) => {
-                getScheduleResponse(e)
+                getScheduleResponse(e);
               }}
             />
           </div>
@@ -424,17 +446,17 @@ export function Schedule() {
 
       {expiredSchedules
         ? expiredSchedules.map((item) => {
-          return (
-            <div key={randomId()}>
-              <ScheduleCard
-                item={item}
-                setId={setId}
-                setIdScheduleDeleted={setIdScheduleDeleted}
-                expired={true}
-              />
-            </div>
-          );
-        })
+            return (
+              <div key={randomId()}>
+                <ScheduleCard
+                  item={item}
+                  setId={setId}
+                  setIdScheduleDeleted={setIdScheduleDeleted}
+                  expired={true}
+                />
+              </div>
+            );
+          })
         : null}
 
       <br />
@@ -443,8 +465,10 @@ export function Schedule() {
         <div>
           {schedules
             .filter(
-              (item: { id: any; }) =>
-                !expiredSchedules.map((expire: { id: any; }) => expire.id).includes(item.id),
+              (item: { id: any }) =>
+                !expiredSchedules
+                  .map((expire: { id: any }) => expire.id)
+                  .includes(item.id),
             )
             .map((item: any) => {
               return (

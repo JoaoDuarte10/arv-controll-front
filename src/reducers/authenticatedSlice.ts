@@ -7,10 +7,12 @@ type UserLogin = {
   userName: string | null;
   userId: string | null;
   redirectLoginPageUri?: string;
-}
+};
 
 const initialState: UserLogin = {
-  userName: loginInLocalStorage ? JSON.parse(loginInLocalStorage).userName : null,
+  userName: loginInLocalStorage
+    ? JSON.parse(loginInLocalStorage).userName
+    : null,
   userId: loginInLocalStorage ? JSON.parse(loginInLocalStorage).userId : null,
   redirectLoginPageUri: '/login',
 };
@@ -27,7 +29,7 @@ const authenticatedSlice = createSlice({
           state.userId = action.payload.userId;
         }
       },
-      prepare(params: { login: string, id: string }): { payload: UserLogin } {
+      prepare(params: { login: string; id: string }): { payload: UserLogin } {
         return {
           payload: {
             userName: params.login,

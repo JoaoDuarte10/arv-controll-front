@@ -43,9 +43,14 @@ export function Segments() {
   const [id, setId] = useState<string | null>(null);
   const [titleCardSegment, setTitleCardSegment] = useState<string>('');
   const [actionName, setActionName] = useState<string>('');
-  const [editSegmentName, setEditSegmentName] = useState<any>({ name: '', id: '' });
+  const [editSegmentName, setEditSegmentName] = useState<any>({
+    name: '',
+    id: '',
+  });
   const [editSegment, setEditSegment] = useState<boolean | null>(null);
-  const [segmentActual, setSegmentActual] = useState<{ label: string, id: string } | any>(null);
+  const [segmentActual, setSegmentActual] = useState<
+    { label: string; id: string } | any
+  >(null);
   const [clientsInSegment, setClientsInSegment] = useState<IClient[] | any>([]);
   const [alert, setAlert] = useState<JSX.Element | null>(null);
 
@@ -55,11 +60,16 @@ export function Segments() {
     }
   }, [auth, navigate]);
 
-  const getClientBySegment = async (event: React.BaseSyntheticEvent, params: { label: string, id: string }) => {
+  const getClientBySegment = async (
+    event: React.BaseSyntheticEvent,
+    params: { label: string; id: string },
+  ) => {
     event.preventDefault();
     setSegmentActual(params);
 
-    const query = [...clients.filter((item: IClient) => item.segment === params.label)];
+    const query = [
+      ...clients.filter((item: IClient) => item.segment === params.label),
+    ];
 
     if (query.length === 0) {
       setAlert(<AlertInfo title="Nenhum cliente nesse segmento." />);
@@ -99,7 +109,10 @@ export function Segments() {
     if (buttonSelector) buttonSelector.click();
   };
 
-  const onAddNewSegment = async (event: React.BaseSyntheticEvent, segment: any) => {
+  const onAddNewSegment = async (
+    event: React.BaseSyntheticEvent,
+    segment: any,
+  ) => {
     event.preventDefault();
 
     if (!segment || !segment.trim()) {
@@ -121,7 +134,11 @@ export function Segments() {
     }
   };
 
-  const updateSegmentRequest = async (event: React.BaseSyntheticEvent, segment: any, id: string) => {
+  const updateSegmentRequest = async (
+    event: React.BaseSyntheticEvent,
+    segment: any,
+    id: string,
+  ) => {
     event.preventDefault();
 
     try {
@@ -136,7 +153,11 @@ export function Segments() {
     }
   };
 
-  const onDeleteSegment = async (event: React.BaseSyntheticEvent, id: string, segment: string) => {
+  const onDeleteSegment = async (
+    event: React.BaseSyntheticEvent,
+    id: string,
+    segment: string,
+  ) => {
     event.preventDefault();
 
     try {
@@ -176,7 +197,7 @@ export function Segments() {
       {loader}
       <Breadcumb page={[{ link: false, name: 'Segmentos' }]} />
 
-      <TitlePage title='Segmentos' />
+      <TitlePage title="Segmentos" />
 
       <TopModal
         className="btn btn-danger"
@@ -194,7 +215,7 @@ export function Segments() {
         body="Tem certeza que deseja excluir esse segmento?"
         click={(e: React.BaseSyntheticEvent) => {
           if (segmentActual) {
-            onDeleteSegment(e, segmentActual.id, segmentActual.label)
+            onDeleteSegment(e, segmentActual.id, segmentActual.label);
           }
         }}
         button="Excluir"
@@ -205,8 +226,12 @@ export function Segments() {
         title={titleCardSegment}
         actionName={actionName}
         segment={editSegmentName}
-        clearStates={(e: React.BaseSyntheticEvent) => setEditSegmentName({ name: '', id: '' })}
-        actionCreate={(e: React.BaseSyntheticEvent, segment: any) => onAddNewSegment(e, segment)}
+        clearStates={(e: React.BaseSyntheticEvent) =>
+          setEditSegmentName({ name: '', id: '' })
+        }
+        actionCreate={(e: React.BaseSyntheticEvent, segment: any) =>
+          onAddNewSegment(e, segment)
+        }
         actionUpdate={updateSegmentRequest}
         setNewSegment={setEditSegmentName}
         alert={alert}

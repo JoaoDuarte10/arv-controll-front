@@ -28,7 +28,7 @@ export function Home() {
     <div className="container-main">
       <Breadcumb page={[]} />
 
-      <TitlePage title={`Olá, ${auth ? auth.userName : 'Seja Bem Vindo'}!`}/>
+      <TitlePage title={`Olá, ${auth ? auth.userName : 'Seja Bem Vindo'}!`} />
       <p>
         Este é o <strong>ARV - Controll &copy;</strong>, um Sistema de
         Gerenciamento de Vendas e Agenda.

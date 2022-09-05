@@ -9,4 +9,4 @@ export const HTTP_RESPONSE = {
 
 export const TIMEOUT = {
   FIVE_SECCONDS: 5000,
-}
+};

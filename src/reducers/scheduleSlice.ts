@@ -12,7 +12,7 @@ export type ISchedule = {
   pacote: boolean | null;
   qtdTotalAtendimento: number;
   qtdAtendimento: string;
-}
+};
 
 const initialState: ISchedule = {
   id: '',
@@ -46,8 +46,8 @@ const scheduleSlice = createSlice({
       },
       prepare(payload) {
         return {
-          payload
-        }
+          payload,
+        };
       },
     },
   },

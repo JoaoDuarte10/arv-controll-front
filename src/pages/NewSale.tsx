@@ -33,7 +33,8 @@ export function NewSale() {
   const [date, setDate] = useState<string>('');
 
   const [serverError, setServerError] = useState<boolean>(false);
-  const [saleRegisterSuccess, setSaleRegisterSuccess] = useState<boolean>(false);
+  const [saleRegisterSuccess, setSaleRegisterSuccess] =
+    useState<boolean>(false);
   const [saleRegisterFail, setSaleRegisterFail] = useState<boolean>(false);
 
   useEffect(() => {
@@ -86,7 +87,7 @@ export function NewSale() {
   }
 
   if (saleRegisterFail) {
-    setTimeout(() => setSaleRegisterFail(false), TIMEOUT.FIVE_SECCONDS)
+    setTimeout(() => setSaleRegisterFail(false), TIMEOUT.FIVE_SECCONDS);
   }
 
   if (serverError) {
@@ -109,12 +110,12 @@ export function NewSale() {
           { link: false, name: 'Nova Venda' },
         ]}
       />
-      <TitlePage title='Registrar Nova Venda' />
+      <TitlePage title="Registrar Nova Venda" />
 
       <form onSubmit={saveSale} className="form-sale">
         <div className="card p-3">
           <div className="form-group mb-2">
-            <LabelForm text='Cliente' />
+            <LabelForm text="Cliente" />
 
             {clients ? (
               <ComboBox
@@ -143,18 +144,20 @@ export function NewSale() {
             )}
           </div>
 
-          <LabelForm text='Descrição' />
+          <LabelForm text="Descrição" />
           <InputText
             id="name"
             label="Digite a descrição"
             value={description}
             variant="outlined"
-            onChange={(e: React.BaseSyntheticEvent) => setDescription(e.target.value)}
+            onChange={(e: React.BaseSyntheticEvent) =>
+              setDescription(e.target.value)
+            }
           />
 
           <div className="form-row mt-2">
             <div className="form-group col">
-              <LabelForm text='Preço' />
+              <LabelForm text="Preço" />
 
               <InputText
                 id="price"
@@ -170,7 +173,7 @@ export function NewSale() {
             </div>
 
             <div className="form-group col">
-              <LabelForm text='Data' />
+              <LabelForm text="Data" />
 
               <InputText
                 type={'date'}
@@ -178,7 +181,9 @@ export function NewSale() {
                 value={date}
                 id="date"
                 variant="outlined"
-                onChange={(e: React.BaseSyntheticEvent) => setDate(e.target.value)}
+                onChange={(e: React.BaseSyntheticEvent) =>
+                  setDate(e.target.value)
+                }
               />
             </div>
           </div>

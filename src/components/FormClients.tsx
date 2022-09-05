@@ -18,7 +18,7 @@ type InputProps = {
   segmentSelect: string;
   onChangeClient: any;
   alert: JSX.Element | null;
-}
+};
 
 export function FormClients(props: InputProps) {
   const { data: segments = [] } = useGetSegmentsQuery('');
@@ -49,7 +49,7 @@ export function FormClients(props: InputProps) {
       </div>
       <div className="modal-body">
         <form>
-          <LabelForm text='Nome' />
+          <LabelForm text="Nome" />
 
           <InputText
             type="text"
@@ -59,7 +59,7 @@ export function FormClients(props: InputProps) {
             onChange={(e: React.BaseSyntheticEvent) => setName(e.target.value)}
             label="Digite o nome do cliente"
           />
-          <LabelForm text='E-mail' />
+          <LabelForm text="E-mail" />
 
           <InputText
             type="text"
@@ -69,7 +69,7 @@ export function FormClients(props: InputProps) {
             onChange={(e: React.BaseSyntheticEvent) => setEmail(e.target.value)}
             label="Digite o email"
           />
-          <LabelForm text='Telefone' />
+          <LabelForm text="Telefone" />
 
           <InputMask
             type="text"
@@ -84,11 +84,13 @@ export function FormClients(props: InputProps) {
           />
           {segments && segments.length > 0 && (
             <div>
-              <LabelForm text='Segmento' />
+              <LabelForm text="Segmento" />
               <ComboBox
                 title="Selecionar Segmento"
                 options={segments.map((item: ISegment) => item.segment)}
-                selectValue={(e: React.BaseSyntheticEvent, item: string) => setSegmentSelect(item)}
+                selectValue={(e: React.BaseSyntheticEvent, item: string) =>
+                  setSegmentSelect(item)
+                }
               />
             </div>
           )}

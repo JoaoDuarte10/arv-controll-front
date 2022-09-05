@@ -12,7 +12,7 @@ type InputProps = {
   segment: ISegment;
   setNewSegment: Function;
   alert: JSX.Element | null;
-}
+};
 
 export function CardSegment(props: InputProps) {
   const {
@@ -51,7 +51,7 @@ export function CardSegment(props: InputProps) {
             </button>
           </div>
           <div className="modal-body">
-            <LabelForm text='Segmento' />
+            <LabelForm text="Segmento" />
 
             <InputText
               type="text"
@@ -64,7 +64,7 @@ export function CardSegment(props: InputProps) {
               required={true}
             />
             <div className="form-row mt-4">
-              <div className='form-group col'>
+              <div className="form-group col">
                 <button
                   type="reset"
                   onClick={() => {
@@ -78,7 +78,7 @@ export function CardSegment(props: InputProps) {
                   Fechar
                 </button>
               </div>
-              <div className='form-group col'>
+              <div className="form-group col">
                 <button
                   className="btn btn-primary col p-2"
                   type="button"

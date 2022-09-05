@@ -3,10 +3,10 @@ import { randomId } from '../utils/random';
 
 type InputProps = {
   page: {
-    link: boolean | string,
-    name: string
-  }[]
-}
+    link: boolean | string;
+    name: string;
+  }[];
+};
 
 export function Breadcumb(props: InputProps) {
   const { page } = props;

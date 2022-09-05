@@ -31,11 +31,11 @@ export function Sales() {
   const [date2, setDate2] = useState<string | null>('');
   const [sales, setSales] = useState<ISales[]>([]);
   const [salesTodayNotFound, setSalesTodayNotFound] = useState<boolean>(false);
-  
+
   const [fetchSalesSuccess, setFetchSalesSuccess] = useState<boolean>(false);
 
   const [clearFields, setClearFields] = useState<boolean>(false);
-  
+
   const [salesNotFound, setSalesNotFound] = useState<boolean>(false);
   const [serverError, setServerError] = useState<boolean>(false);
 
@@ -93,7 +93,11 @@ export function Sales() {
         clientSelected,
       );
     } else {
-      request = await salesService.getSalesInPeriod(auth.userId, date1 as string, date2 as string);
+      request = await salesService.getSalesInPeriod(
+        auth.userId,
+        date1 as string,
+        date2 as string,
+      );
     }
 
     if (request.status === HTTP_RESPONSE.NOT_FOUND) {
@@ -108,7 +112,7 @@ export function Sales() {
     }
 
     setSales(request.data);
-    setFetchSalesSuccess(true)
+    setFetchSalesSuccess(true);
   };
 
   const clearSales = (event: React.BaseSyntheticEvent) => {
@@ -121,13 +125,17 @@ export function Sales() {
   };
 
   const clearDates = () => {
-    const date1Element = document.getElementById('date1') as HTMLInputElement | null;
-    const date2Element = document.getElementById('date2') as HTMLInputElement | null;
+    const date1Element = document.getElementById(
+      'date1',
+    ) as HTMLInputElement | null;
+    const date2Element = document.getElementById(
+      'date2',
+    ) as HTMLInputElement | null;
     if (date1Element) date1Element.value = '';
     if (date2Element) date2Element.value = '';
     setDate1('');
     setDate2('');
-  }
+  };
 
   const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
@@ -135,9 +143,8 @@ export function Sales() {
     clearDates();
     const buttonSelector = document.querySelector(
       '#root > div > div.container-main > div.card.mb-4.p-3.shadow.bg-white.rounded > form > div.mb-4 > div > div > div > div > button',
-    ) as HTMLElement | null;;
+    ) as HTMLElement | null;
     if (buttonSelector) buttonSelector.click();
-
   };
 
   if (salesNotFound === true) {
@@ -176,14 +183,16 @@ export function Sales() {
       {content}
       <Breadcumb page={[{ link: false, name: 'Suas Vendas' }]} />
 
-      <TitlePage title='Suas Vendas' />
+      <TitlePage title="Suas Vendas" />
 
       <SelectPeriod
         getSalesInPeriodResponse={getSalesInPeriodResponse}
         setDate1={setDate1}
         setDate2={setDate2}
         filterByClient={clients}
-        setDataClient={(e: React.BaseSyntheticEvent, item: string) => setClientSelected(item)}
+        setDataClient={(e: React.BaseSyntheticEvent, item: string) =>
+          setClientSelected(item)
+        }
         clearFields={(e: React.BaseSyntheticEvent) => clearFilters(e)}
       />
 
@@ -218,9 +227,9 @@ export function Sales() {
                   })}
                 {date2 &&
                   ' - ' +
-                  new Date(date2).toLocaleDateString('pt-BR', {
-                    timeZone: 'UTC',
-                  })}
+                    new Date(date2).toLocaleDateString('pt-BR', {
+                      timeZone: 'UTC',
+                    })}
               </div>
             </div>
           )}
@@ -228,9 +237,7 @@ export function Sales() {
           {clientSelected && (
             <div className="d-inline">
               <strong>Cliente: </strong>
-              <div className="d-inline">
-                {clientSelected}
-              </div>
+              <div className="d-inline">{clientSelected}</div>
             </div>
           )}
 

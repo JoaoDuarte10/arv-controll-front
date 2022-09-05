@@ -109,12 +109,17 @@ export function EditScheduleForm() {
           setContact={setContact}
           clearStates={(e: React.BaseSyntheticEvent) => clearStates()}
           edit={true}
-          addNewClientSchedule={(e: React.BaseSyntheticEvent) => onChangeSchedule(e)}
-          setPacoteFunc={(e: React.BaseSyntheticEvent, pacote: boolean) => setPacote(pacote)}
-          pacote={pacote}
-          setQtdTotalAtendimentoFuncion={(e: React.BaseSyntheticEvent, qtd: number) =>
-            setQtdTotalAtendimento(qtd)
+          addNewClientSchedule={(e: React.BaseSyntheticEvent) =>
+            onChangeSchedule(e)
           }
+          setPacoteFunc={(e: React.BaseSyntheticEvent, pacote: boolean) =>
+            setPacote(pacote)
+          }
+          pacote={pacote}
+          setQtdTotalAtendimentoFuncion={(
+            e: React.BaseSyntheticEvent,
+            qtd: number,
+          ) => setQtdTotalAtendimento(qtd)}
           qtdTotalAtendimento={qtdTotalAtendimento}
           alert={alert}
         />

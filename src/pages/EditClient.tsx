@@ -29,8 +29,12 @@ export function EditClient() {
   }
 
   const [name, setName] = useState<string>(editClient ? editClient.name : '');
-  const [email, setEmail] = useState<string>(editClient ? editClient.email : '');
-  const [phone, setPhone] = useState<string>(editClient ? editClient.phone : '');
+  const [email, setEmail] = useState<string>(
+    editClient ? editClient.email : '',
+  );
+  const [phone, setPhone] = useState<string>(
+    editClient ? editClient.phone : '',
+  );
   const [segmentSelect, setSegmentSelect] = useState<string | null>(
     editClient ? editClient.segment : null,
   );

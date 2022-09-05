@@ -31,8 +31,10 @@ export function CreateHistory() {
   const [serverError, setServerError] = useState<boolean>(false);
   const [invalidParams, setInvalidParams] = useState<boolean>(false);
 
-  const [historyResgisterSuccess, setHistoryRegisterSuccess] = useState<boolean>(false);
-  const [historyRegisterFail, setHistoryRegisterFail] = useState<boolean>(false);
+  const [historyResgisterSuccess, setHistoryRegisterSuccess] =
+    useState<boolean>(false);
+  const [historyRegisterFail, setHistoryRegisterFail] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (!auth.userId) {
@@ -110,48 +112,56 @@ export function CreateHistory() {
           { link: false, name: 'Criar Novo' },
         ]}
       />
-      <TitlePage title='Criar Novo' />
+      <TitlePage title="Criar Novo" />
 
       <form onSubmit={saveSale} className="form-sale">
         <div className="card p-3">
           <div className="form-group">
-            <LabelForm text='Cliente' />
+            <LabelForm text="Cliente" />
             <div>
               {clients ? (
                 <ComboBox
                   title="Selecionar Cliente"
                   options={clients.map((item: IClient) => item.name)}
-                  selectValue={(e: React.BaseSyntheticEvent, item: IClient) => setClient(item.name)}
+                  selectValue={(e: React.BaseSyntheticEvent, item: IClient) =>
+                    setClient(item.name)
+                  }
                 />
               ) : (
                 <ComboBox
                   title="Selecionar Cliente"
                   options={[]}
-                  selectValue={(e: React.BaseSyntheticEvent, item: string) => setClient(item)}
+                  selectValue={(e: React.BaseSyntheticEvent, item: string) =>
+                    setClient(item)
+                  }
                 />
               )}
             </div>
           </div>
           <div className="form-group">
-            <LabelForm text='Descrição' />
+            <LabelForm text="Descrição" />
 
             <InputText
               type="text"
               value={description}
-              onChange={(e: React.BaseSyntheticEvent) => setDescription(e.target.value)}
+              onChange={(e: React.BaseSyntheticEvent) =>
+                setDescription(e.target.value)
+              }
               id="name"
               label="Digite a descrição"
             />
           </div>
           <div className="form-group">
-            <LabelForm text='Data' />
+            <LabelForm text="Data" />
 
             <InputText
               type="date"
               id="date"
               label=" "
               value={date}
-              onChange={(e: React.BaseSyntheticEvent) => setDate(e.target.value)}
+              onChange={(e: React.BaseSyntheticEvent) =>
+                setDate(e.target.value)
+              }
             />
           </div>
           <div className="form-row mt-3">

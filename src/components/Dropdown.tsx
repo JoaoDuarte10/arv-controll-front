@@ -5,8 +5,8 @@ type InputProps = {
   options: any[];
   selectValue: any;
   className?: string;
-  style?: React.CSSProperties
-}
+  style?: React.CSSProperties;
+};
 
 export function Dropdown(props: InputProps) {
   const { title, options, selectValue, className, style } = props;

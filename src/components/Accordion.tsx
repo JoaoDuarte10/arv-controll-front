@@ -3,7 +3,7 @@ type InputProps = {
   title: string;
   body1: any;
   body2: any;
-}
+};
 
 export function Accordion(props: InputProps) {
   const { id, title, body1, body2 } = props;

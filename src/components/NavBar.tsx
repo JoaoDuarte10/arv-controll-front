@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function hidenNavBar() {
-  const links = document.querySelectorAll(".navbar-nav li a:not([href='#'])") as any;
+  const links = document.querySelectorAll(
+    ".navbar-nav li a:not([href='#'])",
+  ) as any;
 
   for (let x = 0; x < links.length; x++) {
     links[x].onclick = function () {
-
-      const buttonToggler = document.querySelector('button.navbar-toggler') as any;
-      if (buttonToggler) buttonToggler.click()
+      const buttonToggler = document.querySelector(
+        'button.navbar-toggler',
+      ) as any;
+      if (buttonToggler) buttonToggler.click();
     };
   }
 }

@@ -7,8 +7,8 @@ type InputProps = {
   selectValue: any;
   value?: any;
   className?: string;
-  style?: React.CSSProperties
-}
+  style?: React.CSSProperties;
+};
 
 export function ComboBox(props: InputProps) {
   const { title, options, selectValue, value, className, style } = props;

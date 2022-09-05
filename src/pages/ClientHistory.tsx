@@ -113,13 +113,17 @@ export function ClientHistory() {
   };
 
   const clearDates = () => {
-    const date1Element = document.getElementById('date1') as HTMLInputElement | null;
-    const date2Element = document.getElementById('date2') as HTMLInputElement | null;
+    const date1Element = document.getElementById(
+      'date1',
+    ) as HTMLInputElement | null;
+    const date2Element = document.getElementById(
+      'date2',
+    ) as HTMLInputElement | null;
     if (date1Element) date1Element.value = '';
     if (date2Element) date2Element.value = '';
     setDate1('');
     setDate2('');
-  }
+  };
 
   if (historyNotFound) {
     setTimeout(() => setHistoryNotFound(false), TIMEOUT.FIVE_SECCONDS);
@@ -148,14 +152,16 @@ export function ClientHistory() {
     <div className="container-main">
       {loader}
       <Breadcumb page={[{ link: false, name: 'Histórico' }]} />
-      <TitlePage title='Histórico' />
+      <TitlePage title="Histórico" />
 
       <SelectPeriod
         getSalesInPeriodResponse={getHistoryInPeriodResponse}
         setDate1={setDate1}
         setDate2={setDate2}
         filterByClient={clients}
-        setDataClient={(e: React.BaseSyntheticEvent, item: string) => setClientSelected(item)}
+        setDataClient={(e: React.BaseSyntheticEvent, item: string) =>
+          setClientSelected(item)
+        }
         clearFields={(e: React.BaseSyntheticEvent) => clearFilters(e)}
       />
 
@@ -168,7 +174,9 @@ export function ClientHistory() {
       {clearSchedule === true ? (
         <AlertSuccess title="A pesquisa foi limpa." />
       ) : null}
-      {invalidParams === true && <AlertError title="Preencha os campos corretamente." />}
+      {invalidParams === true && (
+        <AlertError title="Preencha os campos corretamente." />
+      )}
 
       {clientHistory.length > 0 ? (
         <div>
@@ -182,18 +190,16 @@ export function ClientHistory() {
                   })}
                 {date2 &&
                   ' - ' +
-                  new Date(date2).toLocaleDateString('pt-BR', {
-                    timeZone: 'UTC',
-                  })}
+                    new Date(date2).toLocaleDateString('pt-BR', {
+                      timeZone: 'UTC',
+                    })}
               </div>
             )}
 
             {clientSelected && (
               <div className="d-inline">
                 <strong>Cliente: </strong>
-                <div className="d-inline">
-                  {clientSelected}
-                </div>
+                <div className="d-inline">{clientSelected}</div>
               </div>
             )}
           </div>

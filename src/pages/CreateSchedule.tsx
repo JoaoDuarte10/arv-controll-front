@@ -27,7 +27,9 @@ export function CreateSchedule() {
 
   const [client, setClient] = useState<string>('');
   const [pacote, setPacote] = useState<boolean>(false);
-  const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState<number | null>(null);
+  const [qtdTotalAtendimento, setQtdTotalAtendimento] = useState<number | null>(
+    null,
+  );
   const [procedure, setProcedure] = useState<string>('');
   const [dateNewSchedule, setDateNewSchedule] = useState<string>('');
   const [time, setTime] = useState<string>('');
@@ -42,7 +44,7 @@ export function CreateSchedule() {
     }
   }, [auth, navigate]);
 
-  const setDataClient = (params: { label: string, phone: string}) => {
+  const setDataClient = (params: { label: string; phone: string }) => {
     if (!params) {
       setClient('');
       setContact('');
@@ -57,7 +59,6 @@ export function CreateSchedule() {
 
     setClient(params.label);
   };
-
 
   const clearStates = () => {
     setClient('');
@@ -123,12 +124,14 @@ export function CreateSchedule() {
           { link: false, name: 'Nova Agenda' },
         ]}
       />
-      <TitlePage title='Nova Agenda' />
+      <TitlePage title="Nova Agenda" />
 
       <div className="card">
         <ScheduleForm
           clientSaves={clients}
-          setDataClient={(e: React.BaseSyntheticEvent, item: any) => setDataClient(item)}
+          setDataClient={(e: React.BaseSyntheticEvent, item: any) =>
+            setDataClient(item)
+          }
           client={client}
           setClient={setClient}
           procedure={procedure}
@@ -143,12 +146,17 @@ export function CreateSchedule() {
           setContact={setContact}
           clearStates={(e: React.BaseSyntheticEvent) => clearStates()}
           edit={false}
-          addNewClientSchedule={(e: React.BaseSyntheticEvent) => addNewClientSchedule(e)}
-          setPacoteFunc={(e: React.BaseSyntheticEvent, pacote: boolean) => setPacote(pacote)}
-          pacote={pacote}
-          setQtdTotalAtendimentoFuncion={(e: React.BaseSyntheticEvent, qtd: number) =>
-            setQtdTotalAtendimento(qtd)
+          addNewClientSchedule={(e: React.BaseSyntheticEvent) =>
+            addNewClientSchedule(e)
           }
+          setPacoteFunc={(e: React.BaseSyntheticEvent, pacote: boolean) =>
+            setPacote(pacote)
+          }
+          pacote={pacote}
+          setQtdTotalAtendimentoFuncion={(
+            e: React.BaseSyntheticEvent,
+            qtd: number,
+          ) => setQtdTotalAtendimento(qtd)}
           qtdTotalAtendimento={qtdTotalAtendimento}
           alert={alert}
         />

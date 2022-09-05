@@ -2,8 +2,8 @@ import { AlertInfo } from './alerts/AlertInfo';
 
 type InputProps = {
   id: string;
-  clientSales: any[]
-}
+  clientSales: any[];
+};
 
 function TableReport(props: InputProps) {
   const { id, clientSales } = props;

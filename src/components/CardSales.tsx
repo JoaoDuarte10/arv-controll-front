@@ -4,7 +4,7 @@ import { ISales } from '../api/types/Sales';
 type InputProps = {
   sales: ISales[];
   title: string;
-}
+};
 
 export function CardSales(props: InputProps) {
   const { sales, title } = props;

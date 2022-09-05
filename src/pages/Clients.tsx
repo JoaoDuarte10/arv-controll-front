@@ -10,7 +10,11 @@ import { ComboBox } from '../components/ComboBox';
 import { TitlePage } from '../components/TitlePage';
 import { TopModal } from '../components/TopModal';
 
-import { useDeleteClientMutation, useGetClientsQuery, useGetSegmentsQuery } from '../api/ApiSlice';
+import {
+  useDeleteClientMutation,
+  useGetClientsQuery,
+  useGetSegmentsQuery,
+} from '../api/ApiSlice';
 import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { ReducerStore } from '../app/store';
 import { ISegment } from '../api/types/Segment';
@@ -37,18 +41,18 @@ export function Clients() {
 
   const { data: segments = [] } = useGetSegmentsQuery('');
 
-  const [
-    deleteClient,
-    { isLoading: isLoadingDelete },
-  ] = useDeleteClientMutation();
+  const [deleteClient, { isLoading: isLoadingDelete }] =
+    useDeleteClientMutation();
 
   const [id, setId] = useState<string | null>(null);
   const [loaderClients, setLoaderClients] = useState<JSX.Element | null>();
   const [clientView, setClientView] = useState<IClient[]>([]);
-  const [deletedClientSuccess, setDeletedClientSuccess] = useState<boolean>(false);
+  const [deletedClientSuccess, setDeletedClientSuccess] =
+    useState<boolean>(false);
 
   const [filterClientById, setFilterClientById] = useState<string>('');
-  const [filterClientBySegment, setFilterClientBySegment] = useState<string>('');
+  const [filterClientBySegment, setFilterClientBySegment] =
+    useState<string>('');
 
   useEffect(() => {
     if (!auth.userId) {
@@ -65,7 +69,10 @@ export function Clients() {
     loader = null;
   }
 
-  const onDeleteClient = async (event: React.BaseSyntheticEvent, id: string) => {
+  const onDeleteClient = async (
+    event: React.BaseSyntheticEvent,
+    id: string,
+  ) => {
     event.preventDefault();
 
     try {
@@ -76,7 +83,10 @@ export function Clients() {
     }
   };
 
-  const filterClientSelectedById = (event: React.BaseSyntheticEvent, id: string) => {
+  const filterClientSelectedById = (
+    event: React.BaseSyntheticEvent,
+    id: string,
+  ) => {
     event.preventDefault();
 
     if (id) {
@@ -84,17 +94,22 @@ export function Clients() {
       setClientView(clientsById);
       return;
     }
-  }
+  };
 
-  const filterClientSelectedBySegment = (event: React.BaseSyntheticEvent, segment: string) => {
+  const filterClientSelectedBySegment = (
+    event: React.BaseSyntheticEvent,
+    segment: string,
+  ) => {
     event.preventDefault();
 
     if (segment) {
-      const clientsBySegment = clients.filter((client: IClient) => client.segment === segment);
+      const clientsBySegment = clients.filter(
+        (client: IClient) => client.segment === segment,
+      );
       setClientView(clientsBySegment);
       return;
     }
-  }
+  };
 
   const clearFilters = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
@@ -112,7 +127,7 @@ export function Clients() {
     if (inputFilterSegment) inputFilterSegment.click();
 
     setClientView(clients);
-  }
+  };
 
   if (deletedClientSuccess) {
     setDeletedClientSuccess(true);
@@ -136,63 +151,71 @@ export function Clients() {
     <div className="container-main">
       <Breadcumb page={[{ link: false, name: 'Clientes' }]} />
 
-      <TitlePage title='Clientes' />
+      <TitlePage title="Clientes" />
 
-      <div className='pb-2 mb-2'>
+      <div className="pb-2 mb-2">
         <strong>Quantidade de clientes: </strong>
         {clientView.length}
       </div>
 
-
-      <div className="pb-2 mb-4"
+      <div
+        className="pb-2 mb-4"
         style={{
           overflow: 'auto',
           whiteSpace: 'nowrap',
           display: 'block',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFilters(e)
-            const filterBySegmentElement = document.getElementById('searchBySegmento');
+            clearFilters(e);
+            const filterBySegmentElement =
+              document.getElementById('searchBySegmento');
             const filterByNameElement = document.getElementById('searchByName');
 
             if (filterBySegmentElement?.style.display === 'flex') {
               filterBySegmentElement.style.display = 'none';
             } else {
-              if (filterBySegmentElement) filterBySegmentElement.style.display = 'flex';
+              if (filterBySegmentElement)
+                filterBySegmentElement.style.display = 'flex';
             }
 
             if (filterByNameElement) filterByNameElement.style.display = 'none';
           }}
-          text='Segmento'
+          text="Segmento"
         />
 
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFilters(e)
-            const filterBySegmentElement = document.getElementById('searchBySegmento');
+            clearFilters(e);
+            const filterBySegmentElement =
+              document.getElementById('searchBySegmento');
             const filterByNameElement = document.getElementById('searchByName');
 
             if (filterByNameElement?.style.display === 'flex') {
               filterByNameElement.style.display = 'none';
             } else {
-              if (filterByNameElement) filterByNameElement.style.display = 'flex';
+              if (filterByNameElement)
+                filterByNameElement.style.display = 'flex';
             }
 
-            if (filterBySegmentElement) filterBySegmentElement.style.display = 'none';
+            if (filterBySegmentElement)
+              filterBySegmentElement.style.display = 'none';
           }}
-          text='Nome'
+          text="Nome"
         />
 
         <ClearSearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFilters(e)
+            clearFilters(e);
 
-            const filterClientsElement = document.getElementById('searchByName');
-            if (filterClientsElement) filterClientsElement.style.display = 'none';
-            const filerClientElement = document.getElementById('searchBySegmento');
+            const filterClientsElement =
+              document.getElementById('searchByName');
+            if (filterClientsElement)
+              filterClientsElement.style.display = 'none';
+            const filerClientElement =
+              document.getElementById('searchBySegmento');
 
             if (filerClientElement) filerClientElement.style.display = 'none';
           }}
@@ -200,46 +223,60 @@ export function Clients() {
       </div>
 
       <div
-        className='mb-4 shadow p-3'
+        className="mb-4 shadow p-3"
         style={{
           display: 'none',
         }}
-        id='searchByName'
+        id="searchByName"
       >
         <ComboBox
           title="Digite o nome..."
-          options={clients.map((item: IClient) => ({ label: item.name, id: item.id }))}
-          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientById(item ? item.id : '')}
+          options={clients.map((item: IClient) => ({
+            label: item.name,
+            id: item.id,
+          }))}
+          selectValue={(
+            e: React.BaseSyntheticEvent,
+            item: { label: string; id: string },
+          ) => setFilterClientById(item ? item.id : '')}
           style={{
-            width: '300px'
+            width: '300px',
           }}
         />
         <SearchButton
-          onClick={(e: React.BaseSyntheticEvent) => filterClientSelectedById(e, filterClientById)}
+          onClick={(e: React.BaseSyntheticEvent) =>
+            filterClientSelectedById(e, filterClientById)
+          }
         />
       </div>
       <div
-        className='mb-4 shadow p-3'
+        className="mb-4 shadow p-3"
         style={{
-          display: 'none'
+          display: 'none',
         }}
-        id='searchBySegmento'
+        id="searchBySegmento"
       >
         <ComboBox
           title="Digite o segmento..."
-          options={segments.map((item: ISegment) => ({ label: item.segment, id: item.id }))}
-          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientBySegment(item ? item.label : '')}
+          options={segments.map((item: ISegment) => ({
+            label: item.segment,
+            id: item.id,
+          }))}
+          selectValue={(
+            e: React.BaseSyntheticEvent,
+            item: { label: string; id: string },
+          ) => setFilterClientBySegment(item ? item.label : '')}
           style={{
-            width: '300px'
+            width: '300px',
           }}
         />
 
         <SearchButton
-          onClick={(e: React.BaseSyntheticEvent) => filterClientSelectedBySegment(e, filterClientBySegment)}
+          onClick={(e: React.BaseSyntheticEvent) =>
+            filterClientSelectedBySegment(e, filterClientBySegment)
+          }
         />
       </div>
-
-
 
       {loader}
 

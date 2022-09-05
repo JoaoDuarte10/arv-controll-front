@@ -13,10 +13,12 @@ type InputProps = {
   filterByClient: IClient[];
   setDataClient: any;
   clearFields: any;
-}
+};
 
 function clearDate1() {
-  const date1Element = document.getElementById('date1Period') as HTMLInputElement | null;
+  const date1Element = document.getElementById(
+    'date1Period',
+  ) as HTMLInputElement | null;
   if (date1Element) date1Element.value = '';
 }
 
@@ -24,9 +26,13 @@ function clearAllFilters() {
   const filterByDateElement = document.getElementById('filterByDate');
   const filterByPeriod = document.getElementById('filterByPeriod');
   const filterByDateInPeriod = document.getElementById('filterByDateInPeriod');
-  const filterByDateInPeriod2 = document.getElementById('filterByDateInPeriod2');
+  const filterByDateInPeriod2 = document.getElementById(
+    'filterByDateInPeriod2',
+  );
   const filterByClient = document.getElementById('filterByClient');
-  const inputClientElement = document.querySelector('#filterByClient > div > div > div > div > div > button') as HTMLElement;
+  const inputClientElement = document.querySelector(
+    '#filterByClient > div > div > div > div > div > button',
+  ) as HTMLElement;
 
   if (inputClientElement) inputClientElement.click();
   if (filterByClient) filterByClient.style.display = 'none';
@@ -34,7 +40,7 @@ function clearAllFilters() {
   if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'none';
   if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'none';
   if (filterByDateElement) filterByDateElement.style.display = 'none';
-  clearDate1()
+  clearDate1();
 }
 
 export function SelectPeriod(props: InputProps) {
@@ -49,46 +55,58 @@ export function SelectPeriod(props: InputProps) {
 
   return (
     <div className="mb-4 rounded">
-      <div className="pb-2"
+      <div
+        className="pb-2"
         style={{
           overflow: 'auto',
           whiteSpace: 'nowrap',
           display: 'block',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFields(e)
-            clearDate1()
+            clearFields(e);
+            clearDate1();
             const filterByDateElement = document.getElementById('filterByDate');
             const filterByPeriod = document.getElementById('filterByPeriod');
-            const filterByDateInPeriod = document.getElementById('filterByDateInPeriod');
-            const filterByDateInPeriod2 = document.getElementById('filterByDateInPeriod2');
+            const filterByDateInPeriod = document.getElementById(
+              'filterByDateInPeriod',
+            );
+            const filterByDateInPeriod2 = document.getElementById(
+              'filterByDateInPeriod2',
+            );
             const filterByClient = document.getElementById('filterByClient');
 
             if (filterByDateElement?.style.display === 'block') {
               filterByDateElement.style.display = 'none';
             } else {
-              if (filterByDateElement) filterByDateElement.style.display = 'block';
+              if (filterByDateElement)
+                filterByDateElement.style.display = 'block';
             }
 
             if (filterByPeriod) filterByPeriod.style.display = 'none';
-            if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'none';
-            if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'none';
+            if (filterByDateInPeriod)
+              filterByDateInPeriod.style.display = 'none';
+            if (filterByDateInPeriod2)
+              filterByDateInPeriod2.style.display = 'none';
             if (filterByClient) filterByClient.style.display = 'none';
           }}
-          text='Data'
+          text="Data"
         />
 
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFields(e)
-            clearDate1()
+            clearFields(e);
+            clearDate1();
             const filterByDateElement = document.getElementById('filterByDate');
             const filterByPeriod = document.getElementById('filterByPeriod');
-            const filterByDateInPeriod = document.getElementById('filterByDateInPeriod');
-            const filterByDateInPeriod2 = document.getElementById('filterByDateInPeriod2');
+            const filterByDateInPeriod = document.getElementById(
+              'filterByDateInPeriod',
+            );
+            const filterByDateInPeriod2 = document.getElementById(
+              'filterByDateInPeriod2',
+            );
             const filterByClient = document.getElementById('filterByClient');
 
             if (filterByDateElement) filterByDateElement.style.display = 'none';
@@ -97,28 +115,36 @@ export function SelectPeriod(props: InputProps) {
               filterByPeriod.style.display = 'none';
             } else {
               if (filterByPeriod) filterByPeriod.style.display = 'flex';
-              if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'block';
-              if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'block';
+              if (filterByDateInPeriod)
+                filterByDateInPeriod.style.display = 'block';
+              if (filterByDateInPeriod2)
+                filterByDateInPeriod2.style.display = 'block';
             }
 
             if (filterByClient) filterByClient.style.display = 'none';
           }}
-          text='Período'
+          text="Período"
         />
 
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFields(e)
-            clearDate1()
+            clearFields(e);
+            clearDate1();
             const filterByDateElement = document.getElementById('filterByDate');
             const filterByPeriod = document.getElementById('filterByPeriod');
-            const filterByDateInPeriod = document.getElementById('filterByDateInPeriod');
-            const filterByDateInPeriod2 = document.getElementById('filterByDateInPeriod2');
+            const filterByDateInPeriod = document.getElementById(
+              'filterByDateInPeriod',
+            );
+            const filterByDateInPeriod2 = document.getElementById(
+              'filterByDateInPeriod2',
+            );
             const filterByClient = document.getElementById('filterByClient');
 
-            if (filterByDateInPeriod) filterByDateInPeriod.style.display = 'none';
+            if (filterByDateInPeriod)
+              filterByDateInPeriod.style.display = 'none';
             if (filterByPeriod) filterByPeriod.style.display = 'none';
-            if (filterByDateInPeriod2) filterByDateInPeriod2.style.display = 'none';
+            if (filterByDateInPeriod2)
+              filterByDateInPeriod2.style.display = 'none';
             if (filterByDateElement) filterByDateElement.style.display = 'none';
 
             if (filterByClient?.style.display === 'block') {
@@ -127,13 +153,13 @@ export function SelectPeriod(props: InputProps) {
               if (filterByClient) filterByClient.style.display = 'block';
             }
           }}
-          text='Cliente'
+          text="Cliente"
         />
 
         <ClearSearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFields(e)
-            clearAllFilters()
+            clearFields(e);
+            clearAllFilters();
           }}
         />
       </div>
@@ -142,24 +168,24 @@ export function SelectPeriod(props: InputProps) {
         style={{
           display: 'none',
         }}
-        id='filterByDate'
-        className='shadow-sm p-3'
+        id="filterByDate"
+        className="shadow-sm p-3"
       >
-        <LabelForm text='Data' />
+        <LabelForm text="Data" />
         <div
           style={{
             display: 'flex',
           }}
         >
           <InputDate
-            idComponent='date1InputDate'
-            idInput='date1'
+            idComponent="date1InputDate"
+            idInput="date1"
             onChange={(e: React.BaseSyntheticEvent) => setDate1(e.target.value)}
-            className=''
+            className=""
           />
           <SearchButton
             onClick={(e: React.BaseSyntheticEvent) => {
-              getSalesInPeriodResponse(e)
+              getSalesInPeriodResponse(e);
             }}
           />
         </div>
@@ -170,45 +196,49 @@ export function SelectPeriod(props: InputProps) {
           display: 'none',
           flexDirection: 'column',
         }}
-        id='filterByPeriod'
-        className='shadow-sm p-3'
+        id="filterByPeriod"
+        className="shadow-sm p-3"
       >
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             width: '360px',
-            alignItems: 'flex-end'
+            alignItems: 'flex-end',
           }}
         >
           <div
             style={{
-              display: 'block'
+              display: 'block',
             }}
           >
-            <LabelForm text='Inicial' />
+            <LabelForm text="Inicial" />
             <InputDate
-              idComponent='filterByDateInPeriod'
-              idInput='date1Period'
-              onChange={(e: React.BaseSyntheticEvent) => setDate1(e.target.value)}
+              idComponent="filterByDateInPeriod"
+              idInput="date1Period"
+              onChange={(e: React.BaseSyntheticEvent) =>
+                setDate1(e.target.value)
+              }
             />
           </div>
 
           <div
             style={{
-              display: 'block'
+              display: 'block',
             }}
           >
-            <LabelForm text='Final' />
+            <LabelForm text="Final" />
             <InputDate
-              idComponent='filterByDateInPeriod2'
-              idInput='date2'
-              onChange={(e: React.BaseSyntheticEvent) => setDate2(e.target.value)}
+              idComponent="filterByDateInPeriod2"
+              idInput="date2"
+              onChange={(e: React.BaseSyntheticEvent) =>
+                setDate2(e.target.value)
+              }
             />
           </div>
           <SearchButton
             onClick={(e: React.BaseSyntheticEvent) => {
-              getSalesInPeriodResponse(e)
+              getSalesInPeriodResponse(e);
             }}
             style={{
               height: '55px',
@@ -220,46 +250,51 @@ export function SelectPeriod(props: InputProps) {
       <div
         className="mt-4 mb-4 shadow p-3"
         style={{
-          display: 'none'
+          display: 'none',
         }}
-        id='filterByClient'
+        id="filterByClient"
       >
         {filterByClient !== null ? (
           <div
             style={{
-              display: 'flex'
-            }}>
+              display: 'flex',
+            }}
+          >
             <ComboBox
               title="Digite o nome do cliente..."
               options={filterByClient.map((item) => item.name)}
-              selectValue={(e: React.BaseSyntheticEvent, item: string) => setDataClient(e, item)}
+              selectValue={(e: React.BaseSyntheticEvent, item: string) =>
+                setDataClient(e, item)
+              }
               style={{
-                width: '300px'
+                width: '300px',
               }}
             />
             <SearchButton
               onClick={(e: React.BaseSyntheticEvent) => {
-                getSalesInPeriodResponse(e)
+                getSalesInPeriodResponse(e);
               }}
             />
           </div>
         ) : (
           <div
             style={{
-              display: 'flex'
+              display: 'flex',
             }}
           >
             <ComboBox
               title="Digite o nome do cliente..."
               options={[]}
-              selectValue={(e: React.BaseSyntheticEvent, item: string) => setDataClient(e, item)}
+              selectValue={(e: React.BaseSyntheticEvent, item: string) =>
+                setDataClient(e, item)
+              }
               style={{
-                width: '300px'
+                width: '300px',
               }}
             />
             <SearchButton
               onClick={(e: React.BaseSyntheticEvent) => {
-                getSalesInPeriodResponse(e)
+                getSalesInPeriodResponse(e);
               }}
             />
           </div>

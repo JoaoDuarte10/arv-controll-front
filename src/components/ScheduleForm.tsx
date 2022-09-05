@@ -41,7 +41,7 @@ export function ScheduleForm(props: any) {
           {edit && (
             <h5 className="modal-title border-bottom mb-4 pb-2">Editar</h5>
           )}
-          <LabelForm text='Cliente' />
+          <LabelForm text="Cliente" />
 
           <div className="mb-3">
             {edit ? (
@@ -66,7 +66,10 @@ export function ScheduleForm(props: any) {
                       label: item.name,
                       phone: item.phone,
                     }))}
-                    selectValue={(e: React.BaseSyntheticEvent, item: string) => {
+                    selectValue={(
+                      e: React.BaseSyntheticEvent,
+                      item: string,
+                    ) => {
                       if (!item) {
                         setDataClient(e, item);
                         return;
@@ -78,7 +81,10 @@ export function ScheduleForm(props: any) {
                   <ComboBox
                     title="Selecione o cliente"
                     options={[]}
-                    selectValue={(e: React.BaseSyntheticEvent, item: string) => {
+                    selectValue={(
+                      e: React.BaseSyntheticEvent,
+                      item: string,
+                    ) => {
                       if (!item) {
                         setDataClient(e, item);
                         return;
@@ -91,19 +97,21 @@ export function ScheduleForm(props: any) {
             )}
           </div>
 
-          <LabelForm text='Procedimento' />
+          <LabelForm text="Procedimento" />
 
           <InputText
             type="text"
             id="procedure"
             value={procedure}
-            onChange={(e: React.BaseSyntheticEvent) => setProcedure(e.target.value)}
+            onChange={(e: React.BaseSyntheticEvent) =>
+              setProcedure(e.target.value)
+            }
             label="Digite o procedimento"
           />
 
           <div className="form-row mt-2 pt-2">
             <div className="form-group col">
-              <LabelForm text='Pacote' />
+              <LabelForm text="Pacote" />
 
               <div className="card">
                 <button
@@ -150,7 +158,7 @@ export function ScheduleForm(props: any) {
               </div>
             </div>
             <div className="form-group col">
-              <LabelForm text='Nº de Atendimentos' />
+              <LabelForm text="Nº de Atendimentos" />
 
               <div className="card">
                 <button
@@ -235,33 +243,37 @@ export function ScheduleForm(props: any) {
 
           <div className="form-row">
             <div className="form-group col">
-              <LabelForm text='Data' />
+              <LabelForm text="Data" />
 
               <InputText
                 type="date"
                 label=" "
                 id="date"
                 value={dateNewSchedule}
-                onChange={(e: React.BaseSyntheticEvent) => setDateNewSchedule(e.target.value)}
+                onChange={(e: React.BaseSyntheticEvent) =>
+                  setDateNewSchedule(e.target.value)
+                }
               />
               <small className="form-text text-muted">Selecione a data.</small>
             </div>
             <div className="form-group col">
-              <LabelForm text='Horário' />
+              <LabelForm text="Horário" />
 
               <InputText
                 type="time"
                 label=" "
                 id="time"
                 value={time}
-                onChange={(e: React.BaseSyntheticEvent) => setTime(e.target.value)}
+                onChange={(e: React.BaseSyntheticEvent) =>
+                  setTime(e.target.value)
+                }
               />
               <small className="form-text text-muted">Selecione horário.</small>
             </div>
           </div>
           <div className="form-row">
             <div className="form-group col">
-              <LabelForm text='Preço' />
+              <LabelForm text="Preço" />
 
               <InputText
                 type="text"
@@ -278,7 +290,7 @@ export function ScheduleForm(props: any) {
               />
             </div>
             <div className="form-group col">
-              <LabelForm text='Telefone' />
+              <LabelForm text="Telefone" />
 
               <InputMask
                 type="text"

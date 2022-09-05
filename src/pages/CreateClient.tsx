@@ -15,7 +15,6 @@ import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { useAddNewClientMutation } from '../api/ApiSlice';
 import { ReducerStore } from '../app/store';
 
-
 export function CreateClient() {
   let navigate = useNavigate();
 
@@ -94,7 +93,7 @@ export function CreateClient() {
         ]}
       />
 
-      <TitlePage title='Novo Cliente' />
+      <TitlePage title="Novo Cliente" />
 
       <div>
         <FormClients

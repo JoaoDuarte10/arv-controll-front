@@ -1,8 +1,8 @@
 import { IClientHistory } from '../api/types/ClientHistory';
 
 type InputProps = {
-  clientHistory: IClientHistory[]
-}
+  clientHistory: IClientHistory[];
+};
 
 export function TableHistory(props: InputProps) {
   const { clientHistory } = props;

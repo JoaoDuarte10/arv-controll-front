@@ -12,7 +12,7 @@ type InputProps = {
   setId: any;
   setIdScheduleDeleted: any;
   expired: boolean;
-}
+};
 
 export function ScheduleCard(props: InputProps) {
   const { item, setId, setIdScheduleDeleted, expired } = props;
@@ -143,7 +143,7 @@ export function ScheduleCard(props: InputProps) {
                 data-toggle="modal"
                 data-target="#delete-client-schedule"
                 onClick={(e) => {
-                  setIdScheduleDeleted(item.id)
+                  setIdScheduleDeleted(item.id);
                 }}
               >
                 Excluir

@@ -8,18 +8,10 @@ type InputProps = {
   data_target?: string;
   body: any;
   className?: string;
-}
+};
 
 export function TopModal(props: InputProps) {
-  const {
-    id,
-    title,
-    button,
-    click,
-    data_target,
-    body,
-    className
-  } = props;
+  const { id, title, button, click, data_target, body, className } = props;
 
   return (
     <div

@@ -150,7 +150,10 @@ export function Reports() {
     };
   }, [auth.userId, auth, navigate]);
 
-  const reportClientInfo = async (event: React.BaseSyntheticEvent, params: any) => {
+  const reportClientInfo = async (
+    event: React.BaseSyntheticEvent,
+    params: any,
+  ) => {
     event.preventDefault();
 
     if (!params) return;
@@ -207,7 +210,7 @@ export function Reports() {
         ]}
       />
 
-      <TitlePage title='Relatórios'/>
+      <TitlePage title="Relatórios" />
 
       <div className="mb-3 pb-2">
         <div className="card p-2 shadow-sm bg-white rounded">
@@ -222,13 +225,17 @@ export function Reports() {
                   label: item.name,
                   segment: item.segment,
                 }))}
-                selectValue={(e: React.BaseSyntheticEvent, item: string) => reportClientInfo(e, item)}
+                selectValue={(e: React.BaseSyntheticEvent, item: string) =>
+                  reportClientInfo(e, item)
+                }
               />
             ) : (
               <ComboBox
                 title="Selecionar Cliente"
                 options={[]}
-                selectValue={(e: React.BaseSyntheticEvent, item: string) => reportClientInfo(e, item)}
+                selectValue={(e: React.BaseSyntheticEvent, item: string) =>
+                  reportClientInfo(e, item)
+                }
               />
             )}
             <small className="text-muted">
@@ -436,7 +443,7 @@ export function Reports() {
   );
 }
 
-function HeaderModal(props: { title: any; idCollapse: any; }) {
+function HeaderModal(props: { title: any; idCollapse: any }) {
   const { title, idCollapse } = props;
   return (
     <div className="card-header">

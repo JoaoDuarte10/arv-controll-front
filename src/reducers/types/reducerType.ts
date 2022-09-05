@@ -1,4 +1,4 @@
 export type ReducerActionType<T = any> = {
-    type: string;
-    payload: T;
-}
+  type: string;
+  payload: T;
+};
