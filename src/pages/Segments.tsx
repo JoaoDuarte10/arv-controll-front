@@ -50,7 +50,10 @@ export function Segments() {
   >(null);
   const [alert, setAlert] = useState<JSX.Element | null>(null);
 
-  const [selectSegment, setSelectSegment] = useState<{ label: string, id: string }>({ label: '', id: '' })
+  const [selectSegment, setSelectSegment] = useState<{
+    label: string;
+    id: string;
+  }>({ label: '', id: '' });
 
   useEffect(() => {
     if (!auth.userId) {
@@ -200,15 +203,15 @@ export function Segments() {
             setActionName('Criar');
             setEditSegment(false);
           }}
-          text='Novo'
-          className='pl-3 pr-3'
+          text="Novo"
+          className="pl-3 pr-3"
           dataToggle="modal"
           dataTarget="modalSegment"
         />
 
         <ClearSearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
-            clearFindClients(e)
+            clearFindClients(e);
 
             const filterClientsElement =
               document.getElementById('searchByName');
@@ -229,8 +232,8 @@ export function Segments() {
         {showActions && (
           <ButtonFilterAction
             onClick={clearFindClients}
-            text='Limpar Pesquisa'
-            className='pl-3 pr-3 btn-outline-warning'
+            text="Limpar Pesquisa"
+            className="pl-3 pr-3 btn-outline-warning"
           />
         )}
       </div>
@@ -239,8 +242,8 @@ export function Segments() {
         style={{
           display: 'none',
         }}
-        id='searchBySegment'
-        className='pb-4'
+        id="searchBySegment"
+        className="pb-4"
       >
         {segments.length > 0 ? (
           <div
@@ -255,7 +258,7 @@ export function Segments() {
                 id: item.id,
               }))}
               selectValue={(e: React.BaseSyntheticEvent, item: any) => {
-                setSelectSegment(item || {})
+                setSelectSegment(item || {});
               }}
               style={{
                 width: '300px',
@@ -268,7 +271,6 @@ export function Segments() {
             />
           </div>
         ) : (
-
           <div
             style={{
               display: 'flex',
@@ -278,7 +280,7 @@ export function Segments() {
               title="Selecionar segmento"
               options={[]}
               selectValue={(e: React.BaseSyntheticEvent, item: any) => {
-                setSelectSegment(item || {})
+                setSelectSegment(item || {});
               }}
               style={{
                 width: '300px',
@@ -290,7 +292,6 @@ export function Segments() {
               }
             />
           </div>
-
         )}
       </div>
 
@@ -323,22 +324,18 @@ export function Segments() {
         alert={alert}
       />
 
-
       {showActions ? (
-        <div
-          className='card p-2 mt-4'
-
-        >
+        <div className="card p-2 mt-4">
           <div className="card-header">
             <h6 className="text-primary font-weight-bold pt-2">
               Segmento:{' '}
-              <small className="text-dark text-muted font-weight-bold h6">{segmentActual.label}</small>
+              <small className="text-dark text-muted font-weight-bold h6">
+                {segmentActual.label}
+              </small>
             </h6>
           </div>
-          <div
-            className="pt-4 form-row"
-          >
-            <div className='col'>
+          <div className="pt-4 form-row">
+            <div className="col">
               <button
                 className="col btn btn-outline-primary font-weight-bold"
                 data-toggle="modal"
@@ -356,7 +353,7 @@ export function Segments() {
                 Editar
               </button>
             </div>
-            <div className='col'>
+            <div className="col">
               <button
                 className="col btn btn-outline-danger font-weight-bold col"
                 data-toggle="modal"
@@ -369,7 +366,7 @@ export function Segments() {
           </div>
         </div>
       ) : (
-        <h5 className='border-top pt-4'>Nenhum segmento selecionado</h5>
+        <h5 className="border-top pt-4">Nenhum segmento selecionado</h5>
       )}
       {alert}
     </div>
