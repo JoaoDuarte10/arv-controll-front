@@ -18,7 +18,6 @@ import { Breadcumb } from '../components/Breadcumb';
 import { CircularIndeterminate } from '../components/LoaderCircular';
 import { ClearFields } from '../components/Buttons';
 import { ComboBox } from '../components/ComboBox';
-import { InputText } from '../components/input/InputText';
 import { TopModal } from '../components/TopModal';
 import { TitlePage } from '../components/TitlePage';
 import { LabelForm } from '../components/labels/LabelForm';
