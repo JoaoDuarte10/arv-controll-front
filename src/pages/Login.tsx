@@ -15,6 +15,7 @@ import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 
 import { AlertError } from '../components/alerts/AlertError';
 import { LabelForm } from '../components/labels/LabelForm';
+import { CircularIndeterminate } from '../components/LoaderCircular';
 
 function LoginPage() {
   const [user, setUser] = useState<string>('');
@@ -25,6 +26,8 @@ function LoginPage() {
   const [credentials, setCredentials] = useState<boolean | null>(null);
   const [serverError, setServerError] = useState<boolean | null>(null);
 
+  const [loadFetchClient, setLoadFetchClient] = useState<boolean>(false);
+
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -33,13 +36,23 @@ function LoginPage() {
     if (navbar) navbar.style.display = 'none';
   }, []);
 
+  let loader = null;
+  if (loadFetchClient) {
+    loader = <CircularIndeterminate />;
+  } else {
+    loader = null;
+  }
+
   const saveLoginUser = (login: { user: string; id: string }) => {
     dispatch(loginAdded({ login: login.user, id: login.id }));
     navigate('/home', { replace: true });
+    setLoadFetchClient(false);
   };
 
   const login = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
+    setLoadFetchClient(true);
+
     const request = await authService.sendLogin(
       user.trim(),
       password.password.trim(),
@@ -52,13 +65,13 @@ function LoginPage() {
 
     if (request.status === HTTP_RESPONSE.ERROR || !request.status) {
       setServerError(true);
-      return;
     }
 
     if (request.status === HTTP_RESPONSE.UNAUTHORIZED) {
       setCredentials(false);
-      return;
     }
+
+    setLoadFetchClient(false);
   };
 
   if (credentials === false) {
@@ -77,6 +90,7 @@ function LoginPage() {
 
   return (
     <div className="login_container">
+      {loader}
       <div className="text-center pt-5">
         <img className="img-logo" alt="logo_raise_value" src={logo}></img>
       </div>
