@@ -62,7 +62,7 @@ export function ClientHistory() {
         date1,
         date2 as string,
       );
-    } else if (clientSelected !== null) {
+    } else if (clientSelected) {
       request = await clientHistoryService.getHistoryByClient(
         auth.userId,
         clientSelected,

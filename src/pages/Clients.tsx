@@ -144,7 +144,7 @@ export function Clients() {
       </div>
 
 
-      <div className="pb-2 mb-3"
+      <div className="pb-2 mb-4"
         style={{
           overflow: 'auto',
           whiteSpace: 'nowrap',
@@ -154,6 +154,7 @@ export function Clients() {
       >
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
+            clearFilters(e)
             const filterBySegmentElement = document.getElementById('searchBySegmento');
             const filterByNameElement = document.getElementById('searchByName');
 
@@ -170,6 +171,7 @@ export function Clients() {
 
         <SearchFilterButton
           onClick={(e: React.BaseSyntheticEvent) => {
+            clearFilters(e)
             const filterBySegmentElement = document.getElementById('searchBySegmento');
             const filterByNameElement = document.getElementById('searchByName');
 
@@ -226,7 +228,7 @@ export function Clients() {
         <ComboBox
           title="Digite o segmento..."
           options={segments.map((item: ISegment) => ({ label: item.segment, id: item.id }))}
-          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientBySegment(item.label)}
+          selectValue={(e: React.BaseSyntheticEvent, item: { label: string, id: string }) => setFilterClientBySegment(item ? item.label : '')}
           style={{
             width: '300px'
           }}

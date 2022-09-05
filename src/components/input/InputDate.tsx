@@ -1,10 +1,8 @@
-import { LabelForm } from '../labels/LabelForm';
 import { InputText } from './InputText';
 
 type InputProps = {
     idComponent: string;
     idInput: string;
-    text: string;
     onChange: Function;
     style?: React.CSSProperties;
     className?: string

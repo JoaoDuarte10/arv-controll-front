@@ -24,6 +24,10 @@ import { TitlePage } from '../components/TitlePage';
 import { LabelForm } from '../components/labels/LabelForm';
 import { ISchedule } from '../reducers/scheduleSlice';
 import { IClient } from '../api/types/Client';
+import { SearchFilterButton } from '../components/buttons/SearchFilter';
+import { ClearSearchFilterButton } from '../components/buttons/ClearSearchFilter';
+import { SearchButton } from '../components/buttons/SearchButton';
+import { InputDate } from '../components/input/InputDate';
 
 export function Schedule() {
   let navigate = useNavigate();
@@ -41,9 +45,9 @@ export function Schedule() {
   const [clientSelected, setClientSelected] = useState<string>('');
 
   const [idScheduleDeleted, setIdScheduleDeleted] = useState<string>('');
-  
+
   const [scheduleDeletedSuccess, setScheduleDeletedSuccess] = useState<boolean>(false);
-  
+
   const [fetchScheduleSuccess, setFetchScheduleSuccess] = useState<boolean>(false);
   const [scheduleNotFound, setScheduleNotFound] = useState<boolean>(false);
   const [serverError, setServerError] = useState<boolean>(false);
@@ -177,9 +181,12 @@ export function Schedule() {
     const dateLoad = document.getElementById('dateLoadSchedule') as HTMLInputElement;
     if (dateLoad) dateLoad.value = '';
     const clickButtonSelect = document.querySelector(
-      '#root > div > div.container-main > div.card.p-3.mt-4.mb-4.shadow-sm.bg-white > form > div.form-row.mb-3 > div.col-sm-6 > div > div > div > div > button',
+      '#filterByClient > div > div > div > div > div > button',
     ) as HTMLElement;
     if (clickButtonSelect) clickButtonSelect.click();
+
+    const date1Element = document.getElementById('date1') as HTMLInputElement | null;
+    if (date1Element) date1Element.value = '';
 
     setDate('');
     setClientSelected('');
@@ -248,76 +255,146 @@ export function Schedule() {
 
       <TitlePage title='Agenda' />
 
-      <div className="card p-3 mt-4 mb-4 shadow-sm bg-white">
-        <h4 className="border-bottom pb-2">Busca</h4>
 
-        <form onSubmit={getScheduleResponse}>
-          <div className="form-row mb-3">
-            <div className="col mb-2">
-              <LabelForm text='Selecionar data' />
+      <div
+        className='mb-4 pb-2'
+        style={{
+          display: 'flex',
+          alignItems: 'center'
+        }}
+      >
+        <SearchFilterButton
+          onClick={(e: React.BaseSyntheticEvent) => {
+            clearFilters(e)
+            const filterByDateElement = document.getElementById('filterByDate');
+            const filterByClientElement = document.getElementById('filterByClient');
 
-              <InputText
-                type="date"
-                label=" "
-                id="dateLoadSchedule"
-                value={date}
-                onChange={(e: { target: { value: any; }; }) => setDate(e.target.value)}
-              />
-            </div>
+            if (filterByDateElement?.style.display === 'block') {
+              filterByDateElement.style.display = 'none';
+            } else {
+              if (filterByDateElement) filterByDateElement.style.display = 'block';
+            }
 
-            <div className="col-sm-6">
-              <LabelForm text='Selecionar cliente' />
+            if (filterByClientElement) filterByClientElement.style.display = 'none';
+          }}
+          text='Data'
+        />
 
-              {clients !== null ? (
-                <ComboBox
-                  title="Clientes..."
-                  options={clients.map((item: IClient) => item.name)}
-                  selectValue={(e: React.BaseSyntheticEvent, item: string) => {
-                    if (!item) {
-                      setClientSelected(item);
-                      return;
-                    }
-                    setClientSelected(item);
-                  }}
-                />
-              ) : (
-                <ComboBox
-                  title="Clientes..."
-                  options={[]}
-                  selectValue={(e: React.BaseSyntheticEvent, item: string) => {
-                    if (!item) {
-                      setClientSelected(item);
-                      return;
-                    }
-                    setClientSelected(item);
-                  }}
-                />
-              )}
-            </div>
+        <SearchFilterButton
+          onClick={(e: React.BaseSyntheticEvent) => {
+            clearFilters(e)
+            const filterByDateElement = document.getElementById('filterByDate');
+            const filterByClientElement = document.getElementById('filterByClient');
+
+            if (filterByClientElement?.style.display === 'block') {
+              filterByClientElement.style.display = 'none';
+            } else {
+              if (filterByClientElement) filterByClientElement.style.display = 'block';
+            }
+
+            if (filterByDateElement) filterByDateElement.style.display = 'none';
+          }}
+          text='Cliente'
+        />
+
+        <ClearSearchFilterButton
+          onClick={(e: React.BaseSyntheticEvent) => {
+            clearFilters(e);
+            const filterByDateElement = document.getElementById('filterByDate');
+            const filterByClientElement = document.getElementById('filterByClient');
+
+            if (filterByClientElement) filterByClientElement.style.display = 'none';
+            if (filterByDateElement) filterByDateElement.style.display = 'none';
+          }}
+        />
+      </div>
+
+      <div
+        className="col mb-4 shadow p-3"
+        style={{
+          display: 'none'
+        }}
+        id='filterByDate'
+      >
+        <LabelForm text='Data' />
+        <div style={{
+          display: 'flex'
+        }}>
+          <InputDate
+            idComponent='date1InputDate'
+            idInput='date1'
+            onChange={(e: { target: { value: any; }; }) => setDate(e.target.value)}
+            className=''
+          />
+          <SearchButton
+            onClick={(e: React.BaseSyntheticEvent) => {
+              getScheduleResponse(e)
+            }}
+          />
+        </div>
+      </div>
+
+
+      <div
+        className="mt-2 mb-4 shadow p-3"
+        style={{
+          display: 'none'
+        }}
+        id='filterByClient'
+      >
+        {clients !== null ? (
+          <div
+            style={{
+              display: 'flex'
+            }}
+          >
+            <ComboBox
+              title="Digite o nome do cliente..."
+              options={clients.map((item: IClient) => item.name)}
+              selectValue={(e: React.BaseSyntheticEvent, item: string) => {
+                if (!item) {
+                  setClientSelected(item);
+                  return;
+                }
+                setClientSelected(item);
+              }}
+              style={{
+                width: '300px'
+              }}
+            />
+            <SearchButton
+              onClick={(e: React.BaseSyntheticEvent) => {
+                getScheduleResponse(e)
+              }}
+            />
           </div>
-
-          <div className="form-row mt-2 pt-3">
-            <div className="col mb-2">
-              <button
-                type="button"
-                className="col btn btn-outline-secondary"
-                onClick={(e) => clearFilters(e)}
-                key={randomId()}
-              >
-                Limpar campos
-              </button>
-            </div>
-            <div className="col mb-2">
-              <button
-                type="submit"
-                className="col btn btn-primary"
-                key={randomId()}
-              >
-                Buscar
-              </button>
-            </div>
+        ) : (
+          <div
+            style={{
+              display: 'flex'
+            }}
+          >
+            <ComboBox
+              title="Digite o nome do cliente..."
+              options={[]}
+              selectValue={(e: React.BaseSyntheticEvent, item: string) => {
+                if (!item) {
+                  setClientSelected(item);
+                  return;
+                }
+                setClientSelected(item);
+              }}
+              style={{
+                width: '300px'
+              }}
+            />
+            <SearchButton
+              onClick={(e: React.BaseSyntheticEvent) => {
+                getScheduleResponse(e)
+              }}
+            />
           </div>
-        </form>
+        )}
       </div>
 
       {scheduleNotFound === true ? (
