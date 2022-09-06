@@ -14,6 +14,7 @@ export function ClearSearchFilterButton(props: InputProps) {
         className="btn btn-outline-warning font-weight-bold"
         style={{
           borderRadius: '15px',
+          border: '2px solid'
         }}
         onClick={props.onClick}
       >
