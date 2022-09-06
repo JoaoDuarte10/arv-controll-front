@@ -2,7 +2,6 @@ import React from 'react';
 import { WhatsAppService } from '../services/whatsapp-service';
 import { randomId } from '../utils/random';
 
-import { Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { IClient } from '../api/types/Client';
 
