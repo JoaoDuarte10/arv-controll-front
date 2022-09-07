@@ -48,8 +48,12 @@ const authenticatedSlice = createSlice({
     },
     validateToken: {
       reducer(state: UserLogin, action: any) {
-        if (authService.isValidToken(action.payload)) return
+        console.log(state.token)
+        if (authService.isValidToken(action.payload)) {
+          return
+        }
         state.token = null;
+        authService.cleanUserInLocalStorange();
       },
       prepare(params) {
         return { payload: params }
