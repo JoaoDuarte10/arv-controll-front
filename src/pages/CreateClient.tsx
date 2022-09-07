@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { AlertError } from '../components/alerts/AlertError';
@@ -14,6 +14,7 @@ import { TitlePage } from '../components/TitlePage';
 import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 import { useAddNewClientMutation } from '../api/ApiSlice';
 import { ReducerStore } from '../app/store';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function CreateClient() {
   let navigate = useNavigate();
@@ -28,11 +29,14 @@ export function CreateClient() {
 
   const [alert, setAlert] = useState<JSX.Element | null>(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth, navigate]);
+  }, [auth, navigate, dispatch]);
 
   const clearStates = () => {
     setName('');

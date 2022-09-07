@@ -5,7 +5,7 @@ const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 export const clientHistoryService = {
   async createClientHistory(
-    id_user: string,
+    token: string,
     client: string,
     description: string,
     date: string,
@@ -20,7 +20,7 @@ export const clientHistoryService = {
             description,
             date,
           },
-          { headers: { 'id-user': id_user } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -34,13 +34,13 @@ export const clientHistoryService = {
     }
   },
 
-  async getHistoryByClient(id_user: string, client: string): Promise<Response> {
+  async getHistoryByClient(token: string, client: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/history/client`;
     try {
       const { data, status } = await axios
         .get(URI, {
           params: { client },
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -54,13 +54,13 @@ export const clientHistoryService = {
     }
   },
 
-  async getHistoryByDate(id_user: string, date: string): Promise<Response> {
+  async getHistoryByDate(token: string, date: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/history/date`;
     try {
       const { data, status } = await axios
         .get(URI, {
           params: { date },
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -75,7 +75,7 @@ export const clientHistoryService = {
   },
 
   async getHistoryByPeriod(
-    id_user: string,
+    token: string,
     date1: string,
     date2: string,
   ): Promise<Response> {
@@ -84,7 +84,7 @@ export const clientHistoryService = {
       const { data, status } = await axios
         .get(URI, {
           params: { date1, date2 },
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -99,7 +99,7 @@ export const clientHistoryService = {
   },
 
   async getHistoryByAllFilters(
-    id_user: string,
+    token: string,
     client: string,
     date1: string,
     date2?: string,
@@ -108,7 +108,7 @@ export const clientHistoryService = {
     try {
       const { data, status } = await axios
         .get(URL, {
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
           params: { client, date1, date2 },
         })
         .then((res) => ({ data: res.data, status: res.status }))

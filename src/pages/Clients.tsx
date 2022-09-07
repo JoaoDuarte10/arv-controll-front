@@ -22,10 +22,11 @@ import { IClient } from '../api/types/Client';
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { SearchFilterButton } from '../components/buttons/SearchFilter';
 import { ClearSearchFilterButton } from '../components/buttons/ClearSearchFilter';
 import { SearchButton } from '../components/buttons/SearchButton';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function Clients() {
   let navigate = useNavigate();
@@ -54,12 +55,15 @@ export function Clients() {
   const [filterClientBySegment, setFilterClientBySegment] =
     useState<string>('');
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
     if (clients.length > 0) setClientView(clients);
-  }, [auth, navigate, clients]);
+  }, [auth, navigate, clients, dispatch]);
 
   let loader;
 

@@ -4,11 +4,11 @@ import { Response } from './types/ResponseDTO';
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const segmentService = {
-  async getSegment(id_user: string): Promise<Response> {
+  async getSegment(token: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/segments`;
     try {
       const { data, status } = await axios
-        .get(URL, { headers: { 'id-user': id_user } })
+        .get(URL, { headers: { 'authorization': token } })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
           data: err.response.data,
@@ -20,7 +20,7 @@ const segmentService = {
     }
   },
 
-  async createSegment(id_user: string, segment: string): Promise<Response> {
+  async createSegment(token: string, segment: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/segment/create`;
     try {
       const { data, status } = await axios
@@ -29,7 +29,7 @@ const segmentService = {
           {
             segment,
           },
-          { headers: { 'id-user': id_user } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -43,7 +43,7 @@ const segmentService = {
   },
 
   async updateSegment(
-    id_user: string,
+    token: string,
     id: string,
     segment: string,
   ): Promise<Response> {
@@ -56,7 +56,7 @@ const segmentService = {
             id,
             segment,
           },
-          { headers: { 'id-user': id_user } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -70,7 +70,7 @@ const segmentService = {
   },
 
   async deleteSegment(
-    id_user: string,
+    token: string,
     id: string,
     segment: string,
   ): Promise<Response> {
@@ -79,7 +79,7 @@ const segmentService = {
       const { data, status } = await axios
         .delete(URL, {
           params: { id, segment },
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({

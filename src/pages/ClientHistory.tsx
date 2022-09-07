@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { clientHistoryService } from '../services/clientHistoryService';
 import { ReducerStore } from '../app/store';
@@ -18,6 +18,7 @@ import { SelectPeriod } from '../components/SelectPeriod';
 import { TableHistory } from '../components/TableHistory';
 import { TitlePage } from '../components/TitlePage';
 import { IClientHistory } from '../api/types/ClientHistory';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function ClientHistory() {
   let navigate = useNavigate();
@@ -38,11 +39,14 @@ export function ClientHistory() {
   const [clearSchedule, setClearSchedule] = useState<boolean>(false);
   const [invalidParams, setInvalidParams] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth.userId, auth.redirectLoginPageUri, navigate]);
+  }, [navigate, dispatch, auth]);
 
   const getHistoryInPeriodResponse = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -57,21 +61,21 @@ export function ClientHistory() {
 
     if ((clientSelected && date1) || (clientSelected && date1 && date2)) {
       request = await clientHistoryService.getHistoryByAllFilters(
-        auth.userId,
+        auth.token,
         clientSelected,
         date1,
         date2 as string,
       );
     } else if (clientSelected) {
       request = await clientHistoryService.getHistoryByClient(
-        auth.userId,
+        auth.token,
         clientSelected,
       );
     } else if (date1 && !date2) {
-      request = await clientHistoryService.getHistoryByDate(auth.userId, date1);
+      request = await clientHistoryService.getHistoryByDate(auth.token, date1);
     } else if (date1 && date2) {
       request = await clientHistoryService.getHistoryByPeriod(
-        auth.userId,
+        auth.token,
         date1,
         date2,
       );
@@ -190,9 +194,9 @@ export function ClientHistory() {
                   })}
                 {date2 &&
                   ' - ' +
-                    new Date(date2).toLocaleDateString('pt-BR', {
-                      timeZone: 'UTC',
-                    })}
+                  new Date(date2).toLocaleDateString('pt-BR', {
+                    timeZone: 'UTC',
+                  })}
               </div>
             )}
 

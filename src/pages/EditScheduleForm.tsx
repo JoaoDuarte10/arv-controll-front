@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { scheduleService } from '../services/scheduleService';
@@ -10,6 +10,7 @@ import { AlertError } from '../components/alerts/AlertError';
 import { AlertSuccess } from '../components/alerts/AlertSuccess';
 import { ComeBack } from '../components/ComeBack';
 import { ScheduleForm } from '../components/ScheduleForm';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function EditScheduleForm() {
   let navigate = useNavigate();
@@ -29,14 +30,17 @@ export function EditScheduleForm() {
   const [contact, setContact] = useState<string>(schedule.phone);
   const [alert, setAlert] = useState<JSX.Element | null>(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
     if (!schedule.id) {
       navigate(-1);
     }
-  }, [auth, navigate, schedule.id]);
+  }, [auth, navigate, schedule.id, dispatch]);
 
   const clearStates = () => {
     setClient('');
@@ -57,7 +61,7 @@ export function EditScheduleForm() {
     event.preventDefault();
 
     const request = await scheduleService.updateClientSchedule(
-      auth.userId,
+      auth.token,
       scheduleId as string,
       client,
       procedure,

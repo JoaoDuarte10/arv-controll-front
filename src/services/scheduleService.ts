@@ -4,13 +4,13 @@ import { Response } from './types/ResponseDTO';
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const scheduleService = {
-  async getClientsSchedule(user_id: string, date: string): Promise<Response> {
+  async getClientsSchedule(token: string, date: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/date`;
     try {
       const { data, status } = await axios
         .get(URL, {
           params: { date: date },
-          headers: { 'id-user': user_id },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -25,7 +25,7 @@ const scheduleService = {
   },
 
   async addClientSchedule(
-    user_id: string,
+    token: string,
     client: string,
     procedure: string,
     date: string,
@@ -50,7 +50,7 @@ const scheduleService = {
             pacote: pacote || null,
             qtdTotalAtendimento: qtdTotalAtendimento,
           },
-          { headers: { 'id-user': user_id } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -65,7 +65,7 @@ const scheduleService = {
   },
 
   async updateClientSchedule(
-    user_id: string,
+    token: string,
     id: string,
     client: string,
     procedure: string,
@@ -94,7 +94,7 @@ const scheduleService = {
             qtdTotalAtendimento: qtdTotalAtendimento,
             qtdAtendimento,
           },
-          { headers: { 'id-user': user_id } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -108,13 +108,13 @@ const scheduleService = {
     }
   },
 
-  async deleteClientSchedule(user_id: string, id: string): Promise<Response> {
+  async deleteClientSchedule(token: string, id: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule`;
     try {
       const { data, status } = await axios
         .delete(URL, {
           params: { id },
-          headers: { 'id-user': user_id },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -128,7 +128,7 @@ const scheduleService = {
     }
   },
 
-  async finishClientSchedule(user_id: string, id: string): Promise<Response> {
+  async finishClientSchedule(token: string, id: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/finish`;
     try {
       const { data, status } = await axios
@@ -137,7 +137,7 @@ const scheduleService = {
           {
             id: id,
           },
-          { headers: { 'id-user': user_id } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -151,12 +151,12 @@ const scheduleService = {
     }
   },
 
-  async getAllExpiredSchedules(id_user: string): Promise<Response> {
+  async getAllExpiredSchedules(token: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/expireds`;
 
     try {
       const { data, status } = await axios
-        .get(URL, { headers: { 'id-user': id_user } })
+        .get(URL, { headers: { 'authorization': token } })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
           data: err.response.data,
@@ -170,7 +170,7 @@ const scheduleService = {
   },
 
   async getScheduleByClient(
-    user_id: string,
+    token: string,
     client: string,
   ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/client`;
@@ -179,7 +179,7 @@ const scheduleService = {
       const { data, status } = await axios
         .get(URL, {
           params: { client },
-          headers: { 'id-user': user_id },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({

@@ -12,8 +12,9 @@ import { TitlePage } from '../components/TitlePage';
 
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function CreateSchedule() {
   let navigate = useNavigate();
@@ -38,11 +39,14 @@ export function CreateSchedule() {
 
   const [alert, setAlert] = useState<JSX.Element | null>(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth, navigate]);
+  }, [auth, navigate, dispatch]);
 
   const setDataClient = (params: { label: string; phone: string }) => {
     if (!params) {

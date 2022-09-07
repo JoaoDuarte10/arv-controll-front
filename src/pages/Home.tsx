@@ -2,7 +2,7 @@ import '../css/main.css';
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { WhatsAppService } from '../services/whatsapp-service';
 import { randomId } from '../utils/random';
@@ -10,19 +10,23 @@ import { ReducerStore } from '../app/store';
 
 import { Breadcumb } from '../components/Breadcumb';
 import { TitlePage } from '../components/TitlePage';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function Home() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
   const navbar = document.querySelector('.navbar') as HTMLElement;
   if (navbar) navbar.style.display = 'flex';
 
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth, navigate]);
+
+  }, [auth, navigate, dispatch]);
 
   return (
     <div className="container-main">

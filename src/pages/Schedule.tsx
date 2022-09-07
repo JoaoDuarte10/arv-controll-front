@@ -2,7 +2,7 @@ import '../css/main.css';
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ReducerStore } from '../app/store';
 import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
@@ -27,6 +27,7 @@ import { SearchFilterButton } from '../components/buttons/SearchFilter';
 import { ClearSearchFilterButton } from '../components/buttons/ClearSearchFilter';
 import { SearchButton } from '../components/buttons/SearchButton';
 import { InputDate } from '../components/input/InputDate';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function Schedule() {
   let navigate = useNavigate();
@@ -55,13 +56,16 @@ export function Schedule() {
   const [clearSchedule, setClearSchedule] = useState<boolean>(false);
   const [scheduleFinish, setScheduleFinish] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    let isMounted = true;
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
+    let isMounted = true;
     Promise.all([
-      scheduleService.getAllExpiredSchedules(auth.userId).then((result) => {
+      scheduleService.getAllExpiredSchedules(auth.token).then((result) => {
         if (!result.status) return;
         if (result.status === HTTP_RESPONSE.NOT_FOUND) return;
         if (isMounted) setExpiredSchedules(result.data);
@@ -70,7 +74,7 @@ export function Schedule() {
     return () => {
       isMounted = false;
     };
-  }, [auth, navigate]);
+  }, [auth, navigate, dispatch]);
 
   const clearStates = () => {
     setId('');
@@ -83,7 +87,7 @@ export function Schedule() {
       return;
     }
 
-    scheduleService.getAllExpiredSchedules(auth.userId).then((result) => {
+    scheduleService.getAllExpiredSchedules(auth.token).then((result) => {
       if (!result.status) return;
       if (result.status === HTTP_RESPONSE.NOT_FOUND) return;
       setExpiredSchedules(result.data);
@@ -93,11 +97,11 @@ export function Schedule() {
 
     if ((clientSelected && date) || clientSelected) {
       request = await scheduleService.getScheduleByClient(
-        auth.userId,
+        auth.token,
         clientSelected,
       );
     } else {
-      request = await scheduleService.getClientsSchedule(auth.userId, date);
+      request = await scheduleService.getClientsSchedule(auth.token, date);
     }
 
     if (request.status === HTTP_RESPONSE.ERROR || !request.status) {
@@ -132,7 +136,7 @@ export function Schedule() {
     scheduleFinish.push(...expiredScheduleFinish);
 
     const request = await scheduleService.finishClientSchedule(
-      auth.userId,
+      auth.token,
       scheduleFinish[0].id,
     );
 
@@ -143,7 +147,7 @@ export function Schedule() {
 
     setScheduleFinish(true);
     await getScheduleResponse(event);
-    scheduleService.getAllExpiredSchedules(auth.userId).then((result) => {
+    scheduleService.getAllExpiredSchedules(auth.token).then((result) => {
       if (!result.status) return;
       if (result.status === HTTP_RESPONSE.NOT_FOUND) return;
       setExpiredSchedules(result.data);
@@ -155,7 +159,7 @@ export function Schedule() {
     id: string,
   ) => {
     event.preventDefault();
-    const result = await scheduleService.deleteClientSchedule(auth.userId, id);
+    const result = await scheduleService.deleteClientSchedule(auth.token, id);
 
     if (HTTP_RESPONSE.SUCCESS.includes(result.status)) {
       setScheduleDeletedSuccess(true);
@@ -167,7 +171,7 @@ export function Schedule() {
     }
 
     await getScheduleResponse(event);
-    scheduleService.getAllExpiredSchedules(auth.userId).then((result) => {
+    scheduleService.getAllExpiredSchedules(auth.token).then((result) => {
       if (!result.status) return;
       if (result.status === HTTP_RESPONSE.NOT_FOUND) return;
       setExpiredSchedules(result.data);
@@ -443,19 +447,21 @@ export function Schedule() {
         <ClearFields title="Limpar Pesquisa" callback={clearFindSchedule} />
       )}
 
+      {/* {console.log(expiredSchedules)} */}
+
       {expiredSchedules
         ? expiredSchedules.map((item) => {
-            return (
-              <div key={randomId()}>
-                <ScheduleCard
-                  item={item}
-                  setId={setId}
-                  setIdScheduleDeleted={setIdScheduleDeleted}
-                  expired={true}
-                />
-              </div>
-            );
-          })
+          return (
+            <div key={randomId()}>
+              <ScheduleCard
+                item={item}
+                setId={setId}
+                setIdScheduleDeleted={setIdScheduleDeleted}
+                expired={true}
+              />
+            </div>
+          );
+        })
         : null}
 
       <br />

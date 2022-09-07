@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { Response } from './types/ResponseDTO';
+import jwt from 'jsonwebtoken';
 
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
+const SECRET_TOKEN = process.env.REACT_APP_SECRET_TOKEN as string;
 
 const authService = {
   async getUserInLocalStorange() {
@@ -46,6 +48,24 @@ const authService = {
     const loggedUser = await this.getUserInLocalStorange();
     return loggedUser ? null : '/login';
   },
+
+  isValidToken(token: string): boolean {
+    try {
+      jwt.verify(token, SECRET_TOKEN)
+      return true;
+    } catch (error) {
+      return false
+    }
+  },
+
+  getUserNameInToken(token: string): string {
+    const user: any = jwt.decode(token);
+
+    if (user) {
+      return user.user
+    }
+    return '';
+  }
 };
 
 export { authService };

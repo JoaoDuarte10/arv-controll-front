@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { useGetClientsQuery } from '../api/ApiSlice';
@@ -16,6 +16,7 @@ import { ComboBox } from '../components/ComboBox';
 import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
 import { LabelForm } from '../components/labels/LabelForm';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function CreateHistory() {
   let navigate = useNavigate();
@@ -36,16 +37,19 @@ export function CreateHistory() {
   const [historyRegisterFail, setHistoryRegisterFail] =
     useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth, navigate]);
+  }, [auth, navigate, dispatch]);
 
   const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     const request = await clientHistoryService.createClientHistory(
-      auth.userId,
+      auth.token,
       client.trim(),
       description,
       date,

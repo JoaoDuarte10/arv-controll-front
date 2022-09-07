@@ -2,7 +2,7 @@ import '../css/main.css';
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { salesService } from '../services/salesService';
 import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
@@ -19,6 +19,7 @@ import { ClearFields } from '../components/Buttons';
 import { TableSales } from '../components/TableSales';
 import { TitlePage } from '../components/TitlePage';
 import { SelectPeriod } from '../components/SelectPeriod';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function Sales() {
   let navigate = useNavigate();
@@ -42,15 +43,18 @@ export function Sales() {
   const [clientSelected, setClientSelected] = useState<string | null>(null);
   const [invalidParams, setInvalidParams] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    let isMounted = true;
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
+    let isMounted = true;
     Promise.all([getSalesTodayResponse()]);
 
     async function getSalesTodayResponse() {
-      const request = await salesService.getSalesToday(auth.userId);
+      const request = await salesService.getSalesToday(auth.token);
 
       if (HTTP_RESPONSE.SUCCESS.includes(request.status) && isMounted) {
         setSales(request.data);
@@ -67,7 +71,7 @@ export function Sales() {
     return () => {
       isMounted = false;
     };
-  }, [auth, navigate]);
+  }, [auth, navigate, dispatch]);
 
   const getSalesInPeriodResponse = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
@@ -82,19 +86,19 @@ export function Sales() {
 
     if ((clientSelected && date1) || (clientSelected && date1 && date2)) {
       request = await salesService.getSalesByAllFilters(
-        auth.userId,
+        auth.token,
         clientSelected,
         date1,
         date2,
       );
     } else if (clientSelected) {
       request = await salesService.getSalesByClients(
-        auth.userId,
+        auth.token,
         clientSelected,
       );
     } else {
       request = await salesService.getSalesInPeriod(
-        auth.userId,
+        auth.token,
         date1 as string,
         date2 as string,
       );
@@ -227,9 +231,9 @@ export function Sales() {
                   })}
                 {date2 &&
                   ' - ' +
-                    new Date(date2).toLocaleDateString('pt-BR', {
-                      timeZone: 'UTC',
-                    })}
+                  new Date(date2).toLocaleDateString('pt-BR', {
+                    timeZone: 'UTC',
+                  })}
               </div>
             </div>
           )}

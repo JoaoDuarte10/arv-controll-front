@@ -5,14 +5,14 @@ import { Response } from './types/ResponseDTO';
 const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const salesService = {
-  async getSalesToday(user_id: string): Promise<Response> {
+  async getSalesToday(token: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/today`;
     const date = moment(new Date()).format('YYYY-MM-DD');
     try {
       const { data, status } = await axios
         .get(URL, {
           params: { date: date },
-          headers: { 'id-user': user_id },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -27,7 +27,7 @@ const salesService = {
   },
 
   async getSalesInPeriod(
-    user_id: string,
+    token: string,
     date1: string,
     date2: string,
   ): Promise<Response> {
@@ -43,7 +43,7 @@ const salesService = {
             date1: date1Valid,
             date2: date2,
           },
-          headers: { 'id-user': user_id },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -58,14 +58,14 @@ const salesService = {
   },
 
   async getSalesInPeriodByClients(
-    user_id: string,
+    token: string,
     date1: string,
     date2: string,
   ): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/period-clients`;
     try {
       const { data } = await axios.post(URL, {
-        id_user: user_id,
+        id_user: token,
         date1: date1,
         date2: date2,
       });
@@ -75,12 +75,12 @@ const salesService = {
     }
   },
 
-  async getSalesByClients(user_id: string, client: string): Promise<Response> {
+  async getSalesByClients(token: string, client: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/sales/clients`;
     try {
       const { data, status } = await axios
         .get(URL, {
-          headers: { 'id-user': user_id },
+          headers: { 'authorization': token },
           params: { client },
         })
         .then((res) => ({ data: res.data, status: res.status }))
@@ -96,7 +96,7 @@ const salesService = {
   },
 
   async newSale(
-    user_id: string,
+    token: string,
     description: string,
     client: string,
     price: string,
@@ -113,7 +113,7 @@ const salesService = {
             price: price,
             date: date,
           },
-          { headers: { 'id-user': user_id } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -138,7 +138,7 @@ const salesService = {
   },
 
   async getSalesByAllFilters(
-    user_id: string,
+    token: string,
     client: string,
     date1: string,
     date2: string | null,
@@ -147,7 +147,7 @@ const salesService = {
     try {
       const { data, status } = await axios
         .get(URL, {
-          headers: { 'id-user': user_id },
+          headers: { 'authorization': token },
           params: { client, date1, date2 },
         })
         .then((res) => ({ data: res.data, status: res.status }))

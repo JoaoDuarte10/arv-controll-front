@@ -6,12 +6,26 @@ import { ComeBack } from '../components/ComeBack';
 import { useGetClientsQuery, useUpdateClientMutation } from '../api/ApiSlice';
 import { IClient } from '../api/types/Client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TIMEOUT } from '../utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { validateToken } from '../reducers/authenticatedSlice';
+import { ReducerStore } from '../app/store';
 
 export function EditClient() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const auth = useSelector((state: ReducerStore) => state.authenticated);
+
+  useEffect(() => {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
+      navigate(auth.redirectLoginPageUri, { replace: true });
+    }
+  }, [auth, dispatch, navigate])
+
   const { clientId } = useParams();
 
   const { data: clients = [], isLoading: isLoadingGetClients } =

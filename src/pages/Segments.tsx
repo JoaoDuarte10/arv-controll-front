@@ -11,7 +11,7 @@ import { HTTP_RESPONSE, TIMEOUT } from '../utils/constants';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { TitlePage } from '../components/TitlePage';
 import { ReducerStore } from '../app/store';
 import { SearchFilterButton } from '../components/buttons/SearchFilter';
@@ -25,6 +25,7 @@ import {
   useGetSegmentsQuery,
   useUpdateSegmentMutation,
 } from '../api/ApiSlice';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function Segments() {
   let navigate = useNavigate();
@@ -55,11 +56,14 @@ export function Segments() {
     id: string;
   }>({ label: '', id: '' });
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth, navigate]);
+  }, [auth, dispatch, navigate])
 
   const getSegment = async (
     event: React.BaseSyntheticEvent,

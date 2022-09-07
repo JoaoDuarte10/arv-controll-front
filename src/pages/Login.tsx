@@ -43,8 +43,8 @@ function LoginPage() {
     loader = null;
   }
 
-  const saveLoginUser = (login: { user: string; id: string }) => {
-    dispatch(loginAdded({ login: login.user, id: login.id }));
+  const saveLoginUser = (login: { token: string, refreshToken: string }) => {
+    dispatch(loginAdded({ token: login.token, refreshToken: login.refreshToken }));
     navigate('/home', { replace: true });
     setLoadFetchClient(false);
   };

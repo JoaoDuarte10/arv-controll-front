@@ -5,7 +5,7 @@ const API_RV_BASE_URI = process.env.REACT_APP_BASE_URL;
 
 const clientService = {
   async newClient(
-    id_user: string,
+    token: string,
     name: string,
     email: string,
     phone: string,
@@ -22,7 +22,7 @@ const clientService = {
             phone: phone,
             segment: segment,
           },
-          { headers: { 'id-user': id_user } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -37,7 +37,7 @@ const clientService = {
   },
 
   async updateClient(
-    id_user: string,
+    token: string,
     id: string,
     name: string,
     email: string,
@@ -56,7 +56,7 @@ const clientService = {
             phone: phone,
             segment: segment,
           },
-          { headers: { 'id-user': id_user } },
+          { headers: { 'authorization': token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -70,13 +70,13 @@ const clientService = {
     }
   },
 
-  async findClient(id_user: string, id: string): Promise<Response> {
+  async findClient(token: string, id: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/load`;
     try {
       const { data, status } = await axios
         .get(URI, {
           params: { id: id },
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -90,12 +90,12 @@ const clientService = {
     }
   },
 
-  async findAllClient(id_user: string): Promise<Response> {
+  async findAllClient(token: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/all`;
     try {
       const { data, status } = await axios
         .get(URI, {
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -110,7 +110,7 @@ const clientService = {
   },
 
   async findAllClientBySegment(
-    id_user: string,
+    token: string,
     segment: string,
   ): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client/segment`;
@@ -118,7 +118,7 @@ const clientService = {
       const { data, status } = await axios
         .get(URI, {
           params: { segment: segment },
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -132,13 +132,13 @@ const clientService = {
     }
   },
 
-  async deleteClient(id_user: string, id: string): Promise<Response> {
+  async deleteClient(token: string, id: string): Promise<Response> {
     const URI = `${API_RV_BASE_URI}/api/client`;
     try {
       const { data, status } = await axios
         .delete(URI, {
           params: { id: id },
-          headers: { 'id-user': id_user },
+          headers: { 'authorization': token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({

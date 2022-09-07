@@ -15,10 +15,11 @@ import { TitlePage } from '../components/TitlePage';
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import { IClient } from '../api/types/Client';
 import { ISales } from '../api/types/Sales';
+import { validateToken } from '../reducers/authenticatedSlice';
 
 export function Reports() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
@@ -36,15 +37,20 @@ export function Reports() {
   const [clearTableSalesForClient, setClearTableSalesForClient] =
     useState<any>(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    let isMounted = true;
-    if (!auth.userId) {
+    dispatch(validateToken(auth.token))
+    if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
+
+    let isMounted = true;
+
     Promise.all([getClients(), getSalesWeek(), getSaleMonth()]);
 
     async function getClients() {
-      const request = await clientService.findAllClient(auth.userId);
+      const request = await clientService.findAllClient(auth.token);
 
       if (!request.status) return;
 
@@ -69,12 +75,12 @@ export function Reports() {
       const lastDateWeek = moment().day(6).format('YYYY-MM-DD');
 
       const getSalesLastWeek = await salesService.getSalesInPeriod(
-        auth.userId,
+        auth.token,
         primaryDateLastWeek,
         lastDateLastWeek,
       );
       const getSalesActualWeek = await salesService.getSalesInPeriod(
-        auth.userId,
+        auth.token,
         primaryDateWeek,
         lastDateWeek,
       );
@@ -115,12 +121,12 @@ export function Reports() {
       const dateEndActualMonth = moment().endOf('month').format('YYYY-MM-DD');
 
       const getSalesLastMonth = await salesService.getSalesInPeriod(
-        auth.userId,
+        auth.token,
         dateStartLastMonth,
         dateEndLastMonth,
       );
       const getSalesActualMonth = await salesService.getSalesInPeriod(
-        auth.userId,
+        auth.token,
         dateStartActualMonth,
         dateEndActualMonth,
       );
@@ -148,7 +154,7 @@ export function Reports() {
     return () => {
       isMounted = false;
     };
-  }, [auth.userId, auth, navigate]);
+  }, [auth.token, auth, navigate, dispatch]);
 
   const reportClientInfo = async (
     event: React.BaseSyntheticEvent,
@@ -159,7 +165,7 @@ export function Reports() {
     if (!params) return;
 
     const request = await salesService.getSalesByClients(
-      auth.userId,
+      auth.token,
       params.label.trim(),
     );
 
@@ -309,7 +315,7 @@ export function Reports() {
                             ) / 100,
                         )
                         .reduce((acc, item) => acc + item, 0) /
-                        salesForClient.length,
+                      salesForClient.length,
                     ).toLocaleString('pt-br', {
                       style: 'currency',
                       currency: 'BRL',
