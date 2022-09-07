@@ -48,7 +48,6 @@ const authenticatedSlice = createSlice({
     },
     validateToken: {
       reducer(state: UserLogin, action: any) {
-        console.log(state.token)
         if (authService.isValidToken(action.payload)) {
           return
         }

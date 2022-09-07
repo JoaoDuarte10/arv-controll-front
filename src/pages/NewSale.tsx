@@ -20,6 +20,7 @@ import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
 import { LabelForm } from '../components/labels/LabelForm';
 import { validateToken } from '../reducers/authenticatedSlice';
+import { AlertInfo } from '../components/alerts/AlertInfo';
 
 export function NewSale() {
   let navigate = useNavigate();
@@ -37,6 +38,7 @@ export function NewSale() {
   const [saleRegisterSuccess, setSaleRegisterSuccess] =
     useState<boolean>(false);
   const [saleRegisterFail, setSaleRegisterFail] = useState<boolean>(false);
+  const [alert, setAlert] = useState<JSX.Element | null>(null)
 
   const dispatch = useDispatch();
 
@@ -45,11 +47,29 @@ export function NewSale() {
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth, dispatch, navigate])
+  }, [auth, dispatch, navigate]);
+
+  const formFieldsIsValids = (): boolean => {
+    if (!clientName.trim() || clientName.length > 50) {
+      setAlert(<AlertInfo title='Preencha o cliente corretamente' />)
+      return false;
+    } else if (!description || description.length > 100) {
+      setAlert(<AlertInfo title='Preencha a descrição corretamente' />)
+      return false;
+    } else if (!price || price.length > 15) {
+      setAlert(<AlertInfo title='Preencha o preço corretamente' />)
+      return false;
+    } else if (!date || date.length > 10) {
+      setAlert(<AlertInfo title='Preencha a data corretamente' />)
+      return false;
+    }
+    return true;
+  }
 
   const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
-    clearFields(event);
+
+    if (!formFieldsIsValids()) return;
 
     const request = await salesService.newSale(
       auth.token,
@@ -65,6 +85,7 @@ export function NewSale() {
       setPrice('');
       setDate('');
       setSaleRegisterSuccess(true);
+      clearFields(event);
       return;
     }
 
@@ -80,10 +101,10 @@ export function NewSale() {
     setPrice('');
     setDate('');
     setClientName('');
-    const buttonSelector = document.querySelector(
-      '#root > div > div.container-main > form > div > div.form-group > div > div > div > div > button',
+    const selectClientButton = document.querySelector(
+      '#root > div.container-main > form > div > div.form-group.mb-2 > div > div > div > div > button',
     ) as HTMLElement;
-    if (buttonSelector) buttonSelector.click();
+    if (selectClientButton) selectClientButton.click();
   };
 
   if (saleRegisterSuccess) {
@@ -96,6 +117,10 @@ export function NewSale() {
 
   if (serverError) {
     setTimeout(() => setServerError(false), TIMEOUT.FIVE_SECCONDS);
+  }
+
+  if (alert) {
+    setTimeout(() => setAlert(null), TIMEOUT.FIVE_SECCONDS);
   }
 
   let loader;
@@ -221,6 +246,7 @@ export function NewSale() {
             {serverError === true && (
               <AlertError title="Não foi possível processar a requisição." />
             )}
+            {alert}
           </div>
         </div>
       </form>
