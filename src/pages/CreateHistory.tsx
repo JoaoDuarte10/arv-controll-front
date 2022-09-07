@@ -17,6 +17,7 @@ import { InputText } from '../components/input/InputText';
 import { TitlePage } from '../components/TitlePage';
 import { LabelForm } from '../components/labels/LabelForm';
 import { validateToken } from '../reducers/authenticatedSlice';
+import { AlertInfo } from '../components/alerts/AlertInfo';
 
 export function CreateHistory() {
   let navigate = useNavigate();
@@ -36,6 +37,7 @@ export function CreateHistory() {
     useState<boolean>(false);
   const [historyRegisterFail, setHistoryRegisterFail] =
     useState<boolean>(false);
+  const [alert, setAlert] = useState<JSX.Element | null>(null)
 
   const dispatch = useDispatch();
 
@@ -46,8 +48,25 @@ export function CreateHistory() {
     }
   }, [auth, navigate, dispatch]);
 
+  const formFieldsIsValids = (): boolean => {
+    if (!client.trim() || client.length > 50) {
+      setAlert(<AlertInfo title='Preencha o cliente corretamente' />)
+      return false;
+    } else if (!description || description.length > 100) {
+      setAlert(<AlertInfo title='Preencha a descrição corretamente' />)
+      return false;
+    } else if (!date || date.length > 15) {
+      setAlert(<AlertInfo title='Preencha a data corretamente' />)
+      return false;
+    }
+    return true;
+  }
+
   const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
+
+    if (!formFieldsIsValids()) return;
+
     const request = await clientHistoryService.createClientHistory(
       auth.token,
       client.trim(),
@@ -100,6 +119,10 @@ export function CreateHistory() {
     setTimeout(() => setInvalidParams(false), TIMEOUT.FIVE_SECCONDS);
   }
 
+  if (alert) {
+    setTimeout(() => setAlert(null), TIMEOUT.FIVE_SECCONDS);
+  }
+
   let content = null;
   if (isLoadingGetClients) {
     content = <CircularIndeterminate />;
@@ -127,8 +150,8 @@ export function CreateHistory() {
                 <ComboBox
                   title="Selecionar Cliente"
                   options={clients.map((item: IClient) => item.name)}
-                  selectValue={(e: React.BaseSyntheticEvent, item: IClient) =>
-                    setClient(item.name)
+                  selectValue={(e: React.BaseSyntheticEvent, item: string) =>
+                    setClient(item)
                   }
                 />
               ) : (
@@ -197,6 +220,7 @@ export function CreateHistory() {
             {invalidParams === true && (
               <AlertError title="Preencha os campos corretamente." />
             )}
+            {alert}
           </div>
         </div>
       </form>
