@@ -447,8 +447,6 @@ export function Schedule() {
         <ClearFields title="Limpar Pesquisa" callback={clearFindSchedule} />
       )}
 
-      {/* {console.log(expiredSchedules)} */}
-
       {expiredSchedules
         ? expiredSchedules.map((item) => {
           return (

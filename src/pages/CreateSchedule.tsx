@@ -79,8 +79,30 @@ export function CreateSchedule() {
     if (buttonSelector) buttonSelector.click();
   };
 
+  const formFieldsIsValids = (): boolean => {
+    if (!client.trim() || client.length > 50) {
+      setAlert(<AlertInfo title="Preencha o cliente corretamente." />);
+      return false;
+    } else if (!procedure || procedure.length > 50) {
+      setAlert(<AlertInfo title="Preencha o procedimento corretamente." />);
+      return false;
+    } else if (!dateNewSchedule || dateNewSchedule.length > 15) {
+      setAlert(<AlertInfo title="Preencha os campos corretamente." />);
+      return false;
+    } else if (!time || time.length > 15) {
+      setAlert(<AlertInfo title="Preencha o horário corretamente." />);
+      return false;
+    } else if (!price || price.length > 10) {
+      setAlert(<AlertInfo title="Preencha o preço corretamente." />);
+      return false;
+    }
+    return true;
+  }
+
   const addNewClientSchedule = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
+
+    if (!formFieldsIsValids()) return;
 
     try {
       await addNewSchedule({
