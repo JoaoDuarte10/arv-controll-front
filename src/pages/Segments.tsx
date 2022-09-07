@@ -79,16 +79,21 @@ export function Segments() {
     setSegmentActual(null);
   };
 
+  const formFieldsIsValids = (segment: string): boolean => {
+    if (!segment || !segment.trim() || segment.length > 50) {
+      setAlert(<AlertInfo title="Preencha os campos corretamente." />);
+      return false;
+    }
+    return true;
+  }
+
   const onAddNewSegment = async (
     event: React.BaseSyntheticEvent,
-    segment: any,
+    segment: string,
   ) => {
     event.preventDefault();
 
-    if (!segment || !segment.trim()) {
-      setAlert(<AlertInfo title="Preencha os campos corretamente." />);
-      return;
-    }
+    if (!formFieldsIsValids(segment)) return;
 
     try {
       await addSegment({
