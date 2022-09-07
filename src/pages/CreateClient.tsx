@@ -49,12 +49,21 @@ export function CreateClient() {
     if (buttonSelector) buttonSelector.click();
   };
 
+  const formFieldsIsValids = (): boolean => {
+    if (!name.trim() || name.length > 50) {
+      setAlert(<AlertInfo title="Preencha o nome corretamente." />);
+      return false;
+    } else if (!phone || phone.length > 20) {
+      setAlert(<AlertInfo title="Preencha o telefone corretamente." />);
+      return false;
+    }
+    return true;
+  }
+
   const onSaveClient = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
-    if (!name || !phone) {
-      setAlert(<AlertInfo title="Preencha os campos corretamente." />);
-      return;
-    }
+
+    if (!formFieldsIsValids()) return;
 
     const segmentSelected = segmentSelect ? segmentSelect : null;
 
