@@ -46,7 +46,7 @@ export function Sales() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
@@ -231,9 +231,9 @@ export function Sales() {
                   })}
                 {date2 &&
                   ' - ' +
-                  new Date(date2).toLocaleDateString('pt-BR', {
-                    timeZone: 'UTC',
-                  })}
+                    new Date(date2).toLocaleDateString('pt-BR', {
+                      timeZone: 'UTC',
+                    })}
               </div>
             </div>
           )}

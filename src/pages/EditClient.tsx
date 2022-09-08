@@ -20,11 +20,11 @@ export function EditClient() {
   const auth = useSelector((state: ReducerStore) => state.authenticated);
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-  }, [auth, dispatch, navigate])
+  }, [auth, dispatch, navigate]);
 
   const { clientId } = useParams();
 

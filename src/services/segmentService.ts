@@ -8,7 +8,7 @@ const segmentService = {
     const URL = `${API_RV_BASE_URI}/api/segments`;
     try {
       const { data, status } = await axios
-        .get(URL, { headers: { 'authorization': token } })
+        .get(URL, { headers: { authorization: token } })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
           data: err.response.data,
@@ -29,7 +29,7 @@ const segmentService = {
           {
             segment,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -56,7 +56,7 @@ const segmentService = {
             id,
             segment,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -79,7 +79,7 @@ const segmentService = {
       const { data, status } = await axios
         .delete(URL, {
           params: { id, segment },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({

@@ -58,7 +58,7 @@ export function Clients() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }

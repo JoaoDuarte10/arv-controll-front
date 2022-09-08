@@ -37,12 +37,12 @@ export function CreateHistory() {
     useState<boolean>(false);
   const [historyRegisterFail, setHistoryRegisterFail] =
     useState<boolean>(false);
-  const [alert, setAlert] = useState<JSX.Element | null>(null)
+  const [alert, setAlert] = useState<JSX.Element | null>(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
@@ -50,17 +50,17 @@ export function CreateHistory() {
 
   const formFieldsIsValids = (): boolean => {
     if (!client.trim() || client.length > 50) {
-      setAlert(<AlertInfo title='Preencha o cliente corretamente' />)
+      setAlert(<AlertInfo title="Preencha o cliente corretamente" />);
       return false;
     } else if (!description || description.length > 100) {
-      setAlert(<AlertInfo title='Preencha a descrição corretamente' />)
+      setAlert(<AlertInfo title="Preencha a descrição corretamente" />);
       return false;
     } else if (!date || date.length > 15) {
-      setAlert(<AlertInfo title='Preencha a data corretamente' />)
+      setAlert(<AlertInfo title="Preencha a data corretamente" />);
       return false;
     }
     return true;
-  }
+  };
 
   const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();

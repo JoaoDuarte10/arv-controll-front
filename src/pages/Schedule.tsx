@@ -59,7 +59,7 @@ export function Schedule() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
@@ -449,17 +449,17 @@ export function Schedule() {
 
       {expiredSchedules
         ? expiredSchedules.map((item) => {
-          return (
-            <div key={randomId()}>
-              <ScheduleCard
-                item={item}
-                setId={setId}
-                setIdScheduleDeleted={setIdScheduleDeleted}
-                expired={true}
-              />
-            </div>
-          );
-        })
+            return (
+              <div key={randomId()}>
+                <ScheduleCard
+                  item={item}
+                  setId={setId}
+                  setIdScheduleDeleted={setIdScheduleDeleted}
+                  expired={true}
+                />
+              </div>
+            );
+          })
         : null}
 
       <br />

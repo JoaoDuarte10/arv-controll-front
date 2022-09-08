@@ -21,11 +21,10 @@ export function Home() {
   if (navbar) navbar.style.display = 'flex';
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
-
   }, [auth, navigate, dispatch]);
 
   return (

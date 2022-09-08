@@ -12,7 +12,7 @@ const salesService = {
       const { data, status } = await axios
         .get(URL, {
           params: { date: date },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -43,7 +43,7 @@ const salesService = {
             date1: date1Valid,
             date2: date2,
           },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -80,7 +80,7 @@ const salesService = {
     try {
       const { data, status } = await axios
         .get(URL, {
-          headers: { 'authorization': token },
+          headers: { authorization: token },
           params: { client },
         })
         .then((res) => ({ data: res.data, status: res.status }))
@@ -113,7 +113,7 @@ const salesService = {
             price: price,
             date: date,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -147,7 +147,7 @@ const salesService = {
     try {
       const { data, status } = await axios
         .get(URL, {
-          headers: { 'authorization': token },
+          headers: { authorization: token },
           params: { client, date1, date2 },
         })
         .then((res) => ({ data: res.data, status: res.status }))

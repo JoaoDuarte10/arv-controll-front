@@ -38,12 +38,12 @@ export function NewSale() {
   const [saleRegisterSuccess, setSaleRegisterSuccess] =
     useState<boolean>(false);
   const [saleRegisterFail, setSaleRegisterFail] = useState<boolean>(false);
-  const [alert, setAlert] = useState<JSX.Element | null>(null)
+  const [alert, setAlert] = useState<JSX.Element | null>(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
@@ -51,20 +51,20 @@ export function NewSale() {
 
   const formFieldsIsValids = (): boolean => {
     if (!clientName.trim() || clientName.length > 50) {
-      setAlert(<AlertInfo title='Preencha o cliente corretamente' />)
+      setAlert(<AlertInfo title="Preencha o cliente corretamente" />);
       return false;
     } else if (!description || description.length > 100) {
-      setAlert(<AlertInfo title='Preencha a descrição corretamente' />)
+      setAlert(<AlertInfo title="Preencha a descrição corretamente" />);
       return false;
     } else if (!price || price.length > 15) {
-      setAlert(<AlertInfo title='Preencha o preço corretamente' />)
+      setAlert(<AlertInfo title="Preencha o preço corretamente" />);
       return false;
     } else if (!date || date.length > 10) {
-      setAlert(<AlertInfo title='Preencha a data corretamente' />)
+      setAlert(<AlertInfo title="Preencha a data corretamente" />);
       return false;
     }
     return true;
-  }
+  };
 
   const saveSale = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();

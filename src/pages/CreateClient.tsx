@@ -32,7 +32,7 @@ export function CreateClient() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
@@ -58,7 +58,7 @@ export function CreateClient() {
       return false;
     }
     return true;
-  }
+  };
 
   const onSaveClient = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();

@@ -20,7 +20,7 @@ export const clientHistoryService = {
             description,
             date,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -40,7 +40,7 @@ export const clientHistoryService = {
       const { data, status } = await axios
         .get(URI, {
           params: { client },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -60,7 +60,7 @@ export const clientHistoryService = {
       const { data, status } = await axios
         .get(URI, {
           params: { date },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -84,7 +84,7 @@ export const clientHistoryService = {
       const { data, status } = await axios
         .get(URI, {
           params: { date1, date2 },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -108,7 +108,7 @@ export const clientHistoryService = {
     try {
       const { data, status } = await axios
         .get(URL, {
-          headers: { 'authorization': token },
+          headers: { authorization: token },
           params: { client, date1, date2 },
         })
         .then((res) => ({ data: res.data, status: res.status }))

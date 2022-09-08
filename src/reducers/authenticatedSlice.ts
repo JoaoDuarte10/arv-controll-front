@@ -16,7 +16,9 @@ const initialState: UserLogin = {
     ? JSON.parse(loginInLocalStorage).userName
     : null,
   token: loginInLocalStorage ? JSON.parse(loginInLocalStorage).token : null,
-  refreshToken: loginInLocalStorage ? JSON.parse(loginInLocalStorage).refreshToken : null,
+  refreshToken: loginInLocalStorage
+    ? JSON.parse(loginInLocalStorage).refreshToken
+    : null,
   redirectLoginPageUri: '/login',
 };
 
@@ -29,15 +31,19 @@ const authenticatedSlice = createSlice({
         if (!initialState.token) {
           const setLocalStorage = {
             ...action.payload,
-            userName: authService.getUserNameInToken(action.payload.token as string)
-          }
+            userName: authService.getUserNameInToken(
+              action.payload.token as string,
+            ),
+          };
           authService.cleanUserInLocalStorange();
           localStorage.setItem('user-login', JSON.stringify(setLocalStorage));
           state.userName = setLocalStorage.userName;
           state.token = action.payload.token;
         }
       },
-      prepare(params: { token: string; refreshToken: string }): { payload: UserLogin } {
+      prepare(params: { token: string; refreshToken: string }): {
+        payload: UserLogin;
+      } {
         return {
           payload: {
             token: params.token,
@@ -49,15 +55,15 @@ const authenticatedSlice = createSlice({
     validateToken: {
       reducer(state: UserLogin, action: any) {
         if (authService.isValidToken(action.payload)) {
-          return
+          return;
         }
         state.token = null;
         authService.cleanUserInLocalStorange();
       },
       prepare(params) {
-        return { payload: params }
+        return { payload: params };
       },
-    }
+    },
   },
 });
 

@@ -51,10 +51,10 @@ const authService = {
 
   isValidToken(token: string): boolean {
     try {
-      jwt.verify(token, SECRET_TOKEN)
+      jwt.verify(token, SECRET_TOKEN);
       return true;
     } catch (error) {
-      return false
+      return false;
     }
   },
 
@@ -62,10 +62,10 @@ const authService = {
     const user: any = jwt.decode(token);
 
     if (user) {
-      return user.user
+      return user.user;
     }
     return '';
-  }
+  },
 };
 
 export { authService };

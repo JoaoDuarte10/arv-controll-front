@@ -22,7 +22,7 @@ const clientService = {
             phone: phone,
             segment: segment,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -56,7 +56,7 @@ const clientService = {
             phone: phone,
             segment: segment,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -76,7 +76,7 @@ const clientService = {
       const { data, status } = await axios
         .get(URI, {
           params: { id: id },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -95,7 +95,7 @@ const clientService = {
     try {
       const { data, status } = await axios
         .get(URI, {
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -118,7 +118,7 @@ const clientService = {
       const { data, status } = await axios
         .get(URI, {
           params: { segment: segment },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -138,7 +138,7 @@ const clientService = {
       const { data, status } = await axios
         .delete(URI, {
           params: { id: id },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({

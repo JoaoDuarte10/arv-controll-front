@@ -42,7 +42,7 @@ export function CreateSchedule() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
@@ -97,7 +97,7 @@ export function CreateSchedule() {
       return false;
     }
     return true;
-  }
+  };
 
   const addNewClientSchedule = async (event: React.BaseSyntheticEvent) => {
     event.preventDefault();

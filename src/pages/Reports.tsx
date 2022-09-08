@@ -40,7 +40,7 @@ export function Reports() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(validateToken(auth.token))
+    dispatch(validateToken(auth.token));
     if (!auth.token) {
       navigate(auth.redirectLoginPageUri, { replace: true });
     }
@@ -315,7 +315,7 @@ export function Reports() {
                             ) / 100,
                         )
                         .reduce((acc, item) => acc + item, 0) /
-                      salesForClient.length,
+                        salesForClient.length,
                     ).toLocaleString('pt-br', {
                       style: 'currency',
                       currency: 'BRL',

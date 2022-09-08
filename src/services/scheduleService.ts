@@ -10,7 +10,7 @@ const scheduleService = {
       const { data, status } = await axios
         .get(URL, {
           params: { date: date },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -50,7 +50,7 @@ const scheduleService = {
             pacote: pacote || null,
             qtdTotalAtendimento: qtdTotalAtendimento,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -94,7 +94,7 @@ const scheduleService = {
             qtdTotalAtendimento: qtdTotalAtendimento,
             qtdAtendimento,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -114,7 +114,7 @@ const scheduleService = {
       const { data, status } = await axios
         .delete(URL, {
           params: { id },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -137,7 +137,7 @@ const scheduleService = {
           {
             id: id,
           },
-          { headers: { 'authorization': token } },
+          { headers: { authorization: token } },
         )
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
@@ -156,7 +156,7 @@ const scheduleService = {
 
     try {
       const { data, status } = await axios
-        .get(URL, { headers: { 'authorization': token } })
+        .get(URL, { headers: { authorization: token } })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
           data: err.response.data,
@@ -169,17 +169,14 @@ const scheduleService = {
     }
   },
 
-  async getScheduleByClient(
-    token: string,
-    client: string,
-  ): Promise<Response> {
+  async getScheduleByClient(token: string, client: string): Promise<Response> {
     const URL = `${API_RV_BASE_URI}/api/schedule/client`;
 
     try {
       const { data, status } = await axios
         .get(URL, {
           params: { client },
-          headers: { 'authorization': token },
+          headers: { authorization: token },
         })
         .then((res) => ({ data: res.data, status: res.status }))
         .catch((err) => ({
